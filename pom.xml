@@ -22,6 +22,7 @@
             <artifactId>hibernate-entitymanager</artifactId>
             <version>4.3.1.Final</version>
         </dependency>
+        
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
@@ -92,6 +93,14 @@
             <artifactId>jackson-annotations</artifactId>
             <version>2.6.1</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.webflow</groupId>
+            <artifactId>spring-webflow</artifactId>
+            <version>2.4.1.RELEASE</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
