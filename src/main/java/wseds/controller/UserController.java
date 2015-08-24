@@ -41,6 +41,7 @@ public class UserController
     @RequestMapping(value="/getRegister", method=RequestMethod.GET)
     public String getRegister(Model accountModel, Model userModel ) 
     {   
+        System.out.println("PIPPONE");
         Account account = new Account(); 
         User user = new User();
         accountModel.addAttribute("account", account);

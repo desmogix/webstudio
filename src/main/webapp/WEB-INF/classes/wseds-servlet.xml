@@ -92,18 +92,14 @@
     org.springframework.web.servlet.ViewResolver;
     -->
     <context:component-scan base-package="wsdes" /> 
-    
-    <!-- Spring Controllers. -->
-    <bean id="userController" class="wseds.controller.UserController" />
-    
-    
+
     <!-- luigiS: Spring ViewResolver
     There are about 16 Spring different pre-implemented interfaces of:
     - view Resolver and view interface.
     One of them is internalResourceViewresolver   -->
     <bean   id="viewResolver"
             class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-            p:prefix="/jsp/view/"
+            p:prefix="/"
             p:suffix=".jsp" 
             p:exposeContextBeansAsAttributes="true"      
     />
@@ -115,6 +111,9 @@
         </property>    
     </bean>
     
+     <!-- Spring Controllers. -->
+    <bean id="userController" class="wseds.controller.UserController" />
+    
     <!-- Spring Validators. -->
     <bean id="UserValidator" class="wseds.validator.UserValidator" />    
     <bean id="AccountValidator" class="wseds.validator.AccountValidator" />
@@ -122,15 +121,6 @@
     <!-- Spring Services. -->
     <bean id="accountServiceImpl" class="wseds.service.AccountServiceImp" />    
     <bean id="userServiceImpl" class="wseds.service.UserServiceImp" /> 
-    
-    <!--
-    The index controller.
-   
-    <bean name="indexController"
-          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
-          p:viewName="index" />
-    -->
-    
     
     <!-- Spring (the servlet) configures Hibernate  -->
     <tx:annotation-driven  />
