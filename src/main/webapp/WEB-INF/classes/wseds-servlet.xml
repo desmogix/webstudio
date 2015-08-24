@@ -134,7 +134,7 @@
     <bean id="userServiceImpl" class="wseds.service.UserServiceImp" /> 
     
     <!-- Spring web flow 
-    <import resource="webflow-config.xml"/> -->
+    <import resource="webflow-config.xml"/> 
     
     <webflow:flow-executor id="flowExecutor" />
     
@@ -150,7 +150,7 @@
         <property name="flowExecutor" ref="flowExecutor" />
     </bean> 
 
-    
+    -->
     <!-- Spring (the servlet) configures Hibernate  -->
     <tx:annotation-driven  />
     
