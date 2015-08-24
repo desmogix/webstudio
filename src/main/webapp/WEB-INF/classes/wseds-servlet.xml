@@ -136,19 +136,19 @@
     <!-- Spring web flow 
     <import resource="webflow-config.xml"/> -->
     
-        <webflow:flow-executor id="flowExecutor" />
+    <webflow:flow-executor id="flowExecutor" />
     
-        <webflow:flow-registry id="flowRegistry" base-path="/WEB-INF/flow">
-            <webflow:flow-location-pattern value="/**/*-flow.xml" />
-        </webflow:flow-registry>
+    <webflow:flow-registry id="flowRegistry" base-path="/WEB-INF/flow">
+        <webflow:flow-location-pattern value="*-flow.xml" />
+    </webflow:flow-registry>
     
-        <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
-            <property name="flowRegistry" ref="flowRegistry" />
-        </bean>
+    <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
+        <property name="flowRegistry" ref="flowRegistry" />
+    </bean>
     
-        <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
-            <property name="flowExecutor" ref="flowExecutor" />
-        </bean> 
+    <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
+        <property name="flowExecutor" ref="flowExecutor" />
+    </bean> 
 
     
     <!-- Spring (the servlet) configures Hibernate  -->
