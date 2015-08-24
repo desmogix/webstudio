@@ -5,10 +5,15 @@
  */
 package wseds.service;
 
+import org.springframework.stereotype.Service;
+
 /**
  *
  * @author luigi@santivetti
  */
-public class AccountServiceImp {
+
+@Service("accountServiceImpl")
+public class AccountServiceImp implements AccountService
+{
     
 }
