@@ -57,14 +57,9 @@
                <tr>
                     <td align="left"><form:label path="password">Password</form:label></td>  
                     <td><form:input path="password" /></td>
-                    <td><font color="red"><form:errors path="surname" /></font></td>
+                    <td><font color="red"><form:errors path="password" /></font></td>
                 </tr>
                 
-                <tr>
-                    <td align="left"><form:label path="email">Email</form:label></td>   
-                    <td><form:input path="email" /></td>
-                    <td><font color="red"><form:errors path="email" /></font></td>
-                </tr>
                 <tr>
                     <td></td>
                     <td><input type="submit" value="Register">&nbsp;<input type="Reset" value="Reset"></td>  
