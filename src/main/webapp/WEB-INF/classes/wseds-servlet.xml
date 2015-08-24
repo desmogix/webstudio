@@ -119,6 +119,10 @@
     <bean id="UserValidator" class="wseds.validator.UserValidator" />    
     <bean id="AccountValidator" class="wseds.validator.AccountValidator" />
     
+    <!-- Spring Services. -->
+    <bean id="accountServiceImpl" class="wseds.service.AccountServiceImp" />    
+    <bean id="userServiceImpl" class="wseds.service.UserServiceImp" /> 
+    
     <!--
     The index controller.
    

@@ -5,10 +5,15 @@
  */
 package wseds.service;
 
+import org.springframework.stereotype.Service;
+
 /**
  *
  * @author luigi@santivetti
  */
-public class UserServiceImp {
+
+@Service("userServiceImpl")
+public class UserServiceImp implements UserService
+{
     
 }
