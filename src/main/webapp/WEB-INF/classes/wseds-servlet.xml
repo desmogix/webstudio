@@ -1,0 +1,159 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- was: <?xml version="1.0" encoding="UTF-8"?> -->
+
+<!-- 
+    xmlns - XML Namespace
+    xmlns:"what namespace is currently used in the xml file" = "where is it"
+    
+    Namespeces:
+    
+        - BEANS, has no prefix declaration
+        - CONTEXT, for specifying an ApplicationContext
+        - MVC, enables a set of annotation to be used throughout Javabeans classes
+        web-oriented, specifically web-mvc-oriented. (@Controller, @RequestMapping, etc) 
+        - P, set property
+        - AOP, Aspect Oriented Programming
+        - TX, Transaction Managment (here is a hook for Hibernate)
+        - XSI, XML Schema Instace
+        
+    xsi:schemaLocation
+        
+        this allows XML to be parsed locally. If those strings match the 
+        original Spring value for their location, Spring JARs will able to
+        parse this XML file locally. Then won't be necessary browsing up to those
+        address. Typically within one of your dependency jars it will contain 
+        that same xsd file, in its resources, and it has a "mapping" option in 
+        the jar saying to treat that xsd file as if it maps to the url 
+        http://somewhere/something.xsd (so you never end up going to web and 
+        downloading the file, it just exists locally).
+        
+        From docs.spring.io/spring/docs/
+        The 'xsi:schemaLocation' fragment is not actually required, 
+        but can be included to reference a local copy of a schema 
+        (which can be useful during development).
+        
+        NB. According to Spring 3.2 specification, numebers version of the xsd 
+        files shouldn't be reported.
+        
+        i.e.
+        "~/spring-beans-4.0.xsd" should become "~/spring-beans.xsd"
+        
+-->
+
+<beans  
+        
+        xmlns="http://www.springframework.org/schema/beans"
+        
+        xmlns:context="http://www.springframework.org/schema/context"
+       
+        xmlns:mvc="http://www.springframework.org/schema/mvc" 
+
+        xmlns:p="http://www.springframework.org/schema/p"
+        
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        
+        xsi:schemaLocation="
+
+                            http://www.springframework.org/schema/beans 
+                            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                           
+                            http://www.springframework.org/schema/aop 
+                            http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+                           
+                            http://www.springframework.org/schema/mvc                            
+                            http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd   
+                            
+                            http://www.springframework.org/schema/tx 
+                            http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+                            http://www.springframework.org/schema/context 
+                            http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+    <!-- luigiS: Uses annotations in classes for JavaBeans 
+    
+    mvc belongs to
+    org.springframework.web.servlet.config.annotation.*
+    -->
+    <mvc:annotation-driven />  
+    <!-- 
+    ask DispatcherServlet to forward requests for static resources 
+    to the servlet container’s default servlet and not to try to handle them itself.
+    -->
+    <mvc:default-servlet-handler />
+
+     <!-- luigiS: Base package. This is for @Controller annotation, 
+    match beans throughout the package, then you don't have to explicitly define
+    them 
+    
+    belongs to
+    org.springframework.web.servlet.ViewResolver;
+    -->
+    <context:component-scan base-package="wsdes" /> 
+    
+    <!-- luigiS: Spring ViewResolver
+    There are about 16 Spring different pre-implemented interfaces of:
+    - view Resolver and view interface.
+    One of them is internalResourceViewresolver   -->
+    <bean   id="viewResolver"
+            class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+            p:prefix="/jsp/view/"
+            p:suffix=".jsp" 
+            p:exposeContextBeansAsAttributes="true"      
+    />
+
+    <!-- Spring MesssageSource. -->         
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename"> 
+            <value>/properties/messages</value>    
+        </property>    
+    </bean>
+    
+    <!-- Spring Validators. -->
+    <bean id="UserValidator" class="wseds.validator.UserValidator" />    
+    <bean id="AccountValidator" class="wseds.validator.AccountValidator" />
+    
+    <!--
+    The index controller.
+   
+    <bean name="indexController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="index" />
+    -->
+    
+    
+    <!-- Spring (the servlet) configures Hibernate  -->
+    <tx:annotation-driven  />
+    
+    <!-- TransactionManager  -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+  
+    <!-- Hibernate datasoruce  -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/sql882395_1?zeroDateTimeBehavior=convertToNull" />
+        <property name="username" value="root" />
+        <property name="password" value="admin" /> 
+    </bean>
+    <!-- Hibernate sesionFactory  -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.hbm2ddl.auto">validate</prop>
+            </props>
+        </property>
+        <property name="packagesToScan">
+            <list>
+                <value>library.model</value>                
+            </list>
+        </property>  
+    </bean>
+    
+    
+</beans>

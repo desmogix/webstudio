@@ -1,0 +1,4 @@
+<!-- LuigiS -->
+
+<c:url value="/" var="homeURL" />  
+<a href="${homeURL}">Home</a>      
