@@ -134,12 +134,12 @@
     <bean id="userServiceImpl" class="wseds.service.UserServiceImp" /> 
     
     <!-- Spring web flow 
-    <import resource="webflow-config.xml"/>-->
+    <import resource="webflow-config.xml"/> -->
     
         <webflow:flow-executor id="flowExecutor" />
     
-        <webflow:flow-registry id="flowRegistry" base-path="/WEB-INF/flow" >
-            <webflow:flow-location-pattern value="*-flow.xml" />
+        <webflow:flow-registry id="flowRegistry" base-path="/WEB-INF/flow">
+            <webflow:flow-location-pattern value="/**/*-flow.xml" />
         </webflow:flow-registry>
     
         <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
