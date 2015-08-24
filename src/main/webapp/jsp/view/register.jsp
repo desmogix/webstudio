@@ -1,8 +1,13 @@
-<!DOCTYPE html>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@page language="java" contentType="text/html;charset=UTF-8"%>
+
 
 <!-- 
     Document   : register
@@ -21,8 +26,8 @@
         <h1>WSEDS: please enter your details to register.</h1>
          
         <!-- Register a user (account). -->    
-        <c:url value="/user/postRegister" var="postRegisterURL" />
-        <form:form id="postRegister" action="${postRegisterURL}" method="post" modelAttribute="account">                                           
+        <c:url value="/user/postAccountRegister" var="postRegisterURL" />
+        <form:form id="postAccountRegister" action="${postRegisterURL}" method="post" modelAttribute="account">                                           
             <table border="0">
                 <tr>
                     <td align="left"><form:label path="name">Name</form:label></td>  
@@ -45,10 +50,10 @@
                     <td><input type="submit" value="Register">&nbsp;<input type="Reset" value="Reset"></td>  
                     <td></td>
                 </tr>
-            </table>
         </form:form>
-        <form:form id="postRegister" action="${postRegisterURL}" method="post" modelAttribute="user">                                           
-            <table border="0">
+                
+        <c:url value="/user/postUserRegister" var="postRegisterURL" />
+        <form:form id="postUserRegister" action="${postRegisterURL}" method="post" modelAttribute="user">
                 <tr>
                     <td align="left"><form:label path="username">Username</form:label></td>  
                     <td><form:input path="username" /></td>
