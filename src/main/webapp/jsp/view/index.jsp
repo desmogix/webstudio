@@ -17,7 +17,11 @@
         
         <p>Request a secure login page <a href="index.jsp">index</a></p>
         
-        <p>Request a secure login page <a href="register.jsp">register</a></p>
+        <p>To register with the library, please <i>click</i> the button below:</p>       
+        <c:url value="/user/getRegister" var="getRegisterURL" />
+        <form:form action="${getRegisterURL}" method="get">   
+            <input type="submit" value="Register">                
+        </form:form>  
         
         
       

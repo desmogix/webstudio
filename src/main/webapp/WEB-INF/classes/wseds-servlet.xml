@@ -93,6 +93,10 @@
     -->
     <context:component-scan base-package="wsdes" /> 
     
+    <!-- Spring Controllers. -->
+    <bean id="userController" class="wseds.controller.UserController" />
+    
+    
     <!-- luigiS: Spring ViewResolver
     There are about 16 Spring different pre-implemented interfaces of:
     - view Resolver and view interface.
