@@ -21,8 +21,7 @@ import wseds.validator.UserValidator;
  */
 
 @Controller
-@RequestMapping("/account")
-
+@RequestMapping("/user")
 public class UserController
 {
     @Autowired
@@ -40,29 +39,29 @@ public class UserController
     }
     
     @RequestMapping(value="/getRegister", method=RequestMethod.GET)
-    public String getRegister(Model model) {   
-        
-        
+    public String getRegister(Model accountModel, Model userModel ) 
+    {   
         Account account = new Account(); 
         User user = new User();
-        model.addAttribute("account", account);
-        model.addAttribute("user", user);
+        accountModel.addAttribute("account", account);
+        userModel.addAttribute("user", user);
         return "jsp/view/register";
     }
     
     @RequestMapping(value = "/postRegister", method = RequestMethod.POST)       
-    public String postRegister( @ModelAttribute("account") Account account, 
-                                @ModelAttribute("user") User user,
+    public String postRegister( @ModelAttribute("user") User user, 
+                                
                                 BindingResult userBindingResult, 
-                                BindingResult accountBindingResult,                              
+                                                            
                                 Model model) 
-    {                  
+    {              
+        
         // Validate user and account
         userValidator.validate(user, userBindingResult);
-        accountValidator.validate(account, accountBindingResult);
-        if (userBindingResult.hasErrors() || accountBindingResult.hasErrors()) 
+        
+        if (userBindingResult.hasErrors()) 
         {
-            return "view/register";
+            return "jsp/view/register";
         }
         else 
         {                               

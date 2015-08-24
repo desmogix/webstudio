@@ -20,8 +20,8 @@
     <body>        
         <h1>WSEDS: please enter your details to register.</h1>
          
-        <!-- Register an account. -->    
-        <c:url value="/account/postRegister" var="postRegisterURL" />
+        <!-- Register a user (account). -->    
+        <c:url value="/user/postRegister" var="postRegisterURL" />
         <form:form id="postRegister" action="${postRegisterURL}" method="post" modelAttribute="account">                                           
             <table border="0">
                 <tr>
@@ -47,5 +47,31 @@
                 </tr>
             </table>
         </form:form>
+        <form:form id="postRegister" action="${postRegisterURL}" method="post" modelAttribute="user">                                           
+            <table border="0">
+                <tr>
+                    <td align="left"><form:label path="username">Username</form:label></td>  
+                    <td><form:input path="username" /></td>
+                    <td><font color="red"><form:errors path="username" /></font></td>
+                </tr>
+               <tr>
+                    <td align="left"><form:label path="password">Password</form:label></td>  
+                    <td><form:input path="password" /></td>
+                    <td><font color="red"><form:errors path="surname" /></font></td>
+                </tr>
+                
+                <tr>
+                    <td align="left"><form:label path="email">Email</form:label></td>   
+                    <td><form:input path="email" /></td>
+                    <td><font color="red"><form:errors path="email" /></font></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="Register">&nbsp;<input type="Reset" value="Reset"></td>  
+                    <td></td>
+                </tr>
+            </table>
+        </form:form>
+        
     </body>
 </html>

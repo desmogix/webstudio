@@ -25,15 +25,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="user")
-public class User implements Serializable 
+public class User implements Serializable
 {
     @Id
     @Column(name="id_user", unique=true, nullable=false)
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    
     private Integer userId;
-    
-    
+
     @Column(name="username", nullable=false, length=30)      
     private String username;
 
