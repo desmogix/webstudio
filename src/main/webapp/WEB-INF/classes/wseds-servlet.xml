@@ -114,6 +114,10 @@
      <!-- Spring Controllers. -->
     <bean id="userController" class="wseds.controller.UserController" />
     
+    <!-- Model. -->
+    <bean id="user" class="wseds.model.User" />
+    <bean id="account" class="wseds.model.Account" /> 
+    
     <!-- Spring Validators. -->
     <bean id="UserValidator" class="wseds.validator.UserValidator" />    
     <bean id="AccountValidator" class="wseds.validator.AccountValidator" />
