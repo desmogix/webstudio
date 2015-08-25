@@ -6,7 +6,7 @@
 package wseds.service;
 
 import java.util.List;
-import wseds.model.User;
+import wseds.model.UserCred;
 
 /**
  *
@@ -14,11 +14,14 @@ import wseds.model.User;
  */
 public interface UserService 
 {
+    void insert (UserCred account);
+    /*
     boolean check(Integer id);
     void delete(Integer id);
-    User select(Integer id);
-    void insert (User account);
-    void update (User account);
+    UserCred select(Integer id);
+   
+    void update (UserCred account);
     
-    List<User> list();
+    List<UserCred> list();
+    */
 }

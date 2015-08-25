@@ -95,7 +95,7 @@
     org.springframework.web.servlet.ViewResolver;
     -->
     <context:component-scan base-package="wsdes" /> 
-
+    
     <!-- luigiS: Spring ViewResolver
     There are about 16 Spring different pre-implemented interfaces of:
     - view Resolver and view interface.
@@ -118,8 +118,12 @@
     <bean id="userController" class="wseds.controller.UserController" />
     
     <!-- Model. -->
-    <bean id="user" class="wseds.model.User" />
+    <bean id="user" class="wseds.model.UserCred" />
     <bean id="account" class="wseds.model.Account" /> 
+    
+    <!-- Spring Repositories. -->
+    <bean id="accountDAOImp" class="wseds.dao.AccountDAOImp" />    
+    <bean id="userDAOImp" class="wseds.dao.UserDAOImp" /> 
     
      <!-- Spring Services. -->
     <bean id="accountServiceImp" class="wseds.service.AccountServiceImp" />    
@@ -129,9 +133,7 @@
     <bean id="userValidator" class="wseds.validator.UserValidator" />    
     <bean id="accountValidator" class="wseds.validator.AccountValidator" />
     
-    <!-- Spring Repositories. -->
-    <bean id="accountDAOImp" class="wseds.dao.AccountDAOImp" />    
-    <bean id="userDAOImp" class="wseds.dao.UserDAOImp" /> 
+    
     
     <!-- Spring webflow -->
     <import resource="webflow-config.xml"/> 
@@ -153,7 +155,9 @@
         <property name="username" value="root" />
         <property name="password" value="admin" /> 
     </bean>
-    <!-- Hibernate sesionFactory  -->
+    <!-- Hibernate sesionFactory 
+        
+    -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:hibernate.cfg.xml" />

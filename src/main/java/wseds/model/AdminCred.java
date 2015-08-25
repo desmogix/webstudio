@@ -9,7 +9,7 @@ package wseds.model;
  *
  * @author luigiS
  */
-public class Admin
+public class AdminCred
 {
     
 }

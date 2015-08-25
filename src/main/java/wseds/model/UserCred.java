@@ -6,17 +6,21 @@
 package wseds.model;
 
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+//import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+//import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 /**
  *
@@ -24,11 +28,14 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name="user")
-public class User implements Serializable
+@Table(name="user_cred")
+public class UserCred implements Serializable
 {
     @Id
-    @Column(name="id_user", unique=true, nullable=false)
+    @GeneratedValue(generator="fk")
+    @GenericGenerator(strategy = "foreign", name="fk",
+            parameters = @Parameter(name="property", value="account"))
+    @Column(name="id_user")
     private Integer userId;
 
     @Column(name="username", nullable=false, length=30)      
@@ -37,21 +44,38 @@ public class User implements Serializable
     @Column(name="password", nullable=false, length=128)
     private String password;
 
+    /**
     @OneToOne (cascade=CascadeType.ALL, targetEntity = Account.class, fetch=FetchType.LAZY, mappedBy="user")
     @JsonManagedReference
     private Account account;
-
-    public User() {
+   
+    
+    @OneToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+    @JoinColumn(name="id_user", insertable=false,
+    updatable=false, nullable=false, unique=true)
+    
+     */
+    
+    @OneToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @PrimaryKeyJoinColumn  
+    private Account account;
+    
+    public UserCred() {
     }
 
     public Integer getUserId() {
         return userId;
     }
 
+    /**
     public Account getAccount() {
         return account;
     }
-
+    public void setAccount(Account account) {
+        this.account = account;
+    } 
+     * @return 
+    */
     
     public String getUsername() {
         return username;
@@ -74,9 +98,7 @@ public class User implements Serializable
     }
 
     
-    public void setAccount(Account account) {
-        this.account = account;
-    }
+    
     
     
     

@@ -13,12 +13,15 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import wseds.model.User;
+import org.springframework.stereotype.Repository;
+import wseds.model.UserCred;
 
 /**
  *
  * @author luigi@santivetti
  */
+
+@Repository("userDAOImp")
 public class UserDAOImp implements UserDAO
 {
     @Autowired
@@ -28,62 +31,9 @@ public class UserDAOImp implements UserDAO
     {
     }    
     
-    @Override
-    public void delete(Integer userId) 
-    {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.getTransaction();        
-        try {
-            transaction.begin();
-            session.delete((User) session.get(User.class, userId));
-            transaction.commit();            
-        }
-        catch(RuntimeException e) {
-            transaction.rollback();
-            throw e;
-        }
-        finally {
-            session.close();
-        }
-    }
-
-    @Override
-    public boolean check(Integer userId) 
-    {
-        try 
-        {
-            User user = this.select(userId);
-            return userId == user.getUserId().intValue();
-        }
-        catch(Exception e) 
-        {                        
-            return false;
-        }
-    }    
     
     @Override
-    public User select(Integer userId) 
-    {
-        Session session = sessionFactory.openSession();
-        
-        try 
-        {                
-            Query query = session.createQuery("from User as p left join fetch p.books where p.userId = " +
-                                              ":userId").setParameter("userId", userId);                      
-            // - gg - Return a list of one object User, beacuse of the this query. 
-            //You know the query, you know it will return one obj
-            User user = (User) query.list().get(0); 
-            //Hibernate.initialize(user.getBooks());            
-            return user;            
-            // return (User) session.get(User.class, userId);
-        }        
-        finally {
-            session.close();            
-        }         
-    }
-
-    @Override
-    public void insert(User user)  
+    public void insert(UserCred user)  
     {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.getTransaction();        
@@ -103,25 +53,80 @@ public class UserDAOImp implements UserDAO
             session.close();
         }
     }
+    
+    
+    /*
+    @Override
+    public void delete(Integer userId) 
+    {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.getTransaction();        
+        try {
+            transaction.begin();
+            session.delete((UserCred) session.get(UserCred.class, userId));
+            transaction.commit();            
+        }
+        catch(RuntimeException e) {
+            transaction.rollback();
+            throw e;
+        }
+        finally {
+            session.close();
+        }
+    }
 
     @Override
-    public List<User> list() 
+    public boolean check(Integer userId) 
+    {
+        try 
+        {
+            UserCred user = this.select(userId);
+            return userId == user.getUserId().intValue();
+        }
+        catch(Exception e) 
+        {                        
+            return false;
+        }
+    }    
+    
+    @Override
+    public UserCred select(Integer userId) 
+    {
+        Session session = sessionFactory.openSession();
+        
+        try 
+        {                
+            Query query = session.createQuery("from User as p left join fetch p.books where p.userId = " +
+                                              ":userId").setParameter("userId", userId);                      
+            // - gg - Return a list of one object UserCred, beacuse of the this query. 
+            //You know the query, you know it will return one obj
+            UserCred user = (UserCred) query.list().get(0); 
+            //Hibernate.initialize(user.getBooks());            
+            return user;            
+            // return (UserCred) session.get(UserCred.class, userId);
+        }        
+        finally {
+            session.close();            
+        }         
+    }
+
+    
+
+    @Override
+    public List<UserCred> list() 
     {
         Session session = sessionFactory.openSession();          
         try 
         {     
            Query userQuery = session.createQuery("FROM User");  
-           List<User> users = userQuery.list(); // This will get Users but not their Books.
-           List<User> usersWithBooks = new ArrayList<User>();
-           for (User user : users) {   
+           List<UserCred> users = userQuery.list(); // This will get Users but not their Books.
+           List<UserCred> usersWithBooks = new ArrayList<>();
+           for (UserCred user : users) {   
                
-                /* NOTE: Ensure Books for User are fetched 'lazily' using HQL query to avoid 
-                         an org.hibernate.LazyInitializationException. 
-                         See http://java.dzone.com/articles/lazyeager-loading-using for further 
-                         information. */
+                
                 Query bookQuery = session.createQuery("from User as p left join fetch p.books where p.userId = " +
                                                       ":userId").setParameter("userId", user.getUserId());                      
-                User userWithBooks = (User) bookQuery.list().get(0); 
+                UserCred userWithBooks = (UserCred) bookQuery.list().get(0); 
                 //Hibernate.initialize(userWithBooks.getBooks());            
                 usersWithBooks.add(userWithBooks);
             }
@@ -133,7 +138,7 @@ public class UserDAOImp implements UserDAO
     }   
 
     @Override
-    public void update(User user) 
+    public void update(UserCred user) 
     {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.getTransaction();        
@@ -149,5 +154,7 @@ public class UserDAOImp implements UserDAO
         finally {
             session.close();
         }
-    }   
+    }  
+    
+    */
 }
