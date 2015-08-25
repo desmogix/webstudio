@@ -15,6 +15,7 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import wseds.model.UserCred;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -24,6 +25,8 @@ import wseds.model.UserCred;
 @Repository("userDAOImp")
 public class UserDAOImp implements UserDAO
 {
+    static final Logger logger = Logger.getLogger(UserDAOImp.class.getName());
+    
     @Autowired
     private SessionFactory sessionFactory;
     

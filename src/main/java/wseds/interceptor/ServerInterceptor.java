@@ -1,4 +1,3 @@
-// WRITTEN BY: Martin O'Shea.
 
 package wseds.interceptor;
 
