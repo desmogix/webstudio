@@ -44,6 +44,9 @@ public class UserCred implements Serializable
     @Column(name="password", nullable=false, length=128)
     private String password;
 
+    @Column(name="salt", nullable=true, length=128)
+    private String salt;
+    
     /**
     @OneToOne (cascade=CascadeType.ALL, targetEntity = Account.class, fetch=FetchType.LAZY, mappedBy="user")
     @JsonManagedReference
@@ -56,11 +59,12 @@ public class UserCred implements Serializable
     
      */
     
-    @OneToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-    @PrimaryKeyJoinColumn  
+    @OneToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY, targetEntity = Account.class)
+    @PrimaryKeyJoinColumn(name="id_account") 
     private Account account;
     
-    public UserCred() {
+    public UserCred() 
+    {
     }
 
     public Integer getUserId() {
@@ -96,6 +100,18 @@ public class UserCred implements Serializable
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
+
+    public String getSalt()
+    {
+        return salt;
+    }
+
+    public void setSalt(String salt)
+    {
+        this.salt = salt;
+    }
+
+    
 
     
     

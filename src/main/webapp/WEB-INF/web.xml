@@ -32,6 +32,8 @@
         </init-param>
     </servlet>
     
+    
+    
     <!-- luigiS:
         Associate a servlet (by the tag servlet-name) to a url pattern.
         In this case, all the possible url-patterns will be associated to wseds.

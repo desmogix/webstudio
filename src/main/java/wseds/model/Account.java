@@ -31,7 +31,7 @@ public class Account implements Serializable
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer accountId;
     
-    @Column(name="type", nullable=false, columnDefinition="CHAR", length=20)
+    @Column(name="type", nullable=false, length=20)
     private String type;
     
     @Column(name="surname", nullable=false, length=30)
@@ -43,8 +43,7 @@ public class Account implements Serializable
     @Column(name="email", nullable=false, length=45)
     private String email;
     
-    @OneToOne(mappedBy="account", cascade=CascadeType.ALL)  
-    
+    @OneToOne(mappedBy="account", cascade=CascadeType.ALL, targetEntity = UserCred.class)  
     private UserCred userCred;
 
     public Integer getAccountId() {
@@ -88,10 +87,7 @@ public class Account implements Serializable
     }
     
     
-    public UserCred getUserCred()
-    {
-        return userCred;
-    }
+    
     
     
 }

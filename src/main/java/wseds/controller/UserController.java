@@ -31,9 +31,9 @@ public class UserController
     @Autowired
     private AccountValidator accountValidator;
     @Autowired
-    private UserService userService;
-    @Autowired
     private AccountService accountService;
+    @Autowired
+    private UserService userService;
     @Autowired
     private MessageSource messageSource;
 
@@ -43,7 +43,7 @@ public class UserController
     @RequestMapping(value="/getRegister", method=RequestMethod.GET)
     public String getRegister(Model model) 
     {   
-        Account account = new Account(); 
+        Account account = new Account();
         UserCred user = new UserCred();
         
         model.addAttribute("account", account);

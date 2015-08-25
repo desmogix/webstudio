@@ -74,7 +74,8 @@
                             http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
                             
-                                
+    <!-- Hibernate Interceptors. -->
+    <bean id="serverInterceptor" class="wseds.interceptor.ServerInterceptor" />                            
 
     <!-- luigiS: Uses annotations in classes for JavaBeans 
     mvc belongs to
@@ -121,20 +122,18 @@
     <bean id="user" class="wseds.model.UserCred" />
     <bean id="account" class="wseds.model.Account" /> 
     
+    <!-- Spring Services. -->
+    <bean id="accountServiceImp" class="wseds.service.AccountServiceImp" />    
+    <bean id="userServiceImp" class="wseds.service.UserServiceImp" /> 
+    
     <!-- Spring Repositories. -->
     <bean id="accountDAOImp" class="wseds.dao.AccountDAOImp" />    
     <bean id="userDAOImp" class="wseds.dao.UserDAOImp" /> 
     
-     <!-- Spring Services. -->
-    <bean id="accountServiceImp" class="wseds.service.AccountServiceImp" />    
-    <bean id="userServiceImp" class="wseds.service.UserServiceImp" /> 
-    
     <!-- Spring Validators. -->
     <bean id="userValidator" class="wseds.validator.UserValidator" />    
     <bean id="accountValidator" class="wseds.validator.AccountValidator" />
-    
-    
-    
+
     <!-- Spring webflow -->
     <import resource="webflow-config.xml"/> 
     
@@ -143,11 +142,6 @@
     <!-- Enable hibernate annotations in POJOs file-->
     <tx:annotation-driven  />
     
-    <!-- TransactionManager  -->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-  
     <!-- Hibernate datasoruce  -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -155,9 +149,8 @@
         <property name="username" value="root" />
         <property name="password" value="admin" /> 
     </bean>
-    <!-- Hibernate sesionFactory 
-        
-    -->
+    
+    <!-- Hibernate sessionFactory -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:hibernate.cfg.xml" />
@@ -166,12 +159,21 @@
                 <prop key="hibernate.hbm2ddl.auto">validate</prop>
             </props>
         </property>
+        <property name="entityInterceptor">
+            <ref bean="serverInterceptor" />            
+        </property>
         <property name="packagesToScan">
             <list>
-                <value>wseds.model</value>                
+                <value>wseds.model</value> 
+                <value>wseds.service</value> 
+                <value>wseds.dao</value>              
             </list>
         </property>  
     </bean>
     
-    
+    <!-- TransactionManager  -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+   
 </beans>
