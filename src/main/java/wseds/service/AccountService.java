@@ -5,10 +5,20 @@
  */
 package wseds.service;
 
+import java.util.List;
+import wseds.model.Account;
+
 /**
  *
  * @author luigi@santivetti
  */
-public interface AccountService {
+public interface AccountService 
+{
+    boolean check(Integer id);
+    void delete(Integer id);
+    Account select(Integer id);
+    void insert (Account account);
+    void update (Account account);
     
+    List<Account> list();
 }

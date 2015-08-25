@@ -121,41 +121,24 @@
     <bean id="user" class="wseds.model.User" />
     <bean id="account" class="wseds.model.Account" /> 
     
+     <!-- Spring Services. -->
+    <bean id="accountServiceImp" class="wseds.service.AccountServiceImp" />    
+    <bean id="userServiceImp" class="wseds.service.UserServiceImp" /> 
+    
     <!-- Spring Validators. -->
-    <bean id="UserValidator" class="wseds.validator.UserValidator" />    
-    <bean id="AccountValidator" class="wseds.validator.AccountValidator" />
+    <bean id="userValidator" class="wseds.validator.UserValidator" />    
+    <bean id="accountValidator" class="wseds.validator.AccountValidator" />
     
-    <!-- Spring Services. -->
-    <bean id="accountServiceImpl" class="wseds.service.AccountServiceImp" />    
-    <bean id="userServiceImpl" class="wseds.service.UserServiceImp" /> 
+    <!-- Spring Repositories. -->
+    <bean id="accountDAOImp" class="wseds.dao.AccountDAOImp" />    
+    <bean id="userDAOImp" class="wseds.dao.UserDAOImp" /> 
     
-    
+    <!-- Spring webflow -->
     <import resource="webflow-config.xml"/> 
-    <!-- Spring web flow
-    xmlns:webflow="http://www.springframework.org/schema/webflow-config" 
     
-    
-    <webflow:flow-executor id="flowExecutor" />
-    
-    <webflow:flow-registry id="flowRegistry" base-path="/WEB-INF/flow">
-        <webflow:flow-location-pattern value="*-flow.xml" />
-    </webflow:flow-registry>
-    
-    <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
-        <property name="flowRegistry" ref="flowRegistry" />
-    </bean>
-    
-    <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
-        <property name="flowExecutor" ref="flowExecutor" />
-    </bean> 
-
-    -->
     <!-- Spring (the servlet) configures Hibernate  -->
-    
-    
-    
-    
-    
+
+    <!-- Enable hibernate annotations in POJOs file-->
     <tx:annotation-driven  />
     
     <!-- TransactionManager  -->
@@ -181,7 +164,7 @@
         </property>
         <property name="packagesToScan">
             <list>
-                <value>library.model</value>                
+                <value>wseds.model</value>                
             </list>
         </property>  
     </bean>

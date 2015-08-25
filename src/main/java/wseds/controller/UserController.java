@@ -68,7 +68,7 @@ public class UserController
         }
         else 
         {                               
-            //accountService.insert(account);
+            accountService.insert(account);
             //userService.insert(user);  
                         
             // Set view.            
@@ -95,7 +95,7 @@ public class UserController
         else 
         {                               
             //accountService.insert(account);
-            //userService.insert(user);  
+            userService.insert(user);  
                         
             // Set view.            
             //model.addAttribute("account", account);           

@@ -3,22 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wseds.service;
+package wseds.dao;
 
 import java.util.List;
-import wseds.model.User;
+import wseds.model.Account;
 
 /**
  *
  * @author luigi@santivetti
  */
-public interface UserService 
+public interface AccountDAO 
 {
     boolean check(Integer id);
     void delete(Integer id);
-    User select(Integer id);
-    void insert (User account);
-    void update (User account);
+    Account select(Integer id);
+    void insert (Account account);
+    void update (Account account);
     
-    List<User> list();
+    List<Account> list();
 }
