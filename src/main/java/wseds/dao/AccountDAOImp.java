@@ -12,12 +12,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import wseds.model.Account;
 
 /**
  *
  * @author luigi@santivetti
  */
+@Repository("accountDAOImp")
 public class AccountDAOImp implements AccountDAO
 {
     @Autowired
@@ -27,6 +29,28 @@ public class AccountDAOImp implements AccountDAO
     {
     }    
     
+    @Override
+    public void insert(Account account)  
+    {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.getTransaction();        
+        try 
+        {
+            transaction.begin();
+            session.save(account);
+            transaction.commit();            
+        }
+        catch(RuntimeException e) 
+        {
+            transaction.rollback();
+            throw e;
+        }
+        finally 
+        {
+            session.close();
+        }
+    }
+    /*
     @Override
     public void delete(Integer accountId) 
     {
@@ -82,27 +106,7 @@ public class AccountDAOImp implements AccountDAO
         }         
     }
 
-    @Override
-    public void insert(Account account)  
-    {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.getTransaction();        
-        try 
-        {
-            transaction.begin();
-            session.save(account);
-            transaction.commit();            
-        }
-        catch(RuntimeException e) 
-        {
-            transaction.rollback();
-            throw e;
-        }
-        finally 
-        {
-            session.close();
-        }
-    }
+    
 
     @Override
     public List<Account> list() 
@@ -115,10 +119,7 @@ public class AccountDAOImp implements AccountDAO
            List<Account> accountsWithBooks = new ArrayList<Account>();
            for (Account account : accounts) {   
                
-                /* NOTE: Ensure Books for Account are fetched 'lazily' using HQL query to avoid 
-                         an org.hibernate.LazyInitializationException. 
-                         See http://java.dzone.com/articles/lazyeager-loading-using for further 
-                         information. */
+                
                 Query bookQuery = session.createQuery("from Account as p left join fetch p.books where p.accountId = " +
                                                       ":accountId").setParameter("accountId", account.getAccountId());                      
                 Account accountWithBooks = (Account) bookQuery.list().get(0); 
@@ -150,4 +151,5 @@ public class AccountDAOImp implements AccountDAO
             session.close();
         }
     }   
+    */
 }

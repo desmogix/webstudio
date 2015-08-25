@@ -14,11 +14,14 @@ import wseds.model.Account;
  */
 public interface AccountDAO 
 {
+    void insert (Account account);
+    /*
     boolean check(Integer id);
     void delete(Integer id);
     Account select(Integer id);
-    void insert (Account account);
+    
     void update (Account account);
     
     List<Account> list();
+    */
 }

@@ -10,21 +10,31 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wseds.dao.UserDAO;
-import wseds.model.User;
+import wseds.model.UserCred;
 
 /**
  *
  * @author luigi@santivetti
  */
 
-@Service("userServiceImpl")
+@Service("userServiceImp")
 public class UserServiceImp implements UserService
 {
     @Autowired
     private UserDAO userDAO;
     
-    public UserServiceImp(){};
+    public UserServiceImp()
+    {}
     
+    @Override
+    @Transactional
+    public void insert(UserCred user) 
+    {
+        //To change body of generated methods, choose Tools | Templates.
+        userDAO.insert(user);
+    }
+    
+    /*
     @Override
     @Transactional
     public void delete(Integer userId)
@@ -40,33 +50,27 @@ public class UserServiceImp implements UserService
     }
 
     @Override
-    public User select(Integer userId) 
+    public UserCred select(Integer userId) 
     {
         //To change body of generated methods, choose Tools | Templates.
-        return (User) userDAO.select(userId);
+        return (UserCred) userDAO.select(userId);
     }
+
+    
 
     @Override
     @Transactional
-    public void insert(User user) 
-    {
-        //To change body of generated methods, choose Tools | Templates.
-        userDAO.insert(user);
-    }
-
-    @Override
-    @Transactional
-    public void update(User user) 
+    public void update(UserCred user) 
     {
         //To change body of generated methods, choose Tools | Templates.
         userDAO.update(user);
     }
 
     @Override
-    public List<User> list() 
+    public List<UserCred> list() 
     {
         //To change body of generated methods, choose Tools | Templates.
         return userDAO.list();
     }
-    
+    */
 }

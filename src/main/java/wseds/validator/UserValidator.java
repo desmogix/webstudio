@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Validator;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
-import wseds.model.User;
+import wseds.model.UserCred;
 
 /**
  *
@@ -25,7 +25,7 @@ public class UserValidator implements Validator
     @Override
     public boolean supports (Class cls)
     {
-        return User.class.isAssignableFrom(cls);
+        return UserCred.class.isAssignableFrom(cls);
     }
     
     @Override
@@ -34,7 +34,7 @@ public class UserValidator implements Validator
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "username.required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "password.required");
 
-        User user = (User) target;
+        UserCred user = (UserCred) target;
         
         if (user.getUsername().length() > 30) {
             errors.rejectValue("username", "userame.invalidLength");

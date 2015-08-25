@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import wseds.model.Account;
-import wseds.model.User;
+import wseds.model.UserCred;
 import wseds.service.AccountService;
 import wseds.service.UserService;
 import wseds.validator.AccountValidator;
@@ -44,7 +44,7 @@ public class UserController
     public String getRegister(Model model) 
     {   
         Account account = new Account(); 
-        User user = new User();
+        UserCred user = new UserCred();
         
         model.addAttribute("account", account);
         model.addAttribute("user", user);
@@ -79,7 +79,7 @@ public class UserController
     
     
     @RequestMapping(value = "/postUserRegister", method = RequestMethod.POST)       
-    public String postUserRegister( @ModelAttribute("user") User user, 
+    public String postUserRegister( @ModelAttribute("user") UserCred user, 
                                 BindingResult userBindingResult,                           
                                 Model model) 
     {              

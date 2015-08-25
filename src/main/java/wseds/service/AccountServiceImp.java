@@ -15,14 +15,23 @@ import wseds.model.Account;
  *
  * @author luigi@santivetti
 */
-@Service("accountServiceImpl")
+@Service("accountServiceImp")
 public class AccountServiceImp implements AccountService
 {
     @Autowired
     private AccountDAO accountDAO;
     
-    public AccountServiceImp(){};
+    public AccountServiceImp(){}
     
+    @Override
+    @Transactional
+    public void insert(Account account) 
+    {
+        //To change body of generated methods, choose Tools | Templates.
+        accountDAO.insert(account);
+    }
+
+    /*
     @Override
     @Transactional
     public void delete(Integer accountId)
@@ -44,14 +53,7 @@ public class AccountServiceImp implements AccountService
         return (Account) accountDAO.select(accountId);
     }
 
-    @Override
-    @Transactional
-    public void insert(Account account) 
-    {
-        //To change body of generated methods, choose Tools | Templates.
-        accountDAO.insert(account);
-    }
-
+    
     @Override
     @Transactional
     public void update(Account account) 
@@ -66,8 +68,6 @@ public class AccountServiceImp implements AccountService
         //To change body of generated methods, choose Tools | Templates.
         return accountDAO.list();
     }
-    
-    
-    
-    
+    */
+
 }
