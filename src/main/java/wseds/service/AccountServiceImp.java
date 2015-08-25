@@ -5,15 +5,69 @@
  */
 package wseds.service;
 
+import java.util.List;
+import javax.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import wseds.dao.AccountDAO;
+import wseds.model.Account;
 /**
  *
  * @author luigi@santivetti
- */
-
+*/
 @Service("accountServiceImpl")
 public class AccountServiceImp implements AccountService
 {
+    @Autowired
+    private AccountDAO accountDAO;
+    
+    public AccountServiceImp(){};
+    
+    @Override
+    @Transactional
+    public void delete(Integer accountId)
+    {
+        accountDAO.delete(accountId);
+    }
+
+    @Override
+    public boolean check(Integer accountId) 
+    {
+        //To change body of generated methods, choose Tools | Templates.
+        return accountDAO.check(accountId);
+    }
+
+    @Override
+    public Account select(Integer accountId) 
+    {
+        //To change body of generated methods, choose Tools | Templates.
+        return (Account) accountDAO.select(accountId);
+    }
+
+    @Override
+    @Transactional
+    public void insert(Account account) 
+    {
+        //To change body of generated methods, choose Tools | Templates.
+        accountDAO.insert(account);
+    }
+
+    @Override
+    @Transactional
+    public void update(Account account) 
+    {
+        //To change body of generated methods, choose Tools | Templates.
+        accountDAO.update(account);
+    }
+
+    @Override
+    public List<Account> list() 
+    {
+        //To change body of generated methods, choose Tools | Templates.
+        return accountDAO.list();
+    }
+    
+    
+    
     
 }
