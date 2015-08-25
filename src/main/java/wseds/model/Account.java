@@ -6,11 +6,14 @@
 package wseds.model;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 /**
@@ -28,7 +31,7 @@ public class Account implements Serializable
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer accountId;
     
-    @Column(name="type", nullable=false, length=20)
+    @Column(name="type", nullable=false, columnDefinition="CHAR", length=20)
     private String type;
     
     @Column(name="surname", nullable=false, length=30)
@@ -39,6 +42,10 @@ public class Account implements Serializable
     
     @Column(name="email", nullable=false, length=45)
     private String email;
+    
+    @OneToOne(mappedBy="account", cascade=CascadeType.ALL)  
+    
+    private UserCred userCred;
 
     public Integer getAccountId() {
         return accountId;
@@ -80,6 +87,11 @@ public class Account implements Serializable
         this.email = email;
     }
     
+    
+    public UserCred getUserCred()
+    {
+        return userCred;
+    }
     
     
 }
