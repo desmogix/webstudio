@@ -46,6 +46,9 @@ public class UserController
         Account account = new Account();
         UserCred user = new UserCred();
         
+        account.setUserCred(user);
+        user.setAccount(account);
+        
         model.addAttribute("account", account);
         model.addAttribute("user", user);
         
