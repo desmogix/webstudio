@@ -59,8 +59,7 @@ public class UserCred implements Serializable
     
      */
     
-    @OneToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY, targetEntity = Account.class)
-    @PrimaryKeyJoinColumn(name="id_account") 
+    @OneToOne(mappedBy = "userCred") 
     private Account account;
     
     public UserCred() 

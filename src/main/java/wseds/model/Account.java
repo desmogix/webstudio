@@ -43,7 +43,8 @@ public class Account implements Serializable
     @Column(name="email", nullable=false, columnDefinition="VARCHAR",length=45)
     private String email;
     
-    @OneToOne(mappedBy="account", cascade=CascadeType.ALL, targetEntity = UserCred.class)  
+    @OneToOne(mappedBy="account", cascade=CascadeType.ALL, targetEntity = UserCred.class)
+    @PrimaryKeyJoinColumn
     private UserCred userCred;
 
     public Integer getAccountId() {
