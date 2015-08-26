@@ -28,19 +28,19 @@ public class Account implements Serializable
 {
     @Id
     @Column(name="id_account", unique=true, nullable=false)
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer accountId;
     
-    @Column(name="type", nullable=false, length=20)
+    @Column(name="type", nullable=false, columnDefinition="CHAR", length=20)
     private String type;
     
-    @Column(name="surname", nullable=false, length=30)
+    @Column(name="surname", nullable=false, columnDefinition="VARCHAR", length=30)
     private String surname;
     
-    @Column(name="name", nullable=false, length=30)
+    @Column(name="name", nullable=false, columnDefinition="VARCHAR",length=30)
     private String name;
     
-    @Column(name="email", nullable=false, length=45)
+    @Column(name="email", nullable=false, columnDefinition="VARCHAR",length=45)
     private String email;
     
     @OneToOne(mappedBy="account", cascade=CascadeType.ALL, targetEntity = UserCred.class)  

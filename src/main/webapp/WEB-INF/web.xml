@@ -22,6 +22,18 @@
                     that servlet (in our case wseds) is given with the 
                     configuration it will load into the context.          
     -->
+    
+    <!-- location of log4j config file -->
+<context-param>
+    <param-name>log4jConfigLocation</param-name>
+    <param-value>/WEB-INF/classes/log4j.properties</param-value>
+</context-param>
+
+<!-- applies log4j configuration -->
+<listener>
+    <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+</listener>
+    
     <servlet>
         <servlet-name>wseds</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -60,6 +72,8 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/classes/wseds-servlet.xml</param-value>
     </context-param> 
+    
+    
     
     <!-- luigiS: Error pages
             there are no pages at the moment displaying custom error messages-->

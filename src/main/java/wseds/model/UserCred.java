@@ -38,13 +38,13 @@ public class UserCred implements Serializable
     @Column(name="id_user")
     private Integer userId;
 
-    @Column(name="username", nullable=false, length=30)      
+    @Column(name="username", nullable=false, columnDefinition="VARCHAR",length=30)      
     private String username;
 
-    @Column(name="password", nullable=false, length=128)
+    @Column(name="password", nullable=false, columnDefinition="CHAR", length=128)
     private String password;
 
-    @Column(name="salt", nullable=true, length=128)
+    @Column(name="salt", nullable=true, columnDefinition="CHAR", length=128)
     private String salt;
     
     /**
