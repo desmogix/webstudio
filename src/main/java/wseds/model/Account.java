@@ -31,8 +31,8 @@ public class Account implements Serializable
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer accountId;
     
-    @Column(name="type", nullable=false, columnDefinition="CHAR", length=20)
-    private String type;
+    //@Column(name="type", nullable=false, columnDefinition="CHAR(20) default 'U'", length=20)
+    //private String type;
     
     @Column(name="surname", nullable=false, columnDefinition="VARCHAR", length=30)
     private String surname;
@@ -54,6 +54,7 @@ public class Account implements Serializable
         this.accountId = accountId;
     }
 
+    /*
     public String getType() {
         return type;
     }
@@ -61,7 +62,8 @@ public class Account implements Serializable
     public void setType(String type) {
         this.type = type;
     }
-
+    */
+    
     public String getSurname() {
         return surname;
     }
