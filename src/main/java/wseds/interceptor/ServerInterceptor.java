@@ -19,7 +19,7 @@ public class ServerInterceptor extends EmptyInterceptor {
             Object[] state,
             String[] propertyNames,
             Type[] types) {        
-        System.out.println(ServerInterceptor.class.getName() + ".afterCompletion() method called: row deleted from " + 
+        System.out.println("   ---   INTERCEPTOR   ---> " + ServerInterceptor.class.getName() + ".afterCompletion() method called: row deleted from " + 
                            entity.getClass() + " table at " + Misc.getDateAndTimeAsString() + ".");
         
         // Perform any auditing here.
@@ -33,7 +33,7 @@ public class ServerInterceptor extends EmptyInterceptor {
                                Object[] previousState,
                                String[] propertyNames,
                                Type[] types) {
-      System.out.println(ServerInterceptor.class.getName() + ".onFlushDirty() method called: row updated in " + 
+      System.out.println("   ---   INTERCEPTOR   ---> " + ServerInterceptor.class.getName() + ".onFlushDirty() method called: row updated in " + 
                          entity.getClass() + " table.");   
       
       // Perform any auditing here.
@@ -48,7 +48,7 @@ public class ServerInterceptor extends EmptyInterceptor {
                           Object[] state,
                           String[] propertyNames,
                           Type[] types) { 
-        System.out.println(ServerInterceptor.class.getName() + ".onLoad() method called: row inserted into " + 
+        System.out.println("   ---   INTERCEPTOR   ---> " + ServerInterceptor.class.getName() + ".onLoad() method called: row inserted into " + 
                            entity.getClass() + " table at " + Misc.getDateAndTimeAsString() + ".");
         
         // Perform any auditing here.
@@ -63,7 +63,7 @@ public class ServerInterceptor extends EmptyInterceptor {
                           Object[] state,
                           String[] propertyNames,
                           Type[] types) { 
-        System.out.println(ServerInterceptor.class.getName() + ".onFSave() method called: row inserted into " + 
+        System.out.println("   ---   INTERCEPTOR   ---> " + ServerInterceptor.class.getName() + ".onFSave() method called: row inserted into " + 
                            entity.getClass() + " table at " + Misc.getDateAndTimeAsString() + ".");
         
         // Perform any auditing here.
@@ -95,7 +95,7 @@ public class ServerInterceptor extends EmptyInterceptor {
     // Called before database commit.
     @Override
     public void preFlush(Iterator iterator) {
-        System.out.println(ServerInterceptor.class.getName() + ".preFlush() method called: preFlush database before commit.");
+        System.out.println("   ---   INTERCEPTOR   ---> " + ServerInterceptor.class.getName() + ".preFlush() method called: preFlush database before commit.");
         
         // Perform any auditing of operations here.
     }
@@ -103,7 +103,7 @@ public class ServerInterceptor extends EmptyInterceptor {
     // Called after database commit.
     @Override
     public void postFlush(Iterator iterator) {
-        System.out.println(ServerInterceptor.class.getName() + ".postFlush() method called: postFlush database after commit.");
+        System.out.println("   ---   INTERCEPTOR   ---> " + ServerInterceptor.class.getName() + ".postFlush() method called: postFlush database after commit.");
         
         // Perform any auditing of operations here.
     }
