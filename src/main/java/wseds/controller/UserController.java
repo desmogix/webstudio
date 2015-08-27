@@ -1,7 +1,8 @@
 package wseds.controller;
 
-import java.util.ArrayList;
-import java.util.Map;
+
+
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import wseds.service.AccountService;
 import wseds.service.UserService;
 import wseds.validator.AccountValidator;
 import wseds.validator.UserValidator;
+import wseds.wdo.RegistrationForm;
 
 /**
  *
@@ -36,24 +38,82 @@ public class UserController
     private UserService userService;
     @Autowired
     private MessageSource messageSource;
-
-    public UserController() {
+    
+    
+    
+     
+    public UserController() 
+    {
+       
     }
     
+    
+    
+    
     @RequestMapping(value="/getRegister", method=RequestMethod.GET)
-    public String getRegister(Model model) 
+    public String getRegister(Model model, RegistrationForm registrationForm) 
     {   
         Account account = new Account();
         UserCred user = new UserCred();
+
+        //account.setUserCred(user);
+        //user.setAccount(account);
+
+        registrationForm.setAccount(account);
+        registrationForm.setUser(user);
+ 
+        model.addAttribute("registrationForm", registrationForm);
+        model.addAttribute(user);
+        model.addAttribute(account);
+        System.out.println("\n\n\n\n\n-----------------------------------------------------\n");
         
-        account.setUserCred(user);
-        user.setAccount(account);
-        
-        model.addAttribute("account", account);
-        model.addAttribute("user", user);
+        System.out.println(registrationForm.getAccount());
+        System.out.println(account);
+        System.out.println(registrationForm.getUser());
+        System.out.println(user);
+        System.out.println("\n\n\n\n\n-----------------------------------------------------\n");
         
         return "jsp/view/register";
     }
+    
+    
+    @RequestMapping(value = "/postRegister", method = RequestMethod.POST)       
+    public String postRegister( @ModelAttribute("account") Account account, 
+                                BindingResult accountBindingResult,
+                                @ModelAttribute("user") UserCred user,
+                                BindingResult userBindingResult,
+                                Model model) 
+    {              
+        /*
+        System.out.println("\n\n\n +++++++++++++++++++++++++++++++++++++++++++++++++ \n" + 
+                registrationForm.getAccount().getName().length());
+        
+         System.out.println("\n\n\n +++++++++++++++++++++++++++++++++++++++++++++++++ \n" + 
+                accountFormBindingResult.getTarget().getClass().toString()+"\n\n\n");
+        */
+        
+        String target = accountBindingResult.getTarget().getClass().toString();
+
+        // Validate user and account
+        accountValidator.validate(account, accountBindingResult);
+        userValidator.validate(user, userBindingResult);
+        
+        if (accountBindingResult.hasErrors() || userBindingResult.hasErrors()) 
+        {
+            return "jsp/view/register";
+        }
+        else 
+        {                               
+            accountService.insert(account);
+            userService.insert(user);  
+                        
+            // Set view.            
+            //model.addAttribute("account", account);
+            //model.addAttribute("user", user);
+            return "/jsp/view/register";            
+        }
+    }  
+    
     
     @RequestMapping(value = "/postAccountRegister", method = RequestMethod.POST)       
     public String postAccountRegister( @ModelAttribute("account") Account account, 
@@ -75,8 +135,8 @@ public class UserController
             //userService.insert(user);  
                         
             // Set view.            
-            //model.addAttribute("account", account);           
-            return "/jsp/view/index";            
+            model.addAttribute("account", account);           
+            return "/jsp/view/register";            
         }
     }     
     
@@ -87,9 +147,9 @@ public class UserController
                                 Model model) 
     {              
         
-        // Validate user and account
+        // Validate user 
         userValidator.validate(user, userBindingResult);
-        //userValidator.validate(user, userBindingResult);
+        
         
         if (userBindingResult.hasErrors()) 
         {
@@ -101,7 +161,7 @@ public class UserController
             userService.insert(user);  
                         
             // Set view.            
-            //model.addAttribute("account", account);           
+            model.addAttribute("user", user);           
             return "/jsp/view/index";            
         }
     }    

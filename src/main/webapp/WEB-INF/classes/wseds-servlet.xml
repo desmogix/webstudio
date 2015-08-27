@@ -98,8 +98,11 @@
     <context:component-scan base-package="wsdes" /> 
     
     <!-- luigiS: Spring ViewResolver
-    There are about 16 Spring different pre-implemented interfaces of:
-    - view Resolver and view interface.
+    There are about 13 Spring different pre-implemented interfaces of:
+    - viewResolver and View interfaces.
+    Basically who's implementing those intefaces is able to 
+    bind logical information with proper GUI objects
+    
     One of them is internalResourceViewresolver   -->
     <bean   id="viewResolver"
             class="org.springframework.web.servlet.view.InternalResourceViewResolver"
@@ -134,6 +137,9 @@
     <bean id="userValidator" class="wseds.validator.UserValidator" />    
     <bean id="accountValidator" class="wseds.validator.AccountValidator" />
 
+    <!-- Spring wrappers. 
+    <bean id="registrationForm" class="wseds.wdo.RegistrationForm" />   
+    -->
     <!-- Spring webflow -->
     <import resource="webflow-config.xml"/> 
     
