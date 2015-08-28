@@ -31,16 +31,19 @@ public class UserValidator implements Validator
     @Override
     public void validate(Object target, Errors errors)
     {
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "username.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "password.required");
-
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "user.username", "username.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "user.password", "password.required");
+        
+        //Cast allowed by Spring APIs
         UserCred user = (UserCred) target;
         
-        if (user.getUsername().length() > 30) {
+        if (user.getUsername().length() > 30) 
+        {
             errors.rejectValue("username", "userame.invalidLength");
         }
         
-        if (user.getUsername().length() > 128) {
+        if (user.getUsername().length() > 128) 
+        {
             errors.rejectValue("password", "password.invalidLength");
         }
         
