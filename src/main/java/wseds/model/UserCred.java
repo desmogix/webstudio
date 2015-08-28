@@ -8,10 +8,12 @@ package wseds.model;
 
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
@@ -42,7 +44,8 @@ public class UserCred implements Serializable
     @Column(name="salt", nullable=true, columnDefinition="CHAR", length=128)
     private String salt;
     
-    @OneToOne(mappedBy = "userCred") 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_account")
     private Account account;
     
     public UserCred() 
@@ -53,6 +56,7 @@ public class UserCred implements Serializable
         return userId;
     }
 
+    
     public Account getAccount() {
         return account;
     }

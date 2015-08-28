@@ -52,15 +52,10 @@ public class UserController
     @RequestMapping(value="/getRegister", method=RequestMethod.GET)
     public String getRegister(Model model) 
     {   
-        Account account = new Account();
-        UserCred user = new UserCred();
-        
-        RegistrationForm registrationForm = new RegistrationForm(account, user);
+        RegistrationForm registrationForm = new RegistrationForm(new Account(), new UserCred());
         
         model.addAttribute("registrationForm", registrationForm);
-        model.addAttribute("account", account);
-        model.addAttribute("user", user);
-        
+      
         return "jsp/view/register";
     }
     
