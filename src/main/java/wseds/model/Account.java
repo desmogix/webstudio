@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -43,8 +44,9 @@ public class Account implements Serializable
     @Column(name="email", nullable=false, columnDefinition="VARCHAR",length=45)
     private String email;
     
-    @OneToOne(cascade=CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    
+    //@JoinColumn(name = "id_user")
+    @OneToOne(mappedBy = "account")
     private UserCred userCred;
 
     public Integer getAccountId() 
@@ -91,6 +93,7 @@ public class Account implements Serializable
         this.email = email;
     }
 
+    
     public UserCred getUserCred()
     {
         return userCred;
@@ -100,4 +103,5 @@ public class Account implements Serializable
     {
         this.userCred = userCred;
     }
+    
 }
