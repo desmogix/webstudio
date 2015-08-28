@@ -136,7 +136,8 @@
     <!-- Spring Validators. -->
     <bean id="userValidator" class="wseds.validator.UserValidator" />    
     <bean id="accountValidator" class="wseds.validator.AccountValidator" />
-
+    
+    
     <!-- Spring wrappers. 
     <bean id="registrationForm" class="wseds.wdo.RegistrationForm" />   
     -->

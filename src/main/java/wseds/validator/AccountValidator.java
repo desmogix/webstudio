@@ -13,14 +13,14 @@ import org.springframework.validation.Validator;
 import wseds.model.Account;
 
 
+
 @Component
 public class AccountValidator implements Validator
 {
 
     public AccountValidator() {
     }
-    
-    
+
     @Override
     public boolean supports(Class cls)
     {
@@ -30,13 +30,13 @@ public class AccountValidator implements Validator
     @Override
     public void validate(Object target, Errors errors)
     {
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "account.name", "name.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "account.surname", "surname.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "account.email", "email.required"); 
         
-        
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "name.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "surname", "surname.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "email.required"); 
-        
+        //Cast allowed by Spring APIs
         Account account = (Account) target;
+        
         if (account.getName().length() > 30) {
             errors.rejectValue("name", "name.invalidLength");
         }

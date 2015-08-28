@@ -7,6 +7,7 @@ package wseds.wdo;
 
 
 
+import javax.validation.Valid;
 import wseds.model.Account;
 import wseds.model.UserCred;
 
@@ -18,9 +19,9 @@ import wseds.model.UserCred;
 
 public class RegistrationForm
     {
-        
+        @Valid
         private UserCred user;
-        
+        @Valid
         private Account account;
        
         public RegistrationForm(){}
