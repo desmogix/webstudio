@@ -57,7 +57,11 @@
                     <td><form:password path="user.password" /></td>
                     <td><font color="red"><form:errors path="user.password" /></font></td>
                 </tr>
-                
+                <tr>
+                    <td></td>
+                    <td>${yeah}</td>  
+                    <td></td>
+                </tr>
                 <tr>
                     <td></td>
                     <td><input type="submit" value="Register">&nbsp;<input type="Reset" value="Reset"></td>  

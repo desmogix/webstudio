@@ -82,7 +82,8 @@ public class UserController
                         
             // Set view.            
             //model.addAttribute("account", account);
-            //model.addAttribute("user", user);
+            String yeah = "Yeah, you got it buddy.";
+            model.addAttribute("yeah", yeah);
             return "/jsp/view/register";            
         }
     }  
