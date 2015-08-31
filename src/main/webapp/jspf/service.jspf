@@ -1,0 +1,4 @@
+<!-- LuigiS -->
+
+<c:url value="/jsp/view/service.jsp" var="serviceURL" />  
+<a href="${serviceURL}">Services</a>   

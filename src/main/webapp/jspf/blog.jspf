@@ -1,0 +1,4 @@
+<!-- LuigiS -->
+
+<c:url value="/jsp/view/blog.jsp" var="blogURL" />  
+<a href="${blogURL}">Blog</a>   

@@ -1,32 +1,28 @@
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
-
+<%-- 
+    Document   : blog
+    Created on : 31-Aug-2015, 11:27:31
+    Author     : luigi@santivetti
+--%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@page language="java" contentType="text/html;charset=UTF-8"%>
-
-
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
         <%@include file="/jspf/home.jspf"%>
         <%@include file="/jspf/alert.jspf"%> 
         <%@include file="/jspf/service.jspf"%> 
         <%@include file="/jspf/blog.jspf"%> 
-        <%@include file="/jspf/login.jspf"%> 
-        <title>Home WSEDS</title>
+        <%@include file="/jspf/login.jspf"%>
     </head>
-
     <body>
-        
         <h1>Web Studio Everyday Service</h1>
-        <h2>Home</h2>
+        <h2>Blog</h2>
         
-        <p>Select from the menu above your destination</p>
         
     </body>
 </html>
