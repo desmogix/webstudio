@@ -1,0 +1,4 @@
+<!-- LuigiS -->
+
+<c:url value="/jsp/view/login.jsp" var="loginURL" />  
+<a href="${loginURL}">Login</a>   

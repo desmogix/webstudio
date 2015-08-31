@@ -1,0 +1,4 @@
+<!-- LuigiS -->
+
+<c:url value="/jsp/view/alert.jsp" var="alertURL" />  
+<a href="${alertURL}">Alerts</a>   

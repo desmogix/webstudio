@@ -18,12 +18,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">         
-        <%@include file="/jspf/home.jspf"%>  
+        <%@include file="/jspf/home.jspf"%>
+        <%@include file="/jspf/alert.jspf"%> 
+        <%@include file="/jspf/service.jspf"%> 
+        <%@include file="/jspf/blog.jspf"%> 
+        <%@include file="/jspf/login.jspf"%> 
                     
         <title>WSEDS: please enter your details to register.</title>    
     </head>
     <body>        
-        <h1>WSEDS: please enter your details to register.</h1>
+        <h3>WSEDS: please enter your details to register.</h3>
          
         <!-- Register a user (account). -->    
 
