@@ -26,7 +26,8 @@
         
         
         <c:url value="/user/getRegister" var="getRegisterURL" />
-           
+        <c:url value="/jsp/view/login_1.jsp" var="getAuthenticationURL" />
+        
             <table border="0">
                 <form:form action="${getRegisterURL}" method="get">
                     <tr><td>Click on Register to create a new account</td></tr>
