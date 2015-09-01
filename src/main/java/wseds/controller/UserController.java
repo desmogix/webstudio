@@ -3,14 +3,12 @@ package wseds.controller;
 
 
 
-import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.DataBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,6 +41,8 @@ public class UserController
     private AccountValidator accountValidator;
     @Autowired
     private UserValidator userValidator;
+   
+    
     
     public UserController() 
     {
@@ -56,7 +56,7 @@ public class UserController
         
         model.addAttribute("registrationForm", registrationForm);
       
-        return "jsp/view/register";
+        return "register";
     }
     
     
@@ -71,7 +71,7 @@ public class UserController
         
         if (bindingResult.hasErrors()) 
         {
-            return "jsp/view/register";
+            return "register";
         }
         else 
         {                               
@@ -84,61 +84,18 @@ public class UserController
             //model.addAttribute("account", account);
             String yeah = "Yeah, you got it buddy.";
             model.addAttribute("yeah", yeah);
-            return "/jsp/view/register";            
+            return "register";            
         }
     }  
     
-    /*
-    @RequestMapping(value = "/postAccountRegister", method = RequestMethod.POST)       
-    public String postAccountRegister( @ModelAttribute("account") Account account, 
-                                BindingResult accountBindingResult,                           
-                                Model model) 
-    {              
+    @RequestMapping(value="/getLogin", method=RequestMethod.GET)
+    public String getLogin() 
+    {   
         
-        // Validate user and account
-        accountValidator.validate(account, accountBindingResult);
-        //userValidator.validate(user, userBindingResult);
         
-        if (accountBindingResult.hasErrors()) 
-        {
-            return "jsp/view/register";
-        }
-        else 
-        {                               
-            accountService.insert(account);
-            //userService.insert(user);  
-                        
-            // Set view.            
-            model.addAttribute("account", account);           
-            return "/jsp/view/register";            
-        }
-    }     
+        //model.addAttribute("registrationForm", registrationForm);
+      
+        return "jsp/view/register";
+    }
     
-    
-    @RequestMapping(value = "/postUserRegister", method = RequestMethod.POST)       
-    public String postUserRegister( @ModelAttribute("user") UserCred user, 
-                                BindingResult userBindingResult,                           
-                                Model model) 
-    {              
-        
-        // Validate user 
-        userValidator.validate(user, userBindingResult);
-        
-        
-        if (userBindingResult.hasErrors()) 
-        {
-            return "jsp/view/register";
-        }
-        else 
-        {                               
-            //accountService.insert(account);
-            userService.insert(user);  
-                        
-            // Set view.            
-            model.addAttribute("user", user);           
-            return "/jsp/view/index";            
-        }
-    }    
-    
-    */
 }

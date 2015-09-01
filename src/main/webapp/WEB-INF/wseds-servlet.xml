@@ -106,13 +106,14 @@
     One of them is internalResourceViewresolver   -->
     <bean   id="viewResolver"
             class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-            p:prefix="/"
+            p:prefix="/jsp/view/"
             p:suffix=".jsp" 
             p:exposeContextBeansAsAttributes="true"      
     />
 
     <!-- Spring MesssageSource. -->         
-    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+    <bean   id="messageSource" 
+            class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basename"> 
             <value>/properties/messages</value>    
         </property>    
@@ -137,15 +138,12 @@
     <bean id="userValidator" class="wseds.validator.UserValidator" />    
     <bean id="accountValidator" class="wseds.validator.AccountValidator" />
     
-    
-    <!-- Spring wrappers. 
-    <bean id="registrationForm" class="wseds.wdo.RegistrationForm" />   
-    -->
     <!-- Spring webflow -->
-    <import resource="webflow-config.xml"/> 
+    <import resource="wseds-flow.xml"/> 
     
+    <bean id="loginSecured" class="wseds.security.LoginSecured" />
+     
     <!-- Spring (the servlet) configures Hibernate  -->
-
     <!-- Enable hibernate annotations in POJOs file-->
     <tx:annotation-driven  />
     
