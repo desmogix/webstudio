@@ -15,13 +15,13 @@ import wseds.model.Account;
 public interface AccountDAO 
 {
     void insert (Account account);
-    /*
-    boolean check(Integer id);
     void delete(Integer id);
-    Account select(Integer id);
-    
     void update (Account account);
     
+    boolean check(Integer id);
+    
+    Account selectWithUser(Integer id);
+    Account select(Integer id);
+
     List<Account> list();
-    */
 }
