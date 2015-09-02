@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -25,15 +25,14 @@ import org.apache.log4j.Logger;
 @Repository("userDAOImp")
 public class UserDAOImp implements UserDAO
 {
-    static final Logger logger = Logger.getLogger(UserDAOImp.class.getName());
-    
     @Autowired
     private SessionFactory sessionFactory;
+    
+    static final Logger logger = Logger.getLogger(UserDAOImp.class.getName());
     
     public UserDAOImp() 
     {
     }    
-    
     
     @Override
     public void insert(UserCred user)  
@@ -57,27 +56,50 @@ public class UserDAOImp implements UserDAO
         }
     }
     
-    
-    /*
     @Override
     public void delete(Integer userId) 
     {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.getTransaction();        
-        try {
+        try 
+        {
             transaction.begin();
             session.delete((UserCred) session.get(UserCred.class, userId));
             transaction.commit();            
         }
-        catch(RuntimeException e) {
+        catch(RuntimeException e) 
+        {
             transaction.rollback();
             throw e;
         }
-        finally {
+        finally 
+        {
             session.close();
         }
     }
 
+    @Override
+    public void update(UserCred user) 
+    {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.getTransaction();        
+        try 
+        {
+            transaction.begin();
+            session.update(user);            
+            transaction.commit();            
+        }
+        catch(RuntimeException e) 
+        {            
+            transaction.rollback();
+            throw e;
+        }
+        finally 
+        {
+            session.close();
+        }
+    }
+    
     @Override
     public boolean check(Integer userId) 
     {
@@ -93,18 +115,19 @@ public class UserDAOImp implements UserDAO
     }    
     
     @Override
-    public UserCred select(Integer userId) 
+    public UserCred selectWithAccount(Integer userId) 
     {
         Session session = sessionFactory.openSession();
         
         try 
         {                
-            Query query = session.createQuery("from User as p left join fetch p.books where p.userId = " +
-                                              ":userId").setParameter("userId", userId);                      
-            // - gg - Return a list of one object UserCred, beacuse of the this query. 
-            //You know the query, you know it will return one obj
+            Query query = session.createQuery
+        ("from User as usr left join usr.account where usr.userId = :userId")
+                    .setParameter("userId", userId);                      
+            // - gg - Return a list of one object UserCred 
+            // NOTE: it depends upon the query, you know it will return one obj
             UserCred user = (UserCred) query.list().get(0); 
-            //Hibernate.initialize(user.getBooks());            
+            Hibernate.initialize(user.getAccount());            
             return user;            
             // return (UserCred) session.get(UserCred.class, userId);
         }        
@@ -112,8 +135,22 @@ public class UserDAOImp implements UserDAO
             session.close();            
         }         
     }
-
     
+    @Override
+    public UserCred select(Integer accountId)
+    {
+        logger.info(UserDAOImp.class.getName() + ".get() method called.");
+        
+        Session session = sessionFactory.openSession();          
+        try 
+        {    
+            return (UserCred) session.get(UserCred.class, accountId);                                  
+        }        
+        finally 
+        {
+            session.close();
+        }         
+    }
 
     @Override
     public List<UserCred> list() 
@@ -121,43 +158,26 @@ public class UserDAOImp implements UserDAO
         Session session = sessionFactory.openSession();          
         try 
         {     
-           Query userQuery = session.createQuery("FROM User");  
-           List<UserCred> users = userQuery.list(); // This will get Users but not their Books.
-           List<UserCred> usersWithBooks = new ArrayList<>();
-           for (UserCred user : users) {   
-               
-                
-                Query bookQuery = session.createQuery("from User as p left join fetch p.books where p.userId = " +
-                                                      ":userId").setParameter("userId", user.getUserId());                      
-                UserCred userWithBooks = (UserCred) bookQuery.list().get(0); 
-                //Hibernate.initialize(userWithBooks.getBooks());            
-                usersWithBooks.add(userWithBooks);
+           Query userQuery = session.createQuery("FROM User");
+           // This will get Users but not their Account.
+           List<UserCred> users = userQuery.list(); 
+           // List of list of user with their account
+           List<UserCred> usersWithAccount = new ArrayList<>();
+           for (UserCred user : users) 
+           {   
+                Query accountQuery = session.createQuery
+        ("from User as usr left join usr.account where usr.userId = :userId")
+                        .setParameter("userId", user.getUserId());                      
+                UserCred userWithAccount = (UserCred) userQuery.list().get(0); 
+                Hibernate.initialize(userWithAccount.getAccount());            
+                usersWithAccount.add(userWithAccount );
             }
-            return usersWithBooks;
+            return usersWithAccount;
         }        
-        finally {
+        finally 
+        {
             session.close();
         }         
     }   
 
-    @Override
-    public void update(UserCred user) 
-    {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.getTransaction();        
-        try {
-            transaction.begin();
-            session.update(user);            
-            transaction.commit();            
-        }
-        catch(RuntimeException e) {            
-            transaction.rollback();
-            throw e;
-        }
-        finally {
-            session.close();
-        }
-    }  
-    
-    */
 }

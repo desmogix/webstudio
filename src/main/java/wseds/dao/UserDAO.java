@@ -15,13 +15,13 @@ import wseds.model.UserCred;
 public interface UserDAO 
 {
     void insert (UserCred account);
-    /*
-    boolean check(Integer id);
     void delete(Integer id);
-    UserCred select(Integer id);
-    
     void update (UserCred account);
     
+    boolean check(Integer id);
+    
+    UserCred select(Integer id);
+    UserCred selectWithAccount(Integer id);
+
     List<UserCred> list();
-    */
 }
