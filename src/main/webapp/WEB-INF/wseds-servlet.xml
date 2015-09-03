@@ -122,10 +122,16 @@
      <!-- Spring Controllers. -->
     <bean id="userController" class="wseds.controller.UserController" />
     
-    <!-- Model. -->
-    <bean id="user" class="wseds.model.UserCred" />
-    <bean id="account" class="wseds.model.Account" /> 
     
+    
+    <!-- Model. -->
+    <bean id="account" class="wseds.model.Account"></bean> 
+    
+    <bean id="user" class="wseds.model.UserCred"></bean>
+    
+    <!-- Wrapper 
+    <bean id="registrationForm" class="wseds.wdo.RegistrationForm"></bean>
+    -->
     <!-- Spring Services. -->
     <bean id="accountServiceImp" class="wseds.service.AccountServiceImp" />    
     <bean id="userServiceImp" class="wseds.service.UserServiceImp" /> 
@@ -135,8 +141,8 @@
     <bean id="userDAOImp" class="wseds.dao.UserDAOImp" /> 
     
     <!-- Spring Validators. -->
-    <bean id="userValidator" class="wseds.validator.UserValidator" />    
-    <bean id="accountValidator" class="wseds.validator.AccountValidator" />
+    <bean id="userValidatorImp" class="wseds.validator.UserValidatorImp" />    
+    <bean id="accountValidatorImp" class="wseds.validator.AccountValidatorImp" />
     
     <!-- Spring webflow -->
     <import resource="wseds-flow.xml"/> 
