@@ -16,8 +16,8 @@ import wseds.model.Account;
 import wseds.model.UserCred;
 import wseds.service.AccountService;
 import wseds.service.UserService;
-import wseds.validator.AccountValidator;
-import wseds.validator.UserValidator;
+import wseds.validator.AccountValidatorImp;
+import wseds.validator.UserValidatorImp;
 
 import wseds.wdo.RegistrationForm;
 
@@ -38,21 +38,25 @@ public class UserController
     @Autowired
     private MessageSource messageSource;
     @Autowired
-    private AccountValidator accountValidator;
+    private AccountValidatorImp accountValidatorImp;
     @Autowired
-    private UserValidator userValidator;
-   
-    
+    private UserValidatorImp userValidatorImp;
+    //@Autowired
+    //private RegistrationForm registrationForm;
+    @Autowired
+    private Account account;
+    @Autowired
+    private UserCred user;
     
     public UserController() 
-    {
-       
-    }
+    {}
 
     @RequestMapping(value="/getRegister", method=RequestMethod.GET)
     public String getRegister(Model model) 
     {   
-        RegistrationForm registrationForm = new RegistrationForm(new Account(), new UserCred());
+        //this.registrationForm.setRegistrationForm(new Account(), new UserCred());
+        
+        RegistrationForm registrationForm = new RegistrationForm(account, user);
         
         model.addAttribute("registrationForm", registrationForm);
       
@@ -61,22 +65,40 @@ public class UserController
     
     
     @RequestMapping(value = "/postRegister", method = RequestMethod.POST)       
-    public String postRegister( @ModelAttribute("registrationForm") @Valid RegistrationForm registrationForm , 
+    public String postRegister( @ModelAttribute("registrationForm") RegistrationForm registrationForm, 
                                 BindingResult bindingResult,
                                 Model model) 
-    {              
+    {          
+        //registrationForm.receiveCourier(courier);
+        
+        //registrationForm.unboxData();
         // Validate user and account
-        accountValidator.validate(registrationForm.getAccount(), bindingResult);
-        userValidator.validate(registrationForm.getUser(), bindingResult);
+        
+        this.account = registrationForm.getAccount();
+        this.user = registrationForm.getUser();
+        
+        //accountValidatorImp.validate(registrationForm.getAccount(), bindingResult);
+        //userValidatorImp.validate(registrationForm.getUser(), bindingResult);
+        
+        accountValidatorImp.executeValidation(account, bindingResult, user);
+        userValidatorImp.executeValidation(user, bindingResult, account);
         
         if (bindingResult.hasErrors()) 
         {
             return "register";
         }
         else 
-        {                               
-            registrationForm.getAccount().setUserCred(registrationForm.getUser());
-            registrationForm.getUser().setAccount(registrationForm.getAccount());
+        {   
+            //NOTE: This step, I am not quite sure is supposed to be in right place
+            //it deals with keeping updated both the instances UserCred and Account
+            //that these objects hold respectively of each other.
+            //(UserCred.account and Account.userCred) and it won't work out without it.
+            //Then I'd rather prefer to imply this step necessarily 
+            //registrationForm.getAccount().setUserCred(registrationForm.getUser());
+            //registrationForm.getUser().setAccount(registrationForm.getAccount());
+            
+            
+            
             accountService.insert(registrationForm.getAccount());
             userService.insert(registrationForm.getUser());  
                         

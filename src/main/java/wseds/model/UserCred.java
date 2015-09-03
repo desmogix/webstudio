@@ -7,17 +7,21 @@ package wseds.model;
 
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 /**
  *
@@ -44,12 +48,16 @@ public class UserCred implements Serializable
     @Column(name="salt", nullable=true, columnDefinition="CHAR", length=128)
     private String salt;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn(name = "id_user")
+    
+    @OneToOne(cascade = CascadeType.ALL, targetEntity = Account.class)
+    @JoinColumn(name = "id_user")
+    @JsonBackReference
     private Account account;
+    
     
     public UserCred() 
     {
+        
     }
 
     public Integer getUserId() {
@@ -60,6 +68,8 @@ public class UserCred implements Serializable
     public Account getAccount() {
         return account;
     }
+    
+    
     public void setAccount(Account account) {
         this.account = account;
     } 

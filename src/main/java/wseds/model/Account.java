@@ -5,6 +5,7 @@
  */
 package wseds.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -14,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -42,14 +44,23 @@ public class Account implements Serializable
     @Column(name="email", nullable=false, columnDefinition="VARCHAR",length=45)
     private String email;
     
-    @OneToOne(mappedBy = "account")
-    private UserCred userCred;
+    
+    @OneToOne(mappedBy = "account", targetEntity = UserCred.class)
+    @JsonManagedReference
+    private UserCred user;
 
+    
+    public Account()
+    {
+        
+    }
+       
     public Integer getAccountId() 
     {
         return accountId;
     }
-
+    
+    
     public void setAccountId(Integer accountId) 
     {
         this.accountId = accountId;
@@ -92,12 +103,19 @@ public class Account implements Serializable
     
     public UserCred getUserCred()
     {
-        return userCred;
-    }
-
-    public void setUserCred(UserCred userCred)
-    {
-        this.userCred = userCred;
+        return user;
     }
     
+    
+    public void setUserCred(UserCred user)
+    {
+        this.user = user;
+    }
+   
+    
 }
+
+
+
+
+

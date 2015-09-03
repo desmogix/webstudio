@@ -6,9 +6,10 @@
 package wseds.validator;
 
 import org.springframework.stereotype.Component;
-import org.springframework.validation.Validator;
+
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
+import wseds.model.Account;
 import wseds.model.UserCred;
 
 /**
@@ -17,9 +18,11 @@ import wseds.model.UserCred;
  */
 
 @Component
-public class UserValidator implements Validator
+public class UserValidatorImp implements AccountValidator
 {
-    public UserValidator(){
+    private UserCred user;
+    
+    public UserValidatorImp(){
     }
     
     @Override
@@ -34,9 +37,6 @@ public class UserValidator implements Validator
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "user.username", "username.required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "user.password", "password.required");
         
-        //Cast allowed by Spring APIs
-        UserCred user = (UserCred) target;
-        
         if (user.getUsername().length() > 30) 
         {
             errors.rejectValue("username", "userame.invalidLength");
@@ -46,6 +46,26 @@ public class UserValidator implements Validator
         {
             errors.rejectValue("password", "password.invalidLength");
         }
-        
     }
+    
+     @Override
+    public void referTo(Object account)
+    {
+        this.user.setAccount((Account) account);
+    }
+    
+    @Override
+    public void setTarget(Object account)
+    {
+        this.user = (UserCred) user;
+    }
+    
+    @Override
+    public void executeValidation(Object user, Errors errors, Object account)
+    {
+        setTarget(user);
+        validate(user, errors);
+        referTo(account);
+    }
+    
 }

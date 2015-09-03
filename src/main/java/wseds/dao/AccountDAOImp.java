@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import wseds.model.Account;
 import org.apache.log4j.Logger;
 
+
 /**
  *
  * @author luigi@santivetti
@@ -37,12 +38,13 @@ public class AccountDAOImp implements AccountDAO
     public void insert(Account account)  
     {
         Session session = sessionFactory.openSession();
-        Transaction transaction = session.getTransaction();        
+        Transaction transaction = session.getTransaction();
+        
         try 
         {
             transaction.begin();
             session.save(account);
-            transaction.commit();            
+            transaction.commit();  
         }
         catch(RuntimeException e) 
         {

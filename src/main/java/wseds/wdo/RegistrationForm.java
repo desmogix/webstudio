@@ -7,7 +7,7 @@ package wseds.wdo;
 
 
 
-import javax.validation.Valid;
+import org.springframework.stereotype.Component;
 import wseds.model.Account;
 import wseds.model.UserCred;
 
@@ -16,24 +16,28 @@ import wseds.model.UserCred;
  * @author luigi@santivetti
  */
 
-
+//@Component
 public class RegistrationForm
     {
-        @Valid
         private UserCred user;
-        @Valid
         private Account account;
-       
-        public RegistrationForm(){}
+        
+        private RegistrationForm courier;
+
+        //public RegistrationForm(){}
         
         public RegistrationForm(Account account, UserCred user)
         {
+            //account.setUserCred(user);
             this.account = account;
+            //user.setAccount(account);
             this.user = user;
+            //this.courier = this;
         }
 
         public UserCred getUser()
         {
+           // this.account.getUserCred().setAccount(account);
             return user;
         }
 
@@ -41,9 +45,10 @@ public class RegistrationForm
         {
             this.user = user;
         }
-
+        
         public Account getAccount()
-        {
+        {         
+           // this.user.getAccount().setUserCred(user);
             return account;
         }
 
@@ -52,11 +57,22 @@ public class RegistrationForm
             this.account = account;
         }
 
+        public RegistrationForm getCourier()
+        {
+            return this.courier;
+        }
+        
+        public void receiveCourier(RegistrationForm courier)
+        {
+            this.courier = courier;
+        }
+        
+        public void unboxData()
+        {
+            courier.getAccount().setUserCred(courier.getUser());
+            courier.getUser().setAccount(courier.getAccount());
   
-        
-        
-        
-        
-        
-        
+            this.account = courier.getAccount();
+            this.user = courier.getUser();
+        }
     }

@@ -14,9 +14,9 @@ import wseds.model.UserCred;
  */
 public interface UserDAO 
 {
-    void insert (UserCred account);
+    void insert (UserCred user);
     void delete(Integer id);
-    void update (UserCred account);
+    void update (UserCred user);
     
     boolean check(Integer id);
     
