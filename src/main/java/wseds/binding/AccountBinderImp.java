@@ -11,6 +11,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 
 import wseds.model.Account;
+import wseds.model.Referable;
 import wseds.model.UserCred;
 
 
@@ -50,7 +51,7 @@ public class AccountBinderImp implements Binder
     }
     
     @Override
-    public void referTo(Object user)
+    public void referTo(Referable user)
     {
         this.account.setReference((UserCred) user);
     }
@@ -62,7 +63,7 @@ public class AccountBinderImp implements Binder
     }
     
     @Override
-    public void execInputValidationAndModelIntegrity(Object account, Errors errors, Object user)
+    public void execInputValidationAndModelIntegrity(Object account, Errors errors, Referable user)
     {
         setTarget(account);
         validate(account, errors);
