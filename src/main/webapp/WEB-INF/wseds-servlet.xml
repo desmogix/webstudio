@@ -140,8 +140,8 @@
     <bean id="userDAOImp" class="wseds.dao.UserDAOImp" /> 
     
     <!-- Spring binders -->
-    <bean id="userBinder" class="wseds.validator.UserValidatorImp" />    
-    <bean id="accountBinder" class="wseds.validator.AccountValidatorImp" />
+    <bean id="userBinder" class="wseds.binding.UserBinderImp" />    
+    <bean id="accountBinder" class="wseds.binding.AccountBinderImp" />
     
     <!-- Spring webflow -->
     <import resource="wseds-flow.xml"/> 

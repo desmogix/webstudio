@@ -17,11 +17,11 @@ import wseds.model.UserCred;
  */
 
 @Component
-public class UserValidatorImp implements Binder
+public class UserBinderImp implements Binder
 {
     private UserCred user;
     
-    public UserValidatorImp(){
+    public UserBinderImp(){
     }
     
     @Override
