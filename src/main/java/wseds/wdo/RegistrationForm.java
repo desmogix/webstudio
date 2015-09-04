@@ -16,65 +16,27 @@ import wseds.model.UserCred;
  * @author luigi@santivetti
  */
 
-//@Component
+@Component
 public class RegistrationForm
     {
         private UserCred user;
         private Account account;
-        
-        private RegistrationForm courier;
 
         public RegistrationForm(){}
         
-        public RegistrationForm(Account account, UserCred user)
-        {
-            //account.setUserCred(user);
+        public void setRegistrationForm(Account account, UserCred user)
+        {    
             this.account = account;
-            //user.setAccount(account);
             this.user = user;
-            //this.courier = this;
         }
 
         public UserCred getUser()
         {
-           // this.account.getUserCred().setAccount(account);
             return user;
         }
 
-        public void setUser(UserCred user)
-        {
-            this.user = user;
-        }
-        
         public Account getAccount()
         {         
-           // this.user.getAccount().setUserCred(user);
             return account;
         }
-
-        public void setAccount(Account account)
-        {
-            this.account = account;
-        }
-
-        public RegistrationForm getCourier()
-        {
-            return this.courier;
-        }
-        
-        public void receiveCourier(RegistrationForm courier)
-        {
-            this.courier = courier;
-        }
-        
-        /*
-        public void unboxData()
-        {
-            courier.getAccount().setUserCred(courier.getUser());
-            courier.getUser().setAccount(courier.getAccount());
-  
-            this.account = courier.getAccount();
-            this.user = courier.getUser();
-        }
-        */
     }
