@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wseds.validator;
+package wseds.binding;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -12,7 +12,7 @@ import org.springframework.validation.Validator;
  *
  * @author luigi@santivetti
  */
-public interface Coherence extends Validator
+public interface Binder extends Validator
 {
     /**
      * This method will make point to object the private field of who is calling

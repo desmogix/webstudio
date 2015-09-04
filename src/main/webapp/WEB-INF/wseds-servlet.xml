@@ -139,9 +139,9 @@
     <bean id="accountDAOImp" class="wseds.dao.AccountDAOImp" />    
     <bean id="userDAOImp" class="wseds.dao.UserDAOImp" /> 
     
-    <!-- Spring Validators. -->
-    <bean id="userValidatorImp" class="wseds.validator.UserValidatorImp" />    
-    <bean id="accountValidatorImp" class="wseds.validator.AccountValidatorImp" />
+    <!-- Spring binders -->
+    <bean id="userBinder" class="wseds.validator.UserValidatorImp" />    
+    <bean id="accountBinder" class="wseds.validator.AccountValidatorImp" />
     
     <!-- Spring webflow -->
     <import resource="wseds-flow.xml"/> 
