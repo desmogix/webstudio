@@ -18,7 +18,7 @@ import wseds.model.UserCred;
  */
 
 @Component
-public class UserValidatorImp implements AccountValidator
+public class UserValidatorImp implements Coherence
 {
     private UserCred user;
     
@@ -51,11 +51,11 @@ public class UserValidatorImp implements AccountValidator
      @Override
     public void referTo(Object account)
     {
-        this.user.setAccount((Account) account);
+        this.user.setReference((Account) account);
     }
     
     @Override
-    public void setTarget(Object account)
+    public void setTarget(Object user)
     {
         this.user = (UserCred) user;
     }

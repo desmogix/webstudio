@@ -30,7 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 @Table(name="user_cred")
-public class UserCred implements Serializable
+public class UserCred implements Serializable, Referable
 {
     @Id
     @GeneratedValue(generator="fk")
@@ -69,8 +69,14 @@ public class UserCred implements Serializable
         return account;
     }
     
+    @Override
+    public void setReference(Object o)
+    {
+        setAccount((Account) o);
+    }
     
-    public void setAccount(Account account) {
+    
+    private void setAccount(Account account) {
         this.account = account;
     } 
     

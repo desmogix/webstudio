@@ -25,7 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 @Table(name="account")
-public class Account implements Serializable
+public class Account implements Serializable, Referable
 {
     @Id
     @Column(name="id_account", unique=true, nullable=false)
@@ -100,14 +100,17 @@ public class Account implements Serializable
         this.email = email;
     }
 
-    
     public UserCred getUserCred()
     {
         return user;
     }
     
-    
-    public void setUserCred(UserCred user)
+    @Override
+    public void setReference(Object o)
+    {
+        setUserCred((UserCred) o);
+    }
+    private void setUserCred(UserCred user)
     {
         this.user = user;
     }

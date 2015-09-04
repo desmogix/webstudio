@@ -3,7 +3,11 @@ package wseds.controller;
 
 
 
-import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -19,7 +23,7 @@ import wseds.service.UserService;
 import wseds.validator.AccountValidatorImp;
 import wseds.validator.UserValidatorImp;
 
-import wseds.wdo.RegistrationForm;
+
 
 /**
  *
@@ -41,8 +45,6 @@ public class UserController
     private AccountValidatorImp accountValidatorImp;
     @Autowired
     private UserValidatorImp userValidatorImp;
-    //@Autowired
-    //private RegistrationForm registrationForm;
     @Autowired
     private Account account;
     @Autowired
@@ -56,8 +58,18 @@ public class UserController
     {   
         //this.registrationForm.setRegistrationForm(new Account(), new UserCred());
         
-        RegistrationForm registrationForm = new RegistrationForm(account, user);
+        //RegistrationForm registrationForm = new RegistrationForm(account, user);
         
+        List<Object> registrationForm = new ArrayList<>();
+        registrationForm.add(account);
+        registrationForm.add(user);
+        
+        
+       
+        
+        //Map<String, Object> registrationForm = new HashMap<String, Object>();
+        //registrationForm.put("account", account);
+        //registrationForm.put("user", user);
         model.addAttribute("registrationForm", registrationForm);
       
         return "register";
@@ -65,7 +77,7 @@ public class UserController
     
     
     @RequestMapping(value = "/postRegister", method = RequestMethod.POST)       
-    public String postRegister( @ModelAttribute("registrationForm") RegistrationForm registrationForm, 
+    public String postRegister( @ModelAttribute("registrationForm") ArrayList registrationForm, 
                                 BindingResult bindingResult,
                                 Model model) 
     {          
@@ -74,8 +86,11 @@ public class UserController
         //registrationForm.unboxData();
         // Validate user and account
         
-        this.account = registrationForm.getAccount();
-        this.user = registrationForm.getUser();
+        
+        
+        
+        this.account = (Account) registrationForm.get(0);
+        this.user = (UserCred) registrationForm.get(1);
         
         //accountValidatorImp.validate(registrationForm.getAccount(), bindingResult);
         //userValidatorImp.validate(registrationForm.getUser(), bindingResult);
@@ -99,8 +114,8 @@ public class UserController
             
             
             
-            accountService.insert(registrationForm.getAccount());
-            userService.insert(registrationForm.getUser());  
+            accountService.insert(account);
+            userService.insert(user);  
                         
             // Set view.            
             //model.addAttribute("account", account);
