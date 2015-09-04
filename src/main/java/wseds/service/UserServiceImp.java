@@ -5,9 +5,18 @@
  */
 package wseds.service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import wseds.dao.UserDAO;
 import wseds.model.UserCred;
@@ -18,7 +27,7 @@ import wseds.model.UserCred;
  */
 
 @Service("userServiceImp")
-public class UserServiceImp implements UserService
+public class UserServiceImp implements UserService, UserDetailsService
 {
     @Autowired
     private UserDAO userDAO;
@@ -33,6 +42,42 @@ public class UserServiceImp implements UserService
         //To change body of generated methods, choose Tools | Templates.
         userDAO.insert(user);
     }
+    
+    
+    @Transactional
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
+    {
+        UserCred user = userDAO.select(username);
+        
+        Set<String> userRole = new HashSet<>();
+        userRole.add("USER");
+                
+        
+        List<GrantedAuthority> auths = buildUserAuthority(userRole);
+        return buildUserForAuthentification(user, auths);
+    }
+    
+    
+    private User buildUserForAuthentification(UserCred user, List<GrantedAuthority> authorities)
+    {
+        return new User(user.getUsername(), user.getPassword(), authorities);
+    }
+    
+    
+    private List<GrantedAuthority> buildUserAuthority(Set<String> userRoles)
+    {
+        Set<GrantedAuthority> setAuths = new HashSet<>();
+        
+        for(String userRole : userRoles)
+        {
+            setAuths.add(new SimpleGrantedAuthority(userRole));
+        }
+        
+        List<GrantedAuthority> result = new ArrayList<>(setAuths);
+        return result;
+    }
+    
     
     /*
     @Override
@@ -73,4 +118,6 @@ public class UserServiceImp implements UserService
         return userDAO.list();
     }
     */
+
+    
 }

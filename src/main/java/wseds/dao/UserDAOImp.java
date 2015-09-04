@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import wseds.model.UserCred;
 import org.apache.log4j.Logger;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 /**
  *
@@ -115,15 +116,15 @@ public class UserDAOImp implements UserDAO
     }    
     
     @Override
-    public UserCred selectWithAccount(Integer userId) 
+    public UserCred selectWithAccount(Integer id_user) 
     {
         Session session = sessionFactory.openSession();
         
         try 
         {                
             Query query = session.createQuery
-        ("from User as usr left join usr.account where usr.userId = :userId")
-                    .setParameter("userId", userId);                      
+        ("from User as usr left join usr.account where usr.id_user = :id_user")
+                    .setParameter("id_user", id_user);                      
             // - gg - Return a list of one object UserCred 
             // NOTE: it depends upon the query, you know it will return one obj
             UserCred user = (UserCred) query.list().get(0); 
@@ -137,20 +138,49 @@ public class UserDAOImp implements UserDAO
     }
     
     @Override
-    public UserCred select(Integer accountId)
+    public UserCred select(Integer id_user)
     {
         logger.info(UserDAOImp.class.getName() + ".get() method called.");
         
         Session session = sessionFactory.openSession();          
         try 
         {    
-            return (UserCred) session.get(UserCred.class, accountId);                                  
+            return (UserCred) session.get(UserCred.class, id_user);                                  
         }        
         finally 
         {
             session.close();
         }         
     }
+
+   
+
+    @Override
+    public UserCred select(String username) throws UsernameNotFoundException
+    {
+        Session session = sessionFactory.openSession();          
+        try 
+        {    
+            List<UserCred> one_item_list = sessionFactory.getCurrentSession().createQuery
+        ("from user_cred where username = :username").setParameter("username", username).list();
+            
+            if(one_item_list.size()!=1)
+            {
+                return null;
+            }
+            else
+            {
+                return one_item_list.get(0);
+            }
+        }        
+        finally 
+        {
+            session.close();
+        }    
+    }
+    
+    
+    
 
     @Override
     public List<UserCred> list() 
