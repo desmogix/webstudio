@@ -5,9 +5,10 @@
  */
 package wseds.service;
 
-import java.util.List;
+
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import wseds.dao.AccountDAO;
 import wseds.model.Account;
@@ -31,6 +32,12 @@ public class AccountServiceImp implements AccountService
         accountDAO.insert(account);
     }
 
+ 
+    
+    
+   
+
+    
     /*
     @Override
     @Transactional
@@ -70,4 +77,5 @@ public class AccountServiceImp implements AccountService
     }
     */
 
+    
 }

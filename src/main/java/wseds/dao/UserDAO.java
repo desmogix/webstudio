@@ -21,6 +21,8 @@ public interface UserDAO
     boolean check(Integer id);
     
     UserCred select(Integer id);
+    UserCred select(String username);
+    //UserCred select(String username, String password);
     UserCred selectWithAccount(Integer id);
 
     List<UserCred> list();
