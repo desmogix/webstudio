@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import wseds.model.Account;
+import wseds.model.Referable;
 import wseds.model.UserCred;
 
 /**
@@ -48,7 +49,7 @@ public class UserBinderImp implements Binder
     }
     
      @Override
-    public void referTo(Object account)
+    public void referTo(Referable account)
     {
         this.user.setReference((Account) account);
     }
@@ -60,7 +61,7 @@ public class UserBinderImp implements Binder
     }
     
     @Override
-    public void execInputValidationAndModelIntegrity(Object user, Errors errors, Object account)
+    public void execInputValidationAndModelIntegrity(Object user, Errors errors, Referable account)
     {
         setTarget(user);
         validate(user, errors);

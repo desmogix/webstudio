@@ -54,8 +54,8 @@ public class UserController
     @RequestMapping(value="/getRegister", method=RequestMethod.GET)
     public String getRegister(Model model) 
     {   
-        this.registrationForm.setRegistrationForm(account, user);
-
+        this.registrationForm.setAccount(account);
+        this.registrationForm.setUser(user);
         model.addAttribute("registrationForm", registrationForm);
       
         return "register";

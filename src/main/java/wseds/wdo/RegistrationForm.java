@@ -23,11 +23,15 @@ public class RegistrationForm
         private Account account;
 
         public RegistrationForm(){}
-        
-        public void setRegistrationForm(Account account, UserCred user)
-        {    
-            this.account = account;
+
+        public void setUser(UserCred user)
+        {
             this.user = user;
+        }
+
+        public void setAccount(Account account)
+        {
+            this.account = account;
         }
 
         public UserCred getUser()

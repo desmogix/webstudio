@@ -7,6 +7,7 @@ package wseds.binding;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import wseds.model.Referable;
 
 /**
  *
@@ -21,11 +22,8 @@ public interface Binder extends Validator
      * @param object 
      * Is the actual object must be referred
      */
-    public void referTo(Object object);
-    
-    
-    
-    
+    public void referTo(Referable object);
+
     /**
      * 
      * @param input 
@@ -35,6 +33,6 @@ public interface Binder extends Validator
      * @param referring 
      * It is the object which must be referred
      */
-    public void execInputValidationAndModelIntegrity(Object input, Errors errors, Object referring);
+    public void execInputValidationAndModelIntegrity(Object input, Errors errors, Referable referring);
     public void setTarget(Object object);
 }
