@@ -62,7 +62,7 @@ public class AccountValidatorImp implements Coherence
     }
     
     @Override
-    public void executeValidation(Object account, Errors errors, Object user)
+    public void execInputValidationAndModelIntegrity(Object account, Errors errors, Object user)
     {
         setTarget(account);
         validate(account, errors);

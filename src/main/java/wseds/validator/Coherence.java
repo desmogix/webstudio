@@ -35,6 +35,6 @@ public interface Coherence extends Validator
      * @param referring 
      * It is the object which must be referred
      */
-    public void executeValidation(Object input, Errors errors, Object referring);
+    public void execInputValidationAndModelIntegrity(Object input, Errors errors, Object referring);
     public void setTarget(Object object);
 }

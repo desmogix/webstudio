@@ -6,7 +6,6 @@
 package wseds.validator;
 
 import org.springframework.stereotype.Component;
-
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import wseds.model.Account;
@@ -61,7 +60,7 @@ public class UserValidatorImp implements Coherence
     }
     
     @Override
-    public void executeValidation(Object user, Errors errors, Object account)
+    public void execInputValidationAndModelIntegrity(Object user, Errors errors, Object account)
     {
         setTarget(user);
         validate(user, errors);
