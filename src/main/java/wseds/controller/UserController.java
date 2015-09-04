@@ -70,8 +70,8 @@ public class UserController
         this.account = registrationForm.getAccount();
         this.user = registrationForm.getUser();
         
-        accountValidatorImp.executeValidation(account, bindingResult, user);
-        userValidatorImp.executeValidation(user, bindingResult, account);
+        accountValidatorImp.execInputValidationAndModelIntegrity(account, bindingResult, user);
+        userValidatorImp.execInputValidationAndModelIntegrity(user, bindingResult, account);
         
         if (bindingResult.hasErrors()) 
         {
@@ -79,7 +79,6 @@ public class UserController
         }
         else 
         {   
-
             accountService.insert(account);
             userService.insert(user);  
                         
@@ -95,8 +94,7 @@ public class UserController
     @RequestMapping(value="/getLogin", method=RequestMethod.GET)
     public String getLogin() 
     {   
-        
-        
+
         //model.addAttribute("registrationForm", registrationForm);
       
         return "jsp/view/register";
