@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wseds.validator;
+package wseds.binding;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -17,7 +17,7 @@ import wseds.model.UserCred;
  */
 
 @Component
-public class UserValidatorImp implements Coherence
+public class UserValidatorImp implements Binder
 {
     private UserCred user;
     

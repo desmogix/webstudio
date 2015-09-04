@@ -14,8 +14,7 @@ import wseds.model.Account;
 import wseds.model.UserCred;
 import wseds.service.AccountService;
 import wseds.service.UserService;
-import wseds.validator.AccountValidatorImp;
-import wseds.validator.UserValidatorImp;
+import wseds.binding.Binder;
 import wseds.wdo.RegistrationForm;
 
 
@@ -29,17 +28,18 @@ import wseds.wdo.RegistrationForm;
 @RequestMapping("/user")
 public class UserController
 {
- 
+    @Autowired
+    private Binder accountBinder;
+    @Autowired
+    private Binder userBinder;
     @Autowired
     private AccountService accountService;
     @Autowired
     private UserService userService;
     @Autowired
     private MessageSource messageSource;
-    @Autowired
-    private AccountValidatorImp accountValidatorImp;
-    @Autowired
-    private UserValidatorImp userValidatorImp;
+    
+    
     @Autowired
     private Account account;
     @Autowired
@@ -70,8 +70,8 @@ public class UserController
         this.account = registrationForm.getAccount();
         this.user = registrationForm.getUser();
         
-        accountValidatorImp.execInputValidationAndModelIntegrity(account, bindingResult, user);
-        userValidatorImp.execInputValidationAndModelIntegrity(user, bindingResult, account);
+        accountBinder.execInputValidationAndModelIntegrity(account, bindingResult, user);
+        userBinder.execInputValidationAndModelIntegrity(user, bindingResult, account);
         
         if (bindingResult.hasErrors()) 
         {

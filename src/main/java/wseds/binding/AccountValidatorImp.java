@@ -4,7 +4,7 @@
  * @author luigi@santivetti
  */
 
-package wseds.validator;
+package wseds.binding;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -16,7 +16,7 @@ import wseds.model.UserCred;
 
 
 @Component
-public class AccountValidatorImp implements Coherence
+public class AccountValidatorImp implements Binder
 {
     private Account account;
     
