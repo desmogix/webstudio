@@ -16,11 +16,11 @@ import wseds.model.UserCred;
 
 
 @Component
-public class AccountValidatorImp implements Binder
+public class AccountBinderImp implements Binder
 {
     private Account account;
     
-    public AccountValidatorImp() 
+    public AccountBinderImp() 
     {}
 
     
