@@ -24,7 +24,7 @@ public class RegistrationForm
         
         private RegistrationForm courier;
 
-        //public RegistrationForm(){}
+        public RegistrationForm(){}
         
         public RegistrationForm(Account account, UserCred user)
         {
@@ -67,6 +67,7 @@ public class RegistrationForm
             this.courier = courier;
         }
         
+        /*
         public void unboxData()
         {
             courier.getAccount().setUserCred(courier.getUser());
@@ -75,4 +76,5 @@ public class RegistrationForm
             this.account = courier.getAccount();
             this.user = courier.getUser();
         }
+        */
     }
