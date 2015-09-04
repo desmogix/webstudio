@@ -126,12 +126,11 @@
     
     <!-- Model. -->
     <bean id="account" class="wseds.model.Account"></bean> 
-    
     <bean id="user" class="wseds.model.UserCred"></bean>
     
-    <!-- Wrapper 
+    <!-- Wrapper obbject WTO -->
     <bean id="registrationForm" class="wseds.wdo.RegistrationForm"></bean>
-    -->
+    
     <!-- Spring Services. -->
     <bean id="accountServiceImp" class="wseds.service.AccountServiceImp" />    
     <bean id="userServiceImp" class="wseds.service.UserServiceImp" /> 

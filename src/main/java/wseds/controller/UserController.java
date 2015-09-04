@@ -2,12 +2,6 @@ package wseds.controller;
 
 
 
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -22,6 +16,7 @@ import wseds.service.AccountService;
 import wseds.service.UserService;
 import wseds.validator.AccountValidatorImp;
 import wseds.validator.UserValidatorImp;
+import wseds.wdo.RegistrationForm;
 
 
 
@@ -49,6 +44,9 @@ public class UserController
     private Account account;
     @Autowired
     private UserCred user;
+    @Autowired
+    private RegistrationForm registrationForm;
+    
     
     public UserController() 
     {}
@@ -56,20 +54,8 @@ public class UserController
     @RequestMapping(value="/getRegister", method=RequestMethod.GET)
     public String getRegister(Model model) 
     {   
-        //this.registrationForm.setRegistrationForm(new Account(), new UserCred());
-        
-        //RegistrationForm registrationForm = new RegistrationForm(account, user);
-        
-        List<Object> registrationForm = new ArrayList<>();
-        registrationForm.add(account);
-        registrationForm.add(user);
-        
-        
-       
-        
-        //Map<String, Object> registrationForm = new HashMap<String, Object>();
-        //registrationForm.put("account", account);
-        //registrationForm.put("user", user);
+        this.registrationForm.setRegistrationForm(new Account(), new UserCred());
+
         model.addAttribute("registrationForm", registrationForm);
       
         return "register";
@@ -77,23 +63,12 @@ public class UserController
     
     
     @RequestMapping(value = "/postRegister", method = RequestMethod.POST)       
-    public String postRegister( @ModelAttribute("registrationForm") ArrayList registrationForm, 
+    public String postRegister( @ModelAttribute("registrationForm") RegistrationForm registrationForm, 
                                 BindingResult bindingResult,
                                 Model model) 
     {          
-        //registrationForm.receiveCourier(courier);
-        
-        //registrationForm.unboxData();
-        // Validate user and account
-        
-        
-        
-        
-        this.account = (Account) registrationForm.get(0);
-        this.user = (UserCred) registrationForm.get(1);
-        
-        //accountValidatorImp.validate(registrationForm.getAccount(), bindingResult);
-        //userValidatorImp.validate(registrationForm.getUser(), bindingResult);
+        this.account = registrationForm.getAccount();
+        this.user = registrationForm.getUser();
         
         accountValidatorImp.executeValidation(account, bindingResult, user);
         userValidatorImp.executeValidation(user, bindingResult, account);
@@ -104,21 +79,13 @@ public class UserController
         }
         else 
         {   
-            //NOTE: This step, I am not quite sure is supposed to be in right place
-            //it deals with keeping updated both the instances UserCred and Account
-            //that these objects hold respectively of each other.
-            //(UserCred.account and Account.userCred) and it won't work out without it.
-            //Then I'd rather prefer to imply this step necessarily 
-            //registrationForm.getAccount().setUserCred(registrationForm.getUser());
-            //registrationForm.getUser().setAccount(registrationForm.getAccount());
-            
-            
-            
+
             accountService.insert(account);
             userService.insert(user);  
                         
-            // Set view.            
+            //Set view.            
             //model.addAttribute("account", account);
+            
             String yeah = "Yeah, you got it buddy.";
             model.addAttribute("yeah", yeah);
             return "register";            
