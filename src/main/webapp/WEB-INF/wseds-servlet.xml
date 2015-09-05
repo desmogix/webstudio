@@ -120,32 +120,36 @@
     </bean>
     
      <!-- Spring Controllers. -->
-    <bean id="userController" class="wseds.controller.UserController" />
-    
-    
-    
+    <bean id="accountController" class="wseds.controller.AccountController" />
+
     <!-- Model. -->
     <bean id="account" class="wseds.model.Account"></bean> 
-    <bean id="user" class="wseds.model.UserCred"></bean>
+    <bean id="credentials" class="wseds.model.Credentials"></bean>
     
     <!-- Wrapper obbject WTO -->
     <bean id="registrationForm" class="wseds.wdo.RegistrationForm"></bean>
     
     <!-- Spring Services. -->
     <bean id="accountServiceImp" class="wseds.service.AccountServiceImp" />    
-    <bean id="userServiceImp" class="wseds.service.UserServiceImp" /> 
+    <bean id="credentialsServiceImp" class="wseds.service.CredentialsServiceImp" /> 
     
     <!-- Spring Repositories. -->
     <bean id="accountDAOImp" class="wseds.dao.AccountDAOImp" />    
-    <bean id="userDAOImp" class="wseds.dao.UserDAOImp" /> 
+    <bean id="credentialsDAOImp" class="wseds.dao.CredentialsDAOImp" /> 
+    
+     <!-- TransactionManager  -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
     
     <!-- Spring binders -->
-    <bean id="userBinder" class="wseds.binding.UserBinderImp" />    
+    <bean id="credentialsBinder" class="wseds.binding.CredentialsBinderImp" />    
     <bean id="accountBinder" class="wseds.binding.AccountBinderImp" />
     
     <!-- Spring webflow -->
     <import resource="wseds-flow.xml"/> 
     
+    <!-- Security config class -->
     <bean id="loginSecured" class="wseds.security.LoginSecured" />
      
     <!-- Spring (the servlet) configures Hibernate  -->
@@ -179,9 +183,6 @@
         </property>  
     </bean>
     
-    <!-- TransactionManager  -->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
+   
    
 </beans>

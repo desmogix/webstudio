@@ -30,7 +30,7 @@ public class Account implements Serializable, Referable
     @Id
     @Column(name="id_account", unique=true, nullable=false)
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer accountId;
+    private Integer id_account;
     
     //@Column(name="type", nullable=false, columnDefinition="CHAR(20) default 'U'", length=20)
     //private String type;
@@ -45,9 +45,9 @@ public class Account implements Serializable, Referable
     private String email;
     
     
-    @OneToOne(mappedBy = "account", targetEntity = UserCred.class)
+    @OneToOne(mappedBy = "account", targetEntity = Credentials.class)
     @JsonManagedReference
-    private UserCred user;
+    private Credentials credentials;
 
     
     public Account()
@@ -55,15 +55,15 @@ public class Account implements Serializable, Referable
         
     }
        
-    public Integer getAccountId() 
+    public Integer getId_account() 
     {
-        return accountId;
+        return id_account;
     }
     
     
-    public void setAccountId(Integer accountId) 
+    public void setId_account(Integer id_account) 
     {
-        this.accountId = accountId;
+        this.id_account = id_account;
     }
 
     /*
@@ -100,19 +100,19 @@ public class Account implements Serializable, Referable
         this.email = email;
     }
 
-    public UserCred getUserCred()
+    public Credentials getCredentials()
     {
-        return user;
+        return credentials;
     }
     
     @Override
-    public void setReference(Object o)
+    public void setReference(Referable credentials)
     {
-        setUserCred((UserCred) o);
+        setCredentials((Credentials) credentials);
     }
-    private void setUserCred(UserCred user)
+    private void setCredentials(Credentials credentials)
     {
-        this.user = user;
+        this.credentials = credentials;
     }
    
     

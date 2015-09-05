@@ -58,13 +58,13 @@ public class AccountDAOImp implements AccountDAO
     }
     
     @Override
-    public void delete(Integer accountId) 
+    public void delete(Integer id_account) 
     {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.getTransaction();        
         try {
             transaction.begin();
-            session.delete((Account) session.get(Account.class, accountId));
+            session.delete((Account) session.get(Account.class, id_account));
             transaction.commit();            
         }
         catch(RuntimeException e) 
@@ -99,12 +99,12 @@ public class AccountDAOImp implements AccountDAO
     }   
     
     @Override
-    public boolean check(Integer accountId) 
+    public boolean check(Integer id_account) 
     {
         try 
         {
-            Account account = this.select(accountId);
-            return accountId == account.getAccountId().intValue();
+            Account account = this.select(id_account);
+            return id_account == account.getId_account().intValue();
         }
         catch(Exception e) 
         {                        
@@ -113,22 +113,22 @@ public class AccountDAOImp implements AccountDAO
     }    
     
     @Override
-    public Account selectWithUser(Integer accountId) 
+    public Account selectWithUser(Integer id_account) 
     {
         Session session = sessionFactory.openSession();
         
         try 
         {                
             Query query = session.createQuery
-        ("from Account as acc left join acc.user where acc.accountId = :accountId")
-                    .setParameter("accountId", accountId);                      
+        ("from Account as acc left join acc.user where acc.id_account = :id_account")
+                    .setParameter("id_account", id_account);                      
             // - gg - Return a list of one object Account. 
             // NOTE: it depends upon the query, you know it will return one obj
             Account account = (Account) query.list().get(0); 
             //Hibernate.initialize effectively load into the RAM its data
-            Hibernate.initialize(account.getUserCred());            
+            Hibernate.initialize(account.getCredentials());            
             return account;            
-            //return (Account) session.get(Account.class, accountId);
+            //return (Account) session.get(Account.class, id_account);
         }        
         finally 
         {
@@ -137,13 +137,13 @@ public class AccountDAOImp implements AccountDAO
     }
 
     @Override
-    public Account select(Integer accountId)
+    public Account select(Integer id_account)
     {
         logger.info(AccountDAOImp.class.getName() + ".get() method called.");
         
         Session session = sessionFactory.openSession();          
         try {    
-            return (Account) session.get(Account.class, accountId);                                  
+            return (Account) session.get(Account.class, id_account);                                  
         }        
         finally {
             session.close();
@@ -165,12 +165,12 @@ public class AccountDAOImp implements AccountDAO
            
            for (Account account : accounts) 
            {        
-                Query credentialQuery = session.createQuery("from Account as acc left join fetch acc.credentials where acc.accountId = " +
-                                                      ":accountId").setParameter("accountId", account.getAccountId());                      
+                Query credentialQuery = session.createQuery("from Account as acc left join fetch acc.credentials where acc.id_account = " +
+                                                      ":id_account").setParameter("id_account", account.getId_account());                      
                 // A list of 1 element (single account with its credentials) return to credentialQuery
                 Account accountWithCredentials = (Account) credentialQuery.list().get(0);
                 //Hibernate.initialize effectively load into the RAM its data
-                Hibernate.initialize(accountWithCredentials.getUserCred());            
+                Hibernate.initialize(accountWithCredentials.getCredentials());            
                 accountsWithCredentials.add(accountWithCredentials);
             }
             return accountsWithCredentials;

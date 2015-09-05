@@ -6,24 +6,24 @@
 package wseds.dao;
 
 import java.util.List;
-import wseds.model.UserCred;
+import wseds.model.Credentials;
 
 /**
  *
  * @author luigi@santivetti
  */
-public interface UserDAO 
+public interface CredentialsDAO 
 {
-    void insert (UserCred user);
+    void insert (Credentials credentials);
     void delete(Integer id);
-    void update (UserCred user);
+    void update (Credentials credentials);
     
     boolean check(Integer id);
     
-    UserCred select(Integer id);
-    UserCred select(String username);
+    Credentials select(Integer id);
+    Credentials select(String username);
     //UserCred select(String username, String password);
-    UserCred selectWithAccount(Integer id);
+    Credentials selectWithAccount(Integer id);
 
-    List<UserCred> list();
+    List<Credentials> list();
 }

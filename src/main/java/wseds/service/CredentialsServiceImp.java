@@ -18,29 +18,29 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import wseds.dao.UserDAO;
-import wseds.model.UserCred;
+import wseds.dao.CredentialsDAO;
+import wseds.model.Credentials;
 
 /**
  *
  * @author luigi@santivetti
  */
 
-@Service("userServiceImp")
-public class UserServiceImp implements UserService, UserDetailsService
+@Service("credentialsServiceImp")
+public class CredentialsServiceImp implements CredentialsService, UserDetailsService
 {
     @Autowired
-    private UserDAO userDAO;
+    private CredentialsDAO credentialsDAO;
     
-    public UserServiceImp()
+    public CredentialsServiceImp()
     {}
     
     @Override
     @Transactional
-    public void insert(UserCred user) 
+    public void insert(Credentials credentials) 
     {
         //To change body of generated methods, choose Tools | Templates.
-        userDAO.insert(user);
+        credentialsDAO.insert(credentials);
     }
     
     
@@ -48,20 +48,20 @@ public class UserServiceImp implements UserService, UserDetailsService
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
-        UserCred user = userDAO.select(username);
+        Credentials credentials = credentialsDAO.select(username);
         
         Set<String> userRole = new HashSet<>();
         userRole.add("USER");
                 
         
         List<GrantedAuthority> auths = buildUserAuthority(userRole);
-        return buildUserForAuthentification(user, auths);
+        return buildUserForAuthentification(credentials, auths);
     }
     
     
-    private User buildUserForAuthentification(UserCred user, List<GrantedAuthority> authorities)
+    private User buildUserForAuthentification(Credentials credentials, List<GrantedAuthority> authorities)
     {
-        return new User(user.getUsername(), user.getPassword(), authorities);
+        return new User(credentials.getUsername(), credentials.getPassword(), authorities);
     }
     
     
@@ -82,40 +82,40 @@ public class UserServiceImp implements UserService, UserDetailsService
     /*
     @Override
     @Transactional
-    public void delete(Integer userId)
+    public void delete(Integer id_credentials)
     {
-        userDAO.delete(userId);
+        credentialsDAO.delete(id_credentials);
     }
 
     @Override
-    public boolean check(Integer userId) 
+    public boolean check(Integer id_credentials) 
     {
         //To change body of generated methods, choose Tools | Templates.
-        return userDAO.check(userId);
+        return credentialsDAO.check(id_credentials);
     }
 
     @Override
-    public UserCred select(Integer userId) 
+    public Credentials select(Integer id_credentials) 
     {
         //To change body of generated methods, choose Tools | Templates.
-        return (UserCred) userDAO.select(userId);
+        return (Credentials) credentialsDAO.select(id_credentials);
     }
 
     
 
     @Override
     @Transactional
-    public void update(UserCred user) 
+    public void update(Credentials credentials) 
     {
         //To change body of generated methods, choose Tools | Templates.
-        userDAO.update(user);
+        credentialsDAO.update(credentials);
     }
 
     @Override
     public List<UserCred> list() 
     {
         //To change body of generated methods, choose Tools | Templates.
-        return userDAO.list();
+        return credentialsDAO.list();
     }
     */
 

@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import wseds.model.Account;
-import wseds.model.UserCred;
+import wseds.model.Credentials;
 import wseds.service.AccountService;
-import wseds.service.UserService;
+import wseds.service.CredentialsService;
 import wseds.binding.Binder;
 import wseds.wdo.RegistrationForm;
 
@@ -25,17 +25,17 @@ import wseds.wdo.RegistrationForm;
  */
 
 @Controller
-@RequestMapping("/user")
-public class UserController
+@RequestMapping("/account")
+public class AccountController
 {
     @Autowired
     private Binder accountBinder;
     @Autowired
-    private Binder userBinder;
+    private Binder credentialsBinder;
     @Autowired
     private AccountService accountService;
     @Autowired
-    private UserService userService;
+    private CredentialsService credentialsService;
     @Autowired
     private MessageSource messageSource;
     
@@ -43,19 +43,19 @@ public class UserController
     @Autowired
     private Account account;
     @Autowired
-    private UserCred user;
+    private Credentials credentials;
     @Autowired
     private RegistrationForm registrationForm;
     
     
-    public UserController() 
+    public AccountController() 
     {}
 
     @RequestMapping(value="/getRegister", method=RequestMethod.GET)
     public String getRegister(Model model) 
     {   
         this.registrationForm.setAccount(account);
-        this.registrationForm.setUser(user);
+        this.registrationForm.setCredentials(credentials);
         model.addAttribute("registrationForm", registrationForm);
       
         return "register";
@@ -68,10 +68,10 @@ public class UserController
                                 Model model) 
     {          
         this.account = registrationForm.getAccount();
-        this.user = registrationForm.getUser();
+        this.credentials = registrationForm.getCredentials();
         
-        accountBinder.execInputValidationAndModelIntegrity(account, bindingResult, user);
-        userBinder.execInputValidationAndModelIntegrity(user, bindingResult, account);
+        accountBinder.execInputValidationAndModelIntegrity(account, bindingResult, credentials);
+        credentialsBinder.execInputValidationAndModelIntegrity(credentials, bindingResult, account);
         
         if (bindingResult.hasErrors()) 
         {
@@ -80,7 +80,7 @@ public class UserController
         else 
         {   
             accountService.insert(account);
-            userService.insert(user);  
+            credentialsService.insert(credentials);  
                         
             //Set view.            
             //model.addAttribute("account", account);

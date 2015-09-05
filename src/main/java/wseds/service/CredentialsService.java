@@ -6,21 +6,21 @@
 package wseds.service;
 
 import java.util.List;
-import wseds.model.UserCred;
+import wseds.model.Credentials;
 
 /**
  *
  * @author luigi@santivetti
  */
-public interface UserService 
+public interface CredentialsService 
 {
-    void insert (UserCred account);
+    void insert (Credentials credentials);
     /*
     boolean check(Integer id);
     void delete(Integer id);
-    UserCred select(Integer id);
+    Credentials select(Integer id);
    
-    void update (UserCred account);
+    void update (Credentials account);
     
     List<UserCred> list();
     */

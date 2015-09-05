@@ -10,7 +10,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import wseds.model.Account;
 import wseds.model.Referable;
-import wseds.model.UserCred;
+import wseds.model.Credentials;
 
 /**
  *
@@ -18,17 +18,17 @@ import wseds.model.UserCred;
  */
 
 @Component
-public class UserBinderImp implements Binder
+public class CredentialsBinderImp implements Binder
 {
-    private UserCred user;
+    private Credentials user;
     
-    public UserBinderImp(){
+    public CredentialsBinderImp(){
     }
     
     @Override
     public boolean supports (Class cls)
     {
-        return UserCred.class.isAssignableFrom(cls);
+        return Credentials.class.isAssignableFrom(cls);
     }
     
     @Override
@@ -57,7 +57,7 @@ public class UserBinderImp implements Binder
     @Override
     public void setTarget(Object user)
     {
-        this.user = (UserCred) user;
+        this.user = (Credentials) user;
     }
     
     @Override

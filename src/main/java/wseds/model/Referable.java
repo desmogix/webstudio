@@ -11,5 +11,5 @@ package wseds.model;
  */
 public interface Referable
 {
-    public void setReference(Object o);
+    public void setReference(Referable object);
 }
