@@ -9,7 +9,7 @@ package wseds.wdo;
 
 import org.springframework.stereotype.Component;
 import wseds.model.Account;
-import wseds.model.UserCred;
+import wseds.model.Credentials;
 
 /**
  *
@@ -19,14 +19,14 @@ import wseds.model.UserCred;
 @Component
 public class RegistrationForm
     {
-        private UserCred user;
+        private Credentials credentials;
         private Account account;
 
         public RegistrationForm(){}
 
-        public void setUser(UserCred user)
+        public void setCredentials(Credentials user)
         {
-            this.user = user;
+            this.credentials = user;
         }
 
         public void setAccount(Account account)
@@ -34,9 +34,9 @@ public class RegistrationForm
             this.account = account;
         }
 
-        public UserCred getUser()
+        public Credentials getCredentials()
         {
-            return user;
+            return credentials;
         }
 
         public Account getAccount()

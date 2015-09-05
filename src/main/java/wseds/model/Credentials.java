@@ -16,11 +16,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 
 /**
@@ -29,15 +29,15 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 
 @Entity
-@Table(name="user_cred")
-public class UserCred implements Serializable, Referable
+@Table(name="credentials")
+public class Credentials implements Serializable, Referable
 {
     @Id
     @GeneratedValue(generator="fk")
     @GenericGenerator(strategy = "foreign", name="fk",
             parameters = @Parameter(name="property", value="account"))
-    @Column(name="id_user")
-    private Integer userId;
+    @Column(name="id_credentials")
+    private Integer id_credentials;
 
     @Column(name="username", nullable=false, columnDefinition="VARCHAR",length=30)      
     private String username;
@@ -50,18 +50,21 @@ public class UserCred implements Serializable, Referable
     
     
     @OneToOne(cascade = CascadeType.ALL, targetEntity = Account.class)
-    @JoinColumn(name = "id_user")
+    @JoinColumn(name = "id_credentials")
     @JsonBackReference
     private Account account;
     
     
-    public UserCred() 
+    public Credentials() 
     {
         
     }
-
-    public Integer getUserId() {
-        return userId;
+    
+    public void setId_credential(Integer id_credentials) {
+        this.id_credentials = id_credentials;
+    }
+    public Integer getId_credentials() {
+        return id_credentials;
     }
 
     
@@ -70,12 +73,11 @@ public class UserCred implements Serializable, Referable
     }
     
     @Override
-    public void setReference(Object o)
+    public void setReference(Referable account)
     {
-        setAccount((Account) o);
+        setAccount((Account) account);
     }
-    
-    
+
     private void setAccount(Account account) {
         this.account = account;
     } 
@@ -96,9 +98,7 @@ public class UserCred implements Serializable, Referable
         this.password = password;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+    
 
     public String getSalt()
     {

@@ -31,7 +31,7 @@
          
         <!-- Register a user (account). -->    
 
-        <c:url value="/user/postRegister" var="postRegisterURL" />
+        <c:url value="/account/postRegister" var="postRegisterURL" />
         <form:form id="postRegister" action="${postRegisterURL}" method="post" modelAttribute="registrationForm">                                           
             <table border="0">
                 <tr>
