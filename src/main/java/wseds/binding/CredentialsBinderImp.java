@@ -20,7 +20,7 @@ import wseds.model.Credentials;
 @Component
 public class CredentialsBinderImp implements Binder
 {
-    private Credentials user;
+    private Credentials credentials;
     
     public CredentialsBinderImp(){
     }
@@ -34,15 +34,15 @@ public class CredentialsBinderImp implements Binder
     @Override
     public void validate(Object target, Errors errors)
     {
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "user.username", "username.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "user.password", "password.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "credentials.username", "username.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "credentials.password", "password.required");
         
-        if (user.getUsername().length() > 30) 
+        if (credentials.getUsername().length() > 30) 
         {
             errors.rejectValue("username", "userame.invalidLength");
         }
         
-        if (user.getUsername().length() > 128) 
+        if (credentials.getUsername().length() > 128) 
         {
             errors.rejectValue("password", "password.invalidLength");
         }
@@ -51,20 +51,20 @@ public class CredentialsBinderImp implements Binder
      @Override
     public void referTo(Referable account)
     {
-        this.user.setReference((Account) account);
+        this.credentials.setReference((Account) account);
     }
     
     @Override
-    public void setTarget(Object user)
+    public void setTarget(Object credentials)
     {
-        this.user = (Credentials) user;
+        this.credentials = (Credentials) credentials;
     }
     
     @Override
-    public void execInputValidationAndModelIntegrity(Object user, Errors errors, Referable account)
+    public void execInputValidationAndModelIntegrity(Object credentials, Errors errors, Referable account)
     {
-        setTarget(user);
-        validate(user, errors);
+        setTarget(credentials);
+        validate(credentials, errors);
         referTo(account);
     }
     
