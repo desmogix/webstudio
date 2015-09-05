@@ -25,7 +25,7 @@
         
         
         
-        <c:url value="/user/getRegister" var="getRegisterURL" />
+        <c:url value="/account/getRegister" var="getRegisterURL" />
         <c:url value="/jsp/view/login_1.jsp" var="getAuthenticationURL" />
         
             <table border="0">

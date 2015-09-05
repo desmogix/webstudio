@@ -29,7 +29,7 @@
     <body>        
         <h3>WSEDS: please enter your details to register.</h3>
          
-        <!-- Register a user (account). -->    
+        <!-- Register an account. -->    
 
         <c:url value="/account/postRegister" var="postRegisterURL" />
         <form:form id="postRegister" action="${postRegisterURL}" method="post" modelAttribute="registrationForm">                                           
@@ -52,14 +52,14 @@
                 </tr>
                
                 <tr>
-                    <td align="left"><form:label path="user.username">Username</form:label></td>  
-                    <td><form:input path="user.username" /></td>
-                    <td><font color="red"><form:errors path="user.username" /></font></td>
+                    <td align="left"><form:label path="credentials.username">Username</form:label></td>  
+                    <td><form:input path="credentials.username" /></td>
+                    <td><font color="red"><form:errors path="credentials.username" /></font></td>
                 </tr>
                <tr>
-                    <td align="left"><form:label path="user.password">Password</form:label></td>  
-                    <td><form:password path="user.password" /></td>
-                    <td><font color="red"><form:errors path="user.password" /></font></td>
+                    <td align="left"><form:label path="credentials.password">Password</form:label></td>  
+                    <td><form:password path="credentials.password" /></td>
+                    <td><font color="red"><form:errors path="credentials.password" /></font></td>
                 </tr>
                 <tr>
                     <td></td>
