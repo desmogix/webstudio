@@ -8,15 +8,25 @@ package wseds.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import wseds.model.interfaces.Referable;
 
 
 /**
@@ -27,7 +37,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="account")
-public class Account implements Serializable
+public class Account implements Serializable, Referable
 {
     @Id
     @Column(name="id_account", unique=true, nullable=false)
@@ -51,6 +61,13 @@ public class Account implements Serializable
     @JsonManagedReference
     private Credentials credentials;
 
+    @ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "account_has_role", joinColumns = {
+    @JoinColumn(name="id_acount", nullable = false)}, 
+    inverseJoinColumns = {
+    @JoinColumn(name = "id_role", nullable = false)})
+    private Set<Role> roles = new HashSet<>(0);
+    
     
     public Account()
     {
@@ -106,35 +123,28 @@ public class Account implements Serializable
     {
         return credentials;
     }
-    /* 
-    This method is the only Credentials setter 
-    visible from the outside, implemented from the 
-    interface Referable, will keep the reference 
-    between their (Account and Credentials) instaces updated
-    */
-    /*
-    @Override
-    public void setReference(Referable ... credentials)
+
+    public Set<Role> getRoles()
     {
-        if(credentials.length>1)
-            throw new IllegalArgumentException("You must provide 1 argument");
-        try
-        {
-            for (Referable r : credentials)
-            {
-                if(r.getClass().isInstance(Credentials.class))
-                {
-                    setCredentials((Credentials) r);
-                }
-                else
-                    throw new ClassCastException();
-            }
-        } catch (ClassCastException ex)
-        {
-            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        return roles;
     }
-    */
+
+    public void setRoles(Set<Role> roles)
+    {
+        this.roles = roles;
+    }
+    
+  
+    @Override
+    public ArrayList<Referable> getReference()
+    {
+        ArrayList<Referable> references = new ArrayList<>();
+        return references;
+    }
+    
+    
+    
+    
     public void setCredentials(Credentials credentials)
     {
         this.credentials = credentials;

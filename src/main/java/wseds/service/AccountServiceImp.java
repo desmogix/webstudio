@@ -45,6 +45,9 @@ public class AccountServiceImp implements AccountService, CredentialsService, Us
     @Transactional
     public void insert(Account account, Credentials credentials) 
     {
+        account.setCredentials(credentials);
+        credentials.setAccount(account);
+        
         accountDAO.insert(account);
         credentialsDAO.insert(credentials);
     }
