@@ -63,7 +63,7 @@ public class Account implements Serializable, Referable
 
     @ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "account_has_role", joinColumns = {
-    @JoinColumn(name="id_acount", nullable = false)}, 
+    @JoinColumn(name="id_account", nullable = false)}, 
     inverseJoinColumns = {
     @JoinColumn(name = "id_role", nullable = false)})
     private Set<Role> roles = new HashSet<>(0);
