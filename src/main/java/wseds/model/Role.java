@@ -5,14 +5,18 @@
  */
 package wseds.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
+
 import javax.persistence.Table;
 
 
@@ -35,13 +39,9 @@ public class Role implements Serializable
     @Column(name="name", nullable=false, columnDefinition = "VARCHAR", length=45)
     private String name;
     
-    @OneToMany(mappedBy="role", targetEntity=RoleHasPermission.class)
-    @JsonManagedReference
-    private RoleHasPermission roleHasPermission;
     
-    @OneToMany(mappedBy="role", targetEntity=AccountHasRole.class)
-    @JsonManagedReference
-    private AccountHasRole accountHasRole;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "role")
+    private Set<Account> accounts = new HashSet<>(0);
 
     public Integer getId_role()
     {
@@ -62,55 +62,16 @@ public class Role implements Serializable
     {
         this.name = name;
     }
-
-    public RoleHasPermission getRoleHasPermission()
+    
+    public Set<Account> getAccounts()
     {
-        return roleHasPermission;
+        return accounts;
     }
 
-    public void setRoleHasPermission(RoleHasPermission roleHasPermission)
+    public void setAccounts(Set<Account> accounts)
     {
-        this.roleHasPermission = roleHasPermission;
+        this.accounts = accounts;
     }
-
-    public AccountHasRole getAccountHasRole()
-    {
-        return accountHasRole;
-    }
-
-    public void setAccountHasRole(AccountHasRole accountHasRole)
-    {
-        this.accountHasRole = accountHasRole;
-    }
-
-    /*
-    @Override
-    public void setReference(Referable ... referables)
-    {
-        if(referables.length>2)
-            throw new IllegalArgumentException("You must provide 2 argument");
-        try
-        {
-            for (Referable r : referables)
-            {
-                if(r.getClass().isInstance(AccountHasRole.class))
-                {
-                    setAccountHasRole((AccountHasRole) r);
-                }
-                else if(r.getClass().isInstance(RoleHasPermission.class))
-                {
-                    setRoleHasPermission((RoleHasPermission) r);
-                }
-                else
-                    throw new ClassCastException();
-            }
-        } catch (ClassCastException ex)
-        {
-            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
-        }
-     
-    }
-    */
     
     
 }

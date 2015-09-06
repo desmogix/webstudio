@@ -6,6 +6,7 @@
 package wseds.dao.interfaces;
 
 import java.util.List;
+import wseds.dao.interfaces.objectsIntegrity.ModelReference;
 import wseds.model.Account;
 
 /**
@@ -15,7 +16,7 @@ import wseds.model.Account;
 public interface AccountDAO 
 {
     void insert (Account account);
-    void delete(Integer id);
+    void delete (Integer id);
     void update (Account account);
     
     boolean check(Integer id);

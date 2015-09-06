@@ -3,13 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wseds.dao.interfaces.objectsIntegrity;
+package wseds.model.interfaces;
+
+import java.util.ArrayList;
 
 /**
  *
  * @author luigi@santivetti
  */
-public interface ObjectReferences
+public interface Referable
 {
-    public void updateObjectReferences(Object ... objects);
+    public ArrayList<Referable> getReference();
+
 }

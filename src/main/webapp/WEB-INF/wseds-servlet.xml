@@ -145,7 +145,7 @@
     <import resource="wseds-flow.xml"/> 
     
     <!-- Security config class -->
-    <bean id="loginSecured" class="wseds.security.LoginSecured" />
+    <bean id="securityConfig" class="wseds.security.SecurityConfig" />
      
     <!-- Spring (the servlet) configures Hibernate  -->
     <!-- Enable hibernate annotations in POJOs file-->
