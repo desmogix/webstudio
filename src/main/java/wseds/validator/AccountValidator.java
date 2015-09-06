@@ -1,28 +1,29 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package wseds.validator;
+
+
+import org.springframework.stereotype.Component;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
+
+import wseds.model.Account;
+
+import wseds.model.Credentials;
+
 
 /**
  *
  * @author luigi@santivetti
  */
-
-package wseds.binding;
-
-import wseds.binding.interfaces.Binder;
-import org.springframework.stereotype.Component;
-import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
-
-import wseds.model.Account;
-import wseds.model.interfaces.Referable;
-import wseds.model.Credentials;
-
-
-
 @Component
-public class AccountBinderImp implements Binder
+public class AccountValidator implements Validator
 {
-    private Account account;
-    
-    public AccountBinderImp() 
+    public AccountValidator() 
     {}
 
     
@@ -36,6 +37,8 @@ public class AccountBinderImp implements Binder
     @Override
     public void validate(Object target, Errors errors)
     {
+        Account account = (Account) target;
+        
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "account.name", "name.required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "account.surname", "surname.required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "account.email", "email.required"); 
@@ -50,25 +53,4 @@ public class AccountBinderImp implements Binder
             errors.rejectValue("email", "email.invalidLength");
         }   
     }
-    
-    @Override
-    public void referTo(Referable credentials)
-    {
-        this.account.setReference((Credentials) credentials);
-    }
-    
-    @Override
-    public void setTarget(Object account)
-    {
-        this.account = (Account) account;
-    }
-    
-    @Override
-    public void execInputValidationAndModelIntegrity(Object account, Errors errors, Referable credentials)
-    {
-        setTarget(account);
-        validate(account, errors);
-        referTo(credentials);
-    }
-    
 }

@@ -5,9 +5,10 @@
  */
 package wseds.model;
 
-import wseds.model.interfaces.Referable;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 /**
  *
@@ -26,7 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 @Table(name="account")
-public class Account implements Serializable, Referable
+public class Account implements Serializable
 {
     @Id
     @Column(name="id_account", unique=true, nullable=false)
@@ -105,13 +106,36 @@ public class Account implements Serializable, Referable
     {
         return credentials;
     }
-    
+    /* 
+    This method is the only Credentials setter 
+    visible from the outside, implemented from the 
+    interface Referable, will keep the reference 
+    between their (Account and Credentials) instaces updated
+    */
+    /*
     @Override
-    public void setReference(Referable credentials)
+    public void setReference(Referable ... credentials)
     {
-        setCredentials((Credentials) credentials);
+        if(credentials.length>1)
+            throw new IllegalArgumentException("You must provide 1 argument");
+        try
+        {
+            for (Referable r : credentials)
+            {
+                if(r.getClass().isInstance(Credentials.class))
+                {
+                    setCredentials((Credentials) r);
+                }
+                else
+                    throw new ClassCastException();
+            }
+        } catch (ClassCastException ex)
+        {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    private void setCredentials(Credentials credentials)
+    */
+    public void setCredentials(Credentials credentials)
     {
         this.credentials = credentials;
     }

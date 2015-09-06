@@ -14,7 +14,9 @@ import wseds.model.Account;
 import wseds.model.Credentials;
 import wseds.service.interfaces.AccountService;
 import wseds.service.interfaces.CredentialsService;
-import wseds.binding.interfaces.Binder;
+import wseds.validator.AccountValidator;
+import wseds.validator.CredentialsValidator;
+
 import wseds.wdo.RegistrationForm;
 
 
@@ -28,14 +30,14 @@ import wseds.wdo.RegistrationForm;
 @RequestMapping("/account")
 public class AccountController
 {
+   
     @Autowired
-    private Binder accountBinder;
+    AccountValidator accountValidator;
     @Autowired
-    private Binder credentialsBinder;
+    CredentialsValidator credentialsValidator;
+    
     @Autowired
     private AccountService accountService;
-    @Autowired
-    private CredentialsService credentialsService;
     @Autowired
     private MessageSource messageSource;
     
@@ -70,18 +72,17 @@ public class AccountController
         this.account = registrationForm.getAccount();
         this.credentials = registrationForm.getCredentials();
         
-        accountBinder.execInputValidationAndModelIntegrity(account, bindingResult, credentials);
-        credentialsBinder.execInputValidationAndModelIntegrity(credentials, bindingResult, account);
-        
+        accountValidator.validate(account, bindingResult);
+        credentialsValidator.validate(credentials, bindingResult);
+  
         if (bindingResult.hasErrors()) 
         {
             return "register";
         }
         else 
         {   
-            accountService.insert(account);
-            credentialsService.insert(credentials);  
-                        
+            accountService.insert(account, credentials);
+         
             //Set view.            
             //model.addAttribute("account", account);
             

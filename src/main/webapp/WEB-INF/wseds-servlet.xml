@@ -125,18 +125,13 @@
     <!-- Model. -->
     <bean id="account" class="wseds.model.Account"></bean> 
     <bean id="credentials" class="wseds.model.Credentials"></bean>
-    
-    <!-- Spring model integrity binders -->
-    <bean id="credentialsBinder" class="wseds.binding.CredentialsBinderImp" />    
-    <bean id="accountBinder" class="wseds.binding.AccountBinderImp" />
-    
+
     <!-- Wrapper obbject WTO -->
     <bean id="registrationForm" class="wseds.wdo.RegistrationForm"></bean>
     
     <!-- Spring Services. -->
     <bean id="accountServiceImp" class="wseds.service.AccountServiceImp" />    
-    <bean id="credentialsServiceImp" class="wseds.service.CredentialsServiceImp" /> 
-    
+
     <!-- Spring Repositories. -->
     <bean id="accountDAOImp" class="wseds.dao.AccountDAOImp" />    
     <bean id="credentialsDAOImp" class="wseds.dao.CredentialsDAOImp" /> 

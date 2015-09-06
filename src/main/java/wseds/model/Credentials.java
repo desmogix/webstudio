@@ -7,9 +7,10 @@ package wseds.model;
 
 
 
-import wseds.model.interfaces.Referable;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,11 +20,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import javax.persistence.Table;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author luigiS
@@ -31,7 +34,7 @@ import org.hibernate.annotations.Parameter;
 
 @Entity
 @Table(name="credentials")
-public class Credentials implements Serializable, Referable
+public class Credentials implements Serializable
 {
     @Id
     @GeneratedValue(generator="fk")
@@ -73,13 +76,7 @@ public class Credentials implements Serializable, Referable
         return account;
     }
     
-    @Override
-    public void setReference(Referable account)
-    {
-        setAccount((Account) account);
-    }
-
-    private void setAccount(Account account) {
+    public void setAccount(Account account) {
         this.account = account;
     } 
     

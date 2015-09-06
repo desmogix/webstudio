@@ -7,6 +7,7 @@ package wseds.service.interfaces;
 
 import java.util.List;
 import wseds.model.Account;
+import wseds.model.Credentials;
 
 /**
  *
@@ -14,7 +15,7 @@ import wseds.model.Account;
  */
 public interface AccountService 
 {
-    void insert (Account account);
+    void insert (Account account, Credentials credentials);
     /*
     boolean check(Integer id);
     void delete(Integer id);
