@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wseds.dao;
+package wseds.dao.interfaces;
 
 import java.util.List;
 import wseds.model.Credentials;

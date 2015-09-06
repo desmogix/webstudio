@@ -6,12 +6,13 @@
 
 package wseds.binding;
 
+import wseds.binding.interfaces.Binder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 
 import wseds.model.Account;
-import wseds.model.Referable;
+import wseds.model.interfaces.Referable;
 import wseds.model.Credentials;
 
 

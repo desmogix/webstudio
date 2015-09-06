@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wseds.service;
+package wseds.dao.interfaces;
 
 import java.util.List;
 import wseds.model.Account;
@@ -12,16 +12,16 @@ import wseds.model.Account;
  *
  * @author luigi@santivetti
  */
-public interface AccountService 
+public interface AccountDAO 
 {
     void insert (Account account);
-    /*
-    boolean check(Integer id);
     void delete(Integer id);
-    Account select(Integer id);
-    
     void update (Account account);
     
+    boolean check(Integer id);
+    
+    Account selectWithUser(Integer id);
+    Account select(Integer id);
+
     List<Account> list();
-    */
 }

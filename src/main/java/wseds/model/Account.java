@@ -5,6 +5,7 @@
  */
 package wseds.model;
 
+import wseds.model.interfaces.Referable;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 

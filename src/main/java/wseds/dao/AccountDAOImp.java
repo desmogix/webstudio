@@ -5,6 +5,7 @@
  */
 package wseds.dao;
 
+import wseds.dao.interfaces.AccountDAO;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Hibernate;

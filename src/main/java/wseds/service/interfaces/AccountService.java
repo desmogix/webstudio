@@ -3,25 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wseds.service;
+package wseds.service.interfaces;
 
 import java.util.List;
-import wseds.model.Credentials;
+import wseds.model.Account;
 
 /**
  *
  * @author luigi@santivetti
  */
-public interface CredentialsService 
+public interface AccountService 
 {
-    void insert (Credentials credentials);
+    void insert (Account account);
     /*
     boolean check(Integer id);
     void delete(Integer id);
-    Credentials select(Integer id);
-   
-    void update (Credentials account);
+    Account select(Integer id);
     
-    List<UserCred> list();
+    void update (Account account);
+    
+    List<Account> list();
     */
 }
