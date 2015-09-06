@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import wseds.model.Account;
 import wseds.model.Credentials;
-import wseds.service.AccountService;
-import wseds.service.CredentialsService;
-import wseds.binding.Binder;
+import wseds.service.interfaces.AccountService;
+import wseds.service.interfaces.CredentialsService;
+import wseds.binding.interfaces.Binder;
 import wseds.wdo.RegistrationForm;
 
 

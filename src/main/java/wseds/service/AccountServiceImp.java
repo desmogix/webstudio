@@ -6,11 +6,12 @@
 package wseds.service;
 
 
+import wseds.service.interfaces.AccountService;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
-import wseds.dao.AccountDAO;
+import wseds.dao.interfaces.AccountDAO;
 import wseds.model.Account;
 /**
  *

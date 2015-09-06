@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wseds.model;
+package wseds.dao.interfaces;
 
 /**
  *
  * @author luigi@santivetti
  */
-public interface Referable
+public interface RoleDAO
 {
-    public void setReference(Referable object);
+    
 }

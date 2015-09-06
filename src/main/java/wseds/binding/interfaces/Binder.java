@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wseds.binding;
+package wseds.binding.interfaces;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import wseds.model.Referable;
+import wseds.model.interfaces.Referable;
 
 /**
  *

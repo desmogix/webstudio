@@ -37,7 +37,7 @@
         
         i.e.
         "~/spring-beans-4.0.xsd" should become "~/spring-beans.xsd"
-        
+        xmlns:p="http://www.springframework.org/schema/p"
 -->
 
 <beans  
@@ -48,7 +48,7 @@
        
         xmlns:mvc="http://www.springframework.org/schema/mvc" 
 
-        xmlns:p="http://www.springframework.org/schema/p"
+        
         
         xmlns:aop="http://www.springframework.org/schema/aop"
         
@@ -126,6 +126,10 @@
     <bean id="account" class="wseds.model.Account"></bean> 
     <bean id="credentials" class="wseds.model.Credentials"></bean>
     
+    <!-- Spring model integrity binders -->
+    <bean id="credentialsBinder" class="wseds.binding.CredentialsBinderImp" />    
+    <bean id="accountBinder" class="wseds.binding.AccountBinderImp" />
+    
     <!-- Wrapper obbject WTO -->
     <bean id="registrationForm" class="wseds.wdo.RegistrationForm"></bean>
     
@@ -141,10 +145,6 @@
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
-    
-    <!-- Spring binders -->
-    <bean id="credentialsBinder" class="wseds.binding.CredentialsBinderImp" />    
-    <bean id="accountBinder" class="wseds.binding.AccountBinderImp" />
     
     <!-- Spring webflow -->
     <import resource="wseds-flow.xml"/> 

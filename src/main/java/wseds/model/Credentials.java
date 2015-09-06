@@ -7,6 +7,7 @@ package wseds.model;
 
 
 
+import wseds.model.interfaces.Referable;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
