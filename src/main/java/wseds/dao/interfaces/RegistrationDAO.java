@@ -3,13 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wseds.model.interfaces;
+package wseds.dao.interfaces;
+
+import wseds.model.Account;
+import wseds.model.Credentials;
 
 /**
  *
  * @author luigi@santivetti
  */
-public interface Referable
+public interface RegistrationDAO
 {
-    public void setReference(Referable object);
+   void insert(Account account, Credentials credentials);
 }

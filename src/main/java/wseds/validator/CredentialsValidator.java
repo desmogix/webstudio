@@ -3,27 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wseds.binding;
-
-import wseds.binding.interfaces.Binder;
-import org.springframework.stereotype.Component;
-import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
-import wseds.model.Account;
-import wseds.model.interfaces.Referable;
-import wseds.model.Credentials;
-
 /**
  *
  * @author luigi@santivetti
  */
+package wseds.validator;
+
+
+import org.springframework.stereotype.Component;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
+import wseds.model.Account;
+
+import wseds.model.Credentials;
 
 @Component
-public class CredentialsBinderImp implements Binder
+public class CredentialsValidator implements Validator
 {
-    private Credentials credentials;
-    
-    public CredentialsBinderImp(){
+    public CredentialsValidator()
+    {
     }
     
     @Override
@@ -35,6 +34,9 @@ public class CredentialsBinderImp implements Binder
     @Override
     public void validate(Object target, Errors errors)
     {
+        
+        Credentials credentials = (Credentials) target;
+        
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "credentials.username", "username.required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "credentials.password", "password.required");
         
@@ -48,25 +50,4 @@ public class CredentialsBinderImp implements Binder
             errors.rejectValue("password", "password.invalidLength");
         }
     }
-    
-     @Override
-    public void referTo(Referable account)
-    {
-        this.credentials.setReference((Account) account);
-    }
-    
-    @Override
-    public void setTarget(Object credentials)
-    {
-        this.credentials = (Credentials) credentials;
-    }
-    
-    @Override
-    public void execInputValidationAndModelIntegrity(Object credentials, Errors errors, Referable account)
-    {
-        setTarget(credentials);
-        validate(credentials, errors);
-        referTo(account);
-    }
-    
 }

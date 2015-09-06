@@ -6,6 +6,7 @@
 package wseds.dao.interfaces;
 
 import java.util.List;
+import wseds.model.Account;
 import wseds.model.Credentials;
 
 /**
