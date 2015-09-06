@@ -48,7 +48,7 @@
        
         xmlns:mvc="http://www.springframework.org/schema/mvc" 
 
-        
+        xmlns:p="http://www.springframework.org/schema/p"
         
         xmlns:aop="http://www.springframework.org/schema/aop"
         
@@ -57,7 +57,6 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         
         xsi:schemaLocation="
-
                             http://www.springframework.org/schema/beans 
                             http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
                            
@@ -103,13 +102,15 @@
     Basically who's implementing those intefaces is able to 
     bind logical information with proper GUI objects
     
-    One of them is internalResourceViewresolver   -->
+    One of them is internalResourceViewresolver 
+     util:exposeContextBeansAsAttributes="true"
+    -->
     <bean   id="viewResolver"
             class="org.springframework.web.servlet.view.InternalResourceViewResolver"
             p:prefix="/jsp/view/"
             p:suffix=".jsp" 
-            p:exposeContextBeansAsAttributes="true"      
-    />
+             />     
+    
 
     <!-- Spring MesssageSource. -->         
     <bean   id="messageSource" 
@@ -123,11 +124,11 @@
     <bean id="accountController" class="wseds.controller.AccountController" />
 
     <!-- Model. -->
-    <bean id="account" class="wseds.model.Account"></bean> 
-    <bean id="credentials" class="wseds.model.Credentials"></bean>
+    <bean id="account" class="wseds.model.Account" />
+    <bean id="credentials" class="wseds.model.Credentials" />
 
     <!-- Wrapper obbject WTO -->
-    <bean id="registrationForm" class="wseds.wdo.RegistrationForm"></bean>
+    <bean id="registrationForm" class="wseds.wdo.RegistrationForm" />
     
     <!-- Spring Services. -->
     <bean id="accountServiceImp" class="wseds.service.AccountServiceImp" />    
@@ -136,20 +137,25 @@
     <bean id="accountDAOImp" class="wseds.dao.AccountDAOImp" />    
     <bean id="credentialsDAOImp" class="wseds.dao.CredentialsDAOImp" /> 
     
+    <!-- Validator -->
+    <bean id="accountValidator" class="wseds.validator.AccountValidator" />
+    <bean id="credentialsValidator" class="wseds.validator.CredentialsValidator" />
+
+    
      <!-- TransactionManager  -->
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
     <!-- Spring webflow -->
-    <import resource="wseds-flow.xml"/> 
+    <import resource="wseds-flow.xml" /> 
     
     <!-- Security config class -->
     <bean id="securityConfig" class="wseds.security.SecurityConfig" />
      
     <!-- Spring (the servlet) configures Hibernate  -->
     <!-- Enable hibernate annotations in POJOs file-->
-    <tx:annotation-driven  />
+    <tx:annotation-driven />
     
     <!-- Hibernate datasoruce  -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">

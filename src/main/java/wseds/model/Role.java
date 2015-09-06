@@ -40,7 +40,7 @@ public class Role implements Serializable
     private String name;
     
     
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "role")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles")
     private Set<Account> accounts = new HashSet<>(0);
 
     public Integer getId_role()

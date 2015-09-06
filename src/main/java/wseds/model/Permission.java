@@ -7,6 +7,7 @@ package wseds.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,13 +31,10 @@ public class Permission implements Serializable
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id_permission;
 
-    @Column(name="name", nullable=false, columnDefinition = "VARChAR", length=45)
+    @Column(name="name", nullable=false, columnDefinition = "VARCHAR", length=45)
     private String name;
     
-    @OneToMany(mappedBy="permission", targetEntity= RoleHasPermission.class)
-    @JsonManagedReference
-    private RoleHasPermission roleHasPermission;
-    
+   
     public Permission (){}
 
     public Integer getId_permission()
@@ -59,29 +57,11 @@ public class Permission implements Serializable
         this.name = name;
     }
 
-    public RoleHasPermission getRoleHasPermission()
-    {
-        return roleHasPermission;
-    }
+   
+  
 
-    /* 
-    This method is the only roleHasPermission setter 
-    visible from the outside, implemented from the 
-    interface Referable, will keep the reference 
-    between their (RoleHasPermission and Permission) 
-    instaces updated
-    */
-    /*
-    @Override
-    public void setReference(Referable ... object)
-    {
-        setRoleHasPermission(roleHasPermission);
-    }
-    */
-    public void setRoleHasPermission(RoleHasPermission roleHasPermission)
-    {
-        this.roleHasPermission = roleHasPermission;
-    }
+    
+
     
     
     
