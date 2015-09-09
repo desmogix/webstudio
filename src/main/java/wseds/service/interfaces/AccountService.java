@@ -5,9 +5,10 @@
  */
 package wseds.service.interfaces;
 
-import java.util.List;
+
 import wseds.model.Account;
 import wseds.model.Credentials;
+
 
 /**
  *
@@ -25,4 +26,7 @@ public interface AccountService
     
     List<Account> list();
     */
+    
+    
+    
 }

@@ -6,7 +6,6 @@
 package wseds.dao.interfaces;
 
 import java.util.List;
-import wseds.dao.interfaces.objectsIntegrity.ModelReference;
 import wseds.model.Account;
 
 /**

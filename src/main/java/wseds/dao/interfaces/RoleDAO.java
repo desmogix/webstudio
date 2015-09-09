@@ -5,11 +5,13 @@
  */
 package wseds.dao.interfaces;
 
+import wseds.model.Role;
+
 /**
  *
  * @author luigi@santivetti
  */
 public interface RoleDAO
 {
-    
+    void insert(Role role);
 }
