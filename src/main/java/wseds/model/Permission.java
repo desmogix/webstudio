@@ -8,11 +8,15 @@ package wseds.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -33,6 +37,9 @@ public class Permission implements Serializable
 
     @Column(name="name", nullable=false, columnDefinition = "VARCHAR", length=45)
     private String name;
+    
+    @ManyToMany(fetch= FetchType.LAZY, mappedBy="permissions")
+    private Set<Role> roles = new HashSet<>(0);
     
    
     public Permission (){}
@@ -55,6 +62,16 @@ public class Permission implements Serializable
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    public Set<Role> getRoles()
+    {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles)
+    {
+        this.roles = roles;
     }
 
    

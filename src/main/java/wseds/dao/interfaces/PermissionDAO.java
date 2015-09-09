@@ -5,11 +5,13 @@
  */
 package wseds.dao.interfaces;
 
+import wseds.model.Permission;
+
 /**
  *
  * @author luigi@santivetti
  */
 public interface PermissionDAO
 {
-    
+    void insert(Permission permission);
 }

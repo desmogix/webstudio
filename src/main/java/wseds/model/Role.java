@@ -9,12 +9,15 @@ package wseds.model;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import javax.persistence.Table;
@@ -42,7 +45,26 @@ public class Role implements Serializable
     
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles")
     private Set<Account> accounts = new HashSet<>(0);
+    
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable
+    (
+        name = "role_has_permission", 
+        joinColumns = 
+        {
+            @JoinColumn
+                (name="id_role", nullable=false)
+        },
+        inverseJoinColumns = 
+        {
+            @JoinColumn
+                (name = "id_permission", nullable = false)
+        }
+    )
+    private Set<Permission> permissions = new HashSet<>(0);
 
+    public Role(){}
+    
     public Integer getId_role()
     {
         return id_role;
@@ -72,6 +94,17 @@ public class Role implements Serializable
     {
         this.accounts = accounts;
     }
+
+    public Set<Permission> getPermissions()
+    {
+        return permissions;
+    }
+
+    public void setPermissions(Set<Permission> permissions)
+    {
+        this.permissions = permissions;
+    }
+    
     
     
 }

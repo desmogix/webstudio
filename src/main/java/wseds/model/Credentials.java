@@ -27,7 +27,7 @@ import org.hibernate.annotations.Parameter;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import wseds.model.interfaces.Referable;
+
 /**
  *
  * @author luigiS
@@ -96,20 +96,6 @@ public class Credentials implements Serializable
     public void setPassword(String password) {
         this.password = password;
     }
-
-    
-    public void setReference(Referable... references)
-    {
-        for(Referable r : references)
-        {
-            if(r.getClass().isInstance(Account.class))
-                setAccount((Account) r);
-            else
-                throw new IllegalArgumentException("You must provide one and only one Credentials's instance");   
-        }
-    }
-
-    
 
     public String getSalt()
     {

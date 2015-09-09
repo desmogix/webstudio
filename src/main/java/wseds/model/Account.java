@@ -8,9 +8,12 @@ package wseds.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
-import java.util.ArrayList;
+
+
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.CascadeType;
 
 
@@ -23,10 +26,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import wseds.model.interfaces.Referable;
 
 
 /**
@@ -37,7 +39,7 @@ import wseds.model.interfaces.Referable;
 
 @Entity
 @Table(name="account")
-public class Account implements Serializable, Referable
+public class Account implements Serializable
 {
     @Id
     @Column(name="id_account", unique=true, nullable=false)
@@ -62,10 +64,20 @@ public class Account implements Serializable, Referable
     private Credentials credentials;
 
     @ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "account_has_role", joinColumns = {
-    @JoinColumn(name="id_account", nullable = false)}, 
-    inverseJoinColumns = {
-    @JoinColumn(name = "id_role", nullable = false)})
+    @JoinTable
+    (
+        name = "account_has_role", 
+        joinColumns = 
+            {
+                @JoinColumn
+                    (name="id_account", nullable = false)
+            }, 
+        inverseJoinColumns = 
+            {
+                @JoinColumn
+                    (name = "id_role", nullable = false)
+            }
+    )
     private Set<Role> roles = new HashSet<>(0);
     
     
@@ -135,16 +147,8 @@ public class Account implements Serializable, Referable
     }
     
   
-    @Override
-    public ArrayList<Referable> getReference()
-    {
-        ArrayList<Referable> references = new ArrayList<>();
-        return references;
-    }
     
-    
-    
-    
+
     public void setCredentials(Credentials credentials)
     {
         this.credentials = credentials;

@@ -25,6 +25,7 @@ import wseds.dao.interfaces.AccountDAO;
 import wseds.dao.interfaces.CredentialsDAO;
 import wseds.model.Account;
 import wseds.model.Credentials;
+
 import wseds.service.interfaces.CredentialsService;
 /**
  *
@@ -87,7 +88,7 @@ public class AccountServiceImp implements AccountService, CredentialsService, Us
     }
     
    
-
+    
     
     /*
     @Override
@@ -127,6 +128,12 @@ public class AccountServiceImp implements AccountService, CredentialsService, Us
         return accountDAO.list();
     }
     */
+
+    
+    private void setReferences(Object ... object)
+    {
+        
+    }
 
     
     
