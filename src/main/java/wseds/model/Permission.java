@@ -5,9 +5,9 @@
  */
 package wseds.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
-import java.util.ArrayList;
+
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -17,7 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+
 import javax.persistence.Table;
 
 
@@ -41,7 +41,9 @@ public class Permission implements Serializable
     @ManyToMany(fetch= FetchType.LAZY, mappedBy="permissions")
     private Set<Role> roles = new HashSet<>(0);
     
-   
+    public final String PERMISSION_PREFIX = "ROLE_PERMISSION_";
+    
+    
     public Permission (){}
 
     public Integer getId_permission()
@@ -73,6 +75,8 @@ public class Permission implements Serializable
     {
         this.roles = roles;
     }
+
+    
 
    
   

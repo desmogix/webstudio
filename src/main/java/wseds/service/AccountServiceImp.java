@@ -53,11 +53,23 @@ public class AccountServiceImp implements AccountService, CredentialsService, Us
         credentialsDAO.insert(credentials);
     }
 
+    
+    @Override
+    public Account selectWithCredentials(Credentials credentials)
+    {
+        //credentialsDAO.selectWithUsername(credentials.getUsername()).getAccount().getId_account()
+        return accountDAO.select
+        (credentialsDAO.selectWithUsername(credentials.getUsername())
+                .getAccount().getId_account());
+    }
+    
+    
+    
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
-        Credentials credentials = credentialsDAO.select(username);
+        Credentials credentials = credentialsDAO.selectWithUsername(username);
         
         Set<String> userRole = new HashSet<>();
         userRole.add("USER");
@@ -66,6 +78,7 @@ public class AccountServiceImp implements AccountService, CredentialsService, Us
         List<GrantedAuthority> auths = buildUserAuthority(userRole);
         return buildUserForAuthentification(credentials, auths);
     }
+    
     
     
     private User buildUserForAuthentification(Credentials credentials, List<GrantedAuthority> authorities)

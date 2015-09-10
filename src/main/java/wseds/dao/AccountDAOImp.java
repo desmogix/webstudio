@@ -114,7 +114,7 @@ public class AccountDAOImp implements AccountDAO
     }    
     
     @Override
-    public Account selectWithUser(Integer id_account) 
+    public Account selectWithCredentials(Integer id_account) 
     {
         Session session = sessionFactory.openSession();
         

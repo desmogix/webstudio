@@ -17,6 +17,9 @@ import wseds.model.Credentials;
 public interface AccountService 
 {
     void insert (Account account, Credentials credentials);
+    
+    Account selectWithCredentials(Credentials credentials);
+    
     /*
     boolean check(Integer id);
     void delete(Integer id);

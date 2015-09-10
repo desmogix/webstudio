@@ -20,7 +20,7 @@ public interface AccountDAO
     
     boolean check(Integer id);
     
-    Account selectWithUser(Integer id);
+    Account selectWithCredentials(Integer id);
     Account select(Integer id);
 
     List<Account> list();

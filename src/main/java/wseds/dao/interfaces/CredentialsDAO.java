@@ -22,7 +22,7 @@ public interface CredentialsDAO
     boolean check(Integer id);
     
     Credentials select(Integer id);
-    Credentials select(String username);
+    Credentials selectWithUsername(String username);
     //UserCred select(String username, String password);
     Credentials selectWithAccount(Integer id);
 

@@ -8,6 +8,7 @@ package wseds.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
+import java.util.Collection;
 
 
 import java.util.HashSet;
@@ -29,6 +30,9 @@ import javax.persistence.ManyToMany;
 
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import wseds.security.WrapperAuthority;
 
 
 /**
@@ -39,7 +43,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="account")
-public class Account implements Serializable
+public class Account implements Serializable, UserDetails
 {
     @Id
     @Column(name="id_account", unique=true, nullable=false)
@@ -145,15 +149,64 @@ public class Account implements Serializable
     {
         this.roles = roles;
     }
-    
-  
-    
 
     public void setCredentials(Credentials credentials)
     {
         this.credentials = credentials;
     }
+
+    @Override
+    public Collection<WrapperAuthority> getAuthorities()
+    {
+        Set<WrapperAuthority> authorities = new HashSet<>();
+        for (Role role : roles) 
+        {
+            for (Permission permission : role.getPermissions()) 
+            {
+                WrapperAuthority wrapperAuthority = new WrapperAuthority(permission.PERMISSION_PREFIX + permission.getName());
+                authorities.add(wrapperAuthority);
+            }
+        }
+        return authorities;
+    }
+
+    @Override
+    public String getPassword()
+    {
+        return credentials.getPassword();
+    }
+
+    @Override
+    public String getUsername()
+    {
+        return credentials.getUsername();
+    }
+
+    @Override
+    public boolean isAccountNonExpired()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled()
+    {
+        return true;
+    }
    
+    
     
 }
 

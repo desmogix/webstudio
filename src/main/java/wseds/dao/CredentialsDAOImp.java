@@ -133,7 +133,8 @@ public class CredentialsDAOImp implements CredentialsDAO
             return credentials;            
             // return (Credentials) session.get(Credentials.class, credentialsId);
         }        
-        finally {
+        finally 
+        {
             session.close();            
         }         
     }
@@ -157,13 +158,13 @@ public class CredentialsDAOImp implements CredentialsDAO
    
 
     @Override
-    public Credentials select(String credentialsname) throws UsernameNotFoundException
+    public Credentials selectWithUsername(String username) throws UsernameNotFoundException
     {
         Session session = sessionFactory.openSession();          
         try 
         {    
             List<Credentials> one_item_list = sessionFactory.getCurrentSession().createQuery
-        ("from credentials_cred where credentialsname = :credentialsname").setParameter("credentialsname", credentialsname).list();
+        ("from credentials_cred where username = :username").setParameter("username", username).list();
             
             if(one_item_list.size()!=1)
             {
