@@ -23,7 +23,8 @@ public interface CredentialsDAO
     
     Credentials select(Integer id);
     Credentials selectWithUsername(String username);
-    //UserCred select(String username, String password);
+    Credentials selectWithPassword(String password);
+    Credentials selectWithSalt(String salt);
     Credentials selectWithAccount(Integer id);
 
     List<Credentials> list();

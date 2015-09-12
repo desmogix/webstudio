@@ -41,7 +41,7 @@ public class Permission implements Serializable
     @ManyToMany(fetch= FetchType.LAZY, mappedBy="permissions")
     private Set<Role> roles = new HashSet<>(0);
     
-    public final String PERMISSION_PREFIX = "ROLE_PERMISSION_";
+    
     
     
     public Permission (){}

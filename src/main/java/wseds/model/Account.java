@@ -32,7 +32,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import wseds.security.WrapperAuthority;
+import wseds.security.SpringPermissionNameFormatter;
 
 
 /**
@@ -156,15 +156,15 @@ public class Account implements Serializable, UserDetails
     }
 
     @Override
-    public Collection<WrapperAuthority> getAuthorities()
+    public Collection<SpringPermissionNameFormatter> getAuthorities()
     {
-        Set<WrapperAuthority> authorities = new HashSet<>();
+        Set<SpringPermissionNameFormatter> authorities = new HashSet<>();
         for (Role role : roles) 
         {
             for (Permission permission : role.getPermissions()) 
             {
-                WrapperAuthority wrapperAuthority = new WrapperAuthority(permission.PERMISSION_PREFIX + permission.getName());
-                authorities.add(wrapperAuthority);
+                SpringPermissionNameFormatter permissionNameFormatter = new SpringPermissionNameFormatter(permission.getName());
+                authorities.add(permissionNameFormatter);
             }
         }
         return authorities;

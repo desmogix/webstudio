@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import wseds.model.Account;
 import org.apache.log4j.Logger;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -36,6 +37,7 @@ public class AccountDAOImp implements AccountDAO
     }    
     
     @Override
+    @Transactional
     public void insert(Account account)  
     {
         Session session = sessionFactory.openSession();
@@ -59,6 +61,7 @@ public class AccountDAOImp implements AccountDAO
     }
     
     @Override
+    @Transactional
     public void delete(Integer id_account) 
     {
         Session session = sessionFactory.openSession();
@@ -79,6 +82,7 @@ public class AccountDAOImp implements AccountDAO
     }
 
     @Override
+    @Transactional
     public void update(Account account) 
     {
         Session session = sessionFactory.openSession();
@@ -100,6 +104,7 @@ public class AccountDAOImp implements AccountDAO
     }   
     
     @Override
+    //@Transactional
     public boolean check(Integer id_account) 
     {
         try 
@@ -114,14 +119,15 @@ public class AccountDAOImp implements AccountDAO
     }    
     
     @Override
-    public Account selectWithCredentials(Integer id_account) 
+    //@Transactional
+    public Account selectWithCredentialsId(Integer id_account) 
     {
         Session session = sessionFactory.openSession();
-        
+        //Transaction transaction = session.getTransaction();
         try 
         {                
             Query query = session.createQuery
-        ("from Account as acc left join acc.user where acc.id_account = :id_account")
+        ("from Account as acc left join acc.credentials where acc.id_account = :id_account")
                     .setParameter("id_account", id_account);                      
             // - gg - Return a list of one object Account. 
             // NOTE: it depends upon the query, you know it will return one obj
@@ -138,11 +144,13 @@ public class AccountDAOImp implements AccountDAO
     }
 
     @Override
+    //@Transactional
     public Account select(Integer id_account)
     {
         logger.info(AccountDAOImp.class.getName() + ".get() method called.");
         
-        Session session = sessionFactory.openSession();          
+        Session session = sessionFactory.openSession();
+        //Transaction transaction = session.getTransaction();
         try {    
             return (Account) session.get(Account.class, id_account);                                  
         }        
@@ -152,9 +160,11 @@ public class AccountDAOImp implements AccountDAO
     }
 
     @Override
+    //@Transactional
     public List<Account> list() 
     {
-        Session session = sessionFactory.openSession();          
+        Session session = sessionFactory.openSession();  
+        //Transaction transaction = session.getTransaction();
         try 
         {     
            Query accountQuery = session.createQuery("FROM Account");  

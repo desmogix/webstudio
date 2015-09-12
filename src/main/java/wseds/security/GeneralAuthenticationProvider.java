@@ -13,15 +13,17 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 
 import wseds.model.Account;
-import wseds.model.Credentials;
 import wseds.service.interfaces.AccountService;
 
 /**
  *
  * @author luigiS
  */
+
+@Component(value="authenticationProvider")
 public class GeneralAuthenticationProvider implements AuthenticationProvider
 {
     private AccountService accountService;
@@ -35,20 +37,20 @@ public class GeneralAuthenticationProvider implements AuthenticationProvider
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException
     {
-        Account account = accountService.selectWithCredentials((Credentials) authentication.getCredentials());
+        Account account = accountService.selectWithUsername(authentication.getPrincipal().toString());
         
         if(account == null)
         {
             throw new UsernameNotFoundException(String.format("Invalid credentials", authentication.getPrincipal()));
         }
         
-        String suppliedPasswordHash = DigestUtils.sha1Hex(authentication.getCredentials().toString());
+        //String suppliedPasswordHash = DigestUtils.sha1Hex(authentication.getCredentials().toString());
         
-        if(!account.getCredentials().getSalt().equals(suppliedPasswordHash)){
+        if(!account.getCredentials().getPassword().equals(authentication.getCredentials().toString())){
             throw new BadCredentialsException("Invalid credentials");
         }
 
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(account, null, account.getAuthorities());
+        Authentication token = new UsernamePasswordAuthenticationToken(account.getUsername(), account.getPassword(), account.getAuthorities());
  
         return token;
     }

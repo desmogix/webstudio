@@ -16,15 +16,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
 import org.springframework.stereotype.Service;
 import wseds.dao.interfaces.AccountDAO;
 import wseds.dao.interfaces.CredentialsDAO;
+import wseds.dao.interfaces.PermissionDAO;
+import wseds.dao.interfaces.RoleDAO;
 import wseds.model.Account;
 import wseds.model.Credentials;
+import wseds.model.Permission;
+import wseds.model.Role;
 
 import wseds.service.interfaces.CredentialsService;
 /**
@@ -32,15 +32,21 @@ import wseds.service.interfaces.CredentialsService;
  * @author luigi@santivetti
 */
 @Service("accountServiceImp")
-public class AccountServiceImp implements AccountService, CredentialsService, UserDetailsService
+public class AccountServiceImp implements AccountService, CredentialsService
 {
     @Autowired
     private AccountDAO accountDAO;
     @Autowired
     private CredentialsDAO credentialsDAO;
-    
+    @Autowired
+    private RoleDAO roleDAO;
+    @Autowired
+    private PermissionDAO permissionDAO;
+   
     
     public AccountServiceImp(){}
+    
+    
     
     @Override
     @Transactional
@@ -49,22 +55,44 @@ public class AccountServiceImp implements AccountService, CredentialsService, Us
         account.setCredentials(credentials);
         credentials.setAccount(account);
         
+        
+        
+        setUserPermissionTo(setUserRoleTo(account));
+        
         accountDAO.insert(account);
         credentialsDAO.insert(credentials);
     }
 
     
     @Override
-    public Account selectWithCredentials(Credentials credentials)
+    @Transactional
+    public Account selectWithCredentialsObject(Credentials credentials)
     {
-        //credentialsDAO.selectWithUsername(credentials.getUsername()).getAccount().getId_account()
         return accountDAO.select
         (credentialsDAO.selectWithUsername(credentials.getUsername())
                 .getAccount().getId_account());
     }
     
     
+    @Override
+    @Transactional
+    public Account selectWithPassword(String password)
+    {
+        return accountDAO.select
+        (credentialsDAO.selectWithPassword(password)
+        .getAccount().getId_account());
+    }
     
+    @Override
+    @Transactional
+    public Account selectWithUsername(String username)
+    {
+        return accountDAO.select
+        (credentialsDAO.selectWithUsername(username)
+        .getAccount().getId_account());
+    }
+    
+    /*
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
@@ -78,8 +106,29 @@ public class AccountServiceImp implements AccountService, CredentialsService, Us
         List<GrantedAuthority> auths = buildUserAuthority(userRole);
         return buildUserForAuthentification(credentials, auths);
     }
+    */
     
     
+    private Role setUserRoleTo(Account account)
+    {
+        Set<Role> roles = new HashSet<>();
+        roles.add(this.roleDAO.select("user"));
+        account.setRoles(roles);
+        return this.roleDAO.select("user");
+    }
+    
+    
+    private void setUserPermissionTo(Role role)
+    {
+        /*
+            Should be added a method that lists from permission
+        */
+        Set<Permission> permissions = new HashSet<>();
+        permissions.add(this.permissionDAO.select("comment"));
+        permissions.add(this.permissionDAO.select("book"));
+        permissions.add(this.permissionDAO.select("profile"));
+        role.setPermissions(permissions);
+    }
     
     private User buildUserForAuthentification(Credentials credentials, List<GrantedAuthority> authorities)
     {
@@ -141,12 +190,6 @@ public class AccountServiceImp implements AccountService, CredentialsService, Us
         return accountDAO.list();
     }
     */
-
-    
-    private void setReferences(Object ... object)
-    {
-        
-    }
 
     
     

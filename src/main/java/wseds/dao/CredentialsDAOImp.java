@@ -8,6 +8,7 @@ package wseds.dao;
 import wseds.dao.interfaces.CredentialsDAO;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Repository;
 import wseds.model.Credentials;
 import org.apache.log4j.Logger;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -37,6 +39,7 @@ public class CredentialsDAOImp implements CredentialsDAO
     }    
     
     @Override
+    @Transactional
     public void insert(Credentials credentials)  
     {
         Session session = sessionFactory.openSession();
@@ -59,6 +62,7 @@ public class CredentialsDAOImp implements CredentialsDAO
     }
     
     @Override
+    @Transactional
     public void delete(Integer credentialsId) 
     {
         Session session = sessionFactory.openSession();
@@ -81,6 +85,7 @@ public class CredentialsDAOImp implements CredentialsDAO
     }
 
     @Override
+    @Transactional
     public void update(Credentials credentials) 
     {
         Session session = sessionFactory.openSession();
@@ -103,6 +108,7 @@ public class CredentialsDAOImp implements CredentialsDAO
     }
     
     @Override
+    //@Transactional
     public boolean check(Integer credentialsId) 
     {
         try 
@@ -117,14 +123,16 @@ public class CredentialsDAOImp implements CredentialsDAO
     }    
     
     @Override
+    //@Transactional
     public Credentials selectWithAccount(Integer id_credentials) 
     {
         Session session = sessionFactory.openSession();
+        Transaction transaction = session.getTransaction();
         
         try 
         {                
             Query query = session.createQuery
-        ("from User as usr left join usr.account where usr.id_credentials = :id_credentials")
+        ("from Credentials as cred left join cred.id_account where usr.id_credentials = :id_credentials")
                     .setParameter("id_credentials", id_credentials);                      
             // - gg - Return a list of one object Credentials 
             // NOTE: it depends upon the query, you know it will return one obj
@@ -140,11 +148,13 @@ public class CredentialsDAOImp implements CredentialsDAO
     }
     
     @Override
+    //@Transactional
     public Credentials select(Integer id_credentials)
     {
         logger.info(CredentialsDAOImp.class.getName() + ".get() method called.");
         
-        Session session = sessionFactory.openSession();          
+        Session session = sessionFactory.openSession(); 
+        //Transaction transaction = session.getTransaction();
         try 
         {    
             return (Credentials) session.get(Credentials.class, id_credentials);                                  
@@ -158,13 +168,70 @@ public class CredentialsDAOImp implements CredentialsDAO
    
 
     @Override
+    //@Transactional
     public Credentials selectWithUsername(String username) throws UsernameNotFoundException
     {
-        Session session = sessionFactory.openSession();          
+        Session session = sessionFactory.openSession();
+        //Transaction transaction = session.getTransaction();
         try 
         {    
-            List<Credentials> one_item_list = sessionFactory.getCurrentSession().createQuery
-        ("from credentials_cred where username = :username").setParameter("username", username).list();
+            List<Credentials> one_item_list = session.createQuery
+        ("from Credentials as cred where cred.username=:username")
+                    .setParameter("username", username).list(); 
+            
+            if(one_item_list.size()!=1)
+            {
+                return null;
+            }
+            else
+            {
+                return one_item_list.get(0);
+            }
+        }        
+        finally 
+        {
+            session.close();
+        }    
+    }
+
+    @Override
+    //@Transactional
+    public Credentials selectWithPassword(String password)
+    {
+        Session session = sessionFactory.openSession();
+        //Transaction transaction = session.getTransaction();
+        try 
+        {    
+            List<Credentials> one_item_list = session.createQuery
+        ("from Credentials cred where cred.password=:password")
+                    .setParameter("password", password).list();
+            
+            if(one_item_list.size()!=1)
+            {
+                return null;
+            }
+            else
+            {
+                return one_item_list.get(0);
+            }
+        }        
+        finally 
+        {
+            session.close();
+        }    
+    }
+
+    @Override
+    //@Transactional
+    public Credentials selectWithSalt(String salt)
+    {
+        Session session = sessionFactory.openSession(); 
+        //Transaction transaction = session.getTransaction();
+        try 
+        {    
+            List<Credentials> one_item_list = session.createQuery
+        ("from Credentials cred where cred.salt=:salt")
+                    .setParameter("salt", salt).list();
             
             if(one_item_list.size()!=1)
             {
@@ -185,12 +252,14 @@ public class CredentialsDAOImp implements CredentialsDAO
     
 
     @Override
+    //@Transactional
     public List<Credentials> list() 
     {
-        Session session = sessionFactory.openSession();          
+        Session session = sessionFactory.openSession();
+        //Transaction transaction = session.getTransaction();
         try 
         {     
-           Query credentialsQuery = session.createQuery("FROM User");
+           Query credentialsQuery = session.createQuery("FROM Credentials");
            // This will get Users but not their Account.
            List<Credentials> credentialss = credentialsQuery.list(); 
            // List of list of credentials with their account
@@ -198,8 +267,8 @@ public class CredentialsDAOImp implements CredentialsDAO
            for (Credentials credentials : credentialss) 
            {   
                 Query accountQuery = session.createQuery
-        ("from User as usr left join usr.account where usr.credentialsId = :credentialsId")
-                        .setParameter("credentialsId", credentials.getId_credentials());                      
+        ("from Credentials as cred left join cred.account where cred.id_credentials = :id_credentials")
+                        .setParameter("id_credentials", credentials.getId_credentials());                      
                 Credentials credentialsWithAccount = (Credentials) credentialsQuery.list().get(0); 
                 Hibernate.initialize(credentialsWithAccount.getAccount());            
                 credentialssWithAccount.add(credentialsWithAccount );

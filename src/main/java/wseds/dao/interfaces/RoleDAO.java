@@ -14,4 +14,7 @@ import wseds.model.Role;
 public interface RoleDAO
 {
     void insert(Role role);
+    
+    Role select(String name);
+    
 }

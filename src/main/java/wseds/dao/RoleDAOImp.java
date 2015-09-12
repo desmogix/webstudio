@@ -5,6 +5,8 @@
  */
 package wseds.dao;
 
+import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -46,6 +48,31 @@ public class RoleDAOImp implements RoleDAO
         {
             session.close();
         }
+    }
+    
+    
+    @Override
+    public Role select(String name) 
+    {
+        Session session = sessionFactory.openSession();
+        
+        try 
+        {                
+            Query query = session.createQuery
+        ("select rol.name from role rol where rol.name=:name")
+                    .setParameter("name", name);                      
+           
+            // NOTE: it depends upon the query, you know it will return one obj
+            Role role = (Role) query.list().get(0); 
+            //Hibernate.initialize effectively load into the RAM its data
+            Hibernate.initialize(role.getName());            
+            return role;            
+            
+        }        
+        finally 
+        {
+            session.close();            
+        }         
     }
     
 }

@@ -11,14 +11,15 @@ import org.springframework.security.core.GrantedAuthority;
  *
  * @author luigiS
  */
-public class WrapperAuthority implements GrantedAuthority
+public class SpringPermissionNameFormatter implements GrantedAuthority
 {
 
-    private String authority;
- 
-    public WrapperAuthority(String authority) 
+    private final String authority;
+    private final String PERMISSION_PREFIX = "ROLE_PERMISSION_";
+    
+    public SpringPermissionNameFormatter(String authority) 
     {
-        this.authority = authority;
+        this.authority = PERMISSION_PREFIX + authority;
     }
     
     @Override

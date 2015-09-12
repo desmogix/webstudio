@@ -141,6 +141,7 @@
     <bean id="accountValidator" class="wseds.validator.AccountValidator" />
     <bean id="credentialsValidator" class="wseds.validator.CredentialsValidator" />
 
+    <tx:annotation-driven />
     
      <!-- TransactionManager  -->
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
@@ -152,10 +153,12 @@
     
     <!-- Security config class -->
     <bean id="securityConfig" class="wseds.security.SecurityConfig" />
-     
+    <bean id="gap" class="wseds.security.GeneralAuthenticationProvider">
+        <constructor-arg ref="accountServiceImp" /> 
+    </bean>
+        
     <!-- Spring (the servlet) configures Hibernate  -->
     <!-- Enable hibernate annotations in POJOs file-->
-    <tx:annotation-driven />
     
     <!-- Hibernate datasoruce  -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">

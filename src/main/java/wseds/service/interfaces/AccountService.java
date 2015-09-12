@@ -18,7 +18,9 @@ public interface AccountService
 {
     void insert (Account account, Credentials credentials);
     
-    Account selectWithCredentials(Credentials credentials);
+    Account selectWithCredentialsObject(Credentials credentials);
+    Account selectWithPassword(String password);
+    Account selectWithUsername(String username);
     
     /*
     boolean check(Integer id);
