@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -27,27 +27,37 @@ public class RoleDAOImp implements RoleDAO
     @Autowired
     private SessionFactory sessionFactory;
     
+    public RoleDAOImp(){}
+    
     @Override
     public void insert(Role role)
     {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.getTransaction();
         
-        try
+        if(select(role.getName())==null)
         {
-            transaction.begin();
-            session.save(role);
-            transaction.commit();
+            try
+            {
+                transaction.begin();
+                session.save(role);
+                transaction.commit();
+            }
+            catch(RuntimeException e)
+            {
+                transaction.rollback();
+                throw e;
+            }
+            finally
+            {
+                session.close();
+            }
         }
-        catch(RuntimeException e)
+        else
         {
-            transaction.rollback();
-            throw e;
+            System.out.println("\n -*-*- Role already exists -*-*- \n"); 
         }
-        finally
-        {
-            session.close();
-        }
+        
     }
     
     
@@ -55,9 +65,9 @@ public class RoleDAOImp implements RoleDAO
     public Role select(String name) 
     {
         Session session = sessionFactory.openSession();
-        
         try 
-        {                
+        {         
+            
             Query query = session.createQuery
         ("select rol.name from role rol where rol.name=:name")
                     .setParameter("name", name);                      

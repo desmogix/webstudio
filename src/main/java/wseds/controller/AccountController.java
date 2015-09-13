@@ -1,7 +1,6 @@
 package wseds.controller;
 
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -10,10 +9,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import wseds.model.Account;
 import wseds.model.Credentials;
+
 import wseds.service.interfaces.AccountService;
-import wseds.service.interfaces.CredentialsService;
+
 import wseds.validator.AccountValidator;
 import wseds.validator.CredentialsValidator;
 
@@ -38,6 +39,9 @@ public class AccountController
     
     @Autowired
     private AccountService accountService;
+   
+    
+    
     @Autowired
     private MessageSource messageSource;
     
@@ -82,9 +86,6 @@ public class AccountController
         else 
         {   
             accountService.insert(account, credentials);
-         
-            //Set view.            
-            //model.addAttribute("account", account);
             
             String yeah = "Yeah, you got it buddy.";
             model.addAttribute("yeah", yeah);
@@ -95,9 +96,6 @@ public class AccountController
     @RequestMapping(value="/getLogin", method=RequestMethod.GET)
     public String getLogin() 
     {   
-
-        //model.addAttribute("registrationForm", registrationForm);
-      
         return "jsp/view/register";
     }
     

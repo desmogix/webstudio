@@ -6,6 +6,7 @@
 package wseds.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import wseds.dao.interfaces.RoleDAO;
 import wseds.model.Role;
 import wseds.service.interfaces.RoleService;
@@ -14,42 +15,24 @@ import wseds.service.interfaces.RoleService;
  *
  * @author luigiS
  */
+@Service("roleServiceImp")
 public class RoleServiceImp implements RoleService
 {
     @Autowired
     private RoleDAO roleDAO;
     
+    public RoleServiceImp(){}
+    
     @Override
     public void insert(Role role)
     {
-        if(!exists(role))
-        {
-            
-            roleDAO.insert(role);
-        }
-        else
-        {
-            
-        }
+        roleDAO.insert(role);
     }
 
     @Override
     public Role select(String name)
     {
-        
+        return roleDAO.select(name);
     }
-    
-    private boolean exists(Role role)
-    {
-        if(roleDAO.select(role.getName())!=null)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    
     
 }

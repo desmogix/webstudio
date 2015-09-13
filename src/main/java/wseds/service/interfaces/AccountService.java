@@ -6,8 +6,11 @@
 package wseds.service.interfaces;
 
 
+import java.util.Set;
 import wseds.model.Account;
 import wseds.model.Credentials;
+import wseds.model.Permission;
+import wseds.model.Role;
 
 
 /**

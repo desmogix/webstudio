@@ -6,6 +6,7 @@
 package wseds.dao;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.hibernate.Hibernate;
@@ -14,6 +15,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import wseds.dao.interfaces.PermissionDAO;
 import wseds.model.Permission;
 
@@ -22,11 +24,14 @@ import wseds.model.Permission;
  *
  * @author luigiS
  */
+@Repository("permissionDAOImp")
 public class PermissionDAOImp implements PermissionDAO
 {
     
     @Autowired
     private SessionFactory sessionFactory;
+    
+    public PermissionDAOImp(){}
     
     @Override
     public void insert(Permission permission)
@@ -34,21 +39,29 @@ public class PermissionDAOImp implements PermissionDAO
         Session session = sessionFactory.openSession();
         Transaction transaction = session.getTransaction();
 
-        try
+        if(select(permission.getName())==null)
         {
-            transaction.begin();
-            session.save(permission);
-            transaction.commit();
+            try
+            {
+                transaction.begin();
+                session.save(permission);
+                transaction.commit();
+            }
+            catch (RuntimeException e)
+            {
+                transaction.rollback();
+                throw e;
+            }
+            finally
+            {
+                session.close();
+            }
         }
-        catch (RuntimeException e)
+        else
         {
-            transaction.rollback();
-            throw e;
+            System.out.println("\n -*-*- Permission already exists -*-*- \n"); 
         }
-        finally
-        {
-            session.close();
-        }
+        
     }
 
     @Override
@@ -75,43 +88,24 @@ public class PermissionDAOImp implements PermissionDAO
         }  
     }
     
-    public Set<Permission> listByRole() 
+    public Set<Permission> listByRoles(String ... rolesName) 
     {
         Session session = sessionFactory.openSession();  
-        //Transaction transaction = session.getTransaction();
+        
         try 
-        {     
-           Query permissionQuery = session.createQuery("FROM Permission");  
-           
-           // This will get Permissions but not their role.
-           List<Permission> permissions = permissionQuery.list(); 
-           // This will return a list of list of Permissions with their roles.
-           List<Permission> permissionsWithRoles = new ArrayList<>();
-           
-           for (Permission permission : permissions) 
-           {        
-                Query credentialQuery = session.createQuery("").setParameter("id_account", account.getId_account());                      
-                
-"select a from Permission p " +
-                "join p.role p " +
-                "where p.name in (:tags) " +
-                "and a.id in (" +
-                    "select a2.id " +
-                    "from Article a2 " +
-                    "join a2.tags t2 " +
-                    "group by a2 " +
-                    "having count(t2)=:tag_count) " +
-                "group by a " +
-                "having count(t)=:tag_count";
+        {       
+            Query credentialQuery = session.createQuery
+            ("select distinct a from Permission a join a.role t where t.name in (:name)")
+                .setParameterList("name", rolesName);                      
 
-                // A list of 1 element (single permission with its credentials) return to credentialQuery
-                Permission accountWithCredentials = (Permission) credentialQuery.list().get(0);
-                //Hibernate.initialize effectively load into the RAM its data
-                Hibernate.initialize(accountWithCredentials.getCredentials());            
-                accountsWithCredentials.add(accountWithCredentials);
-            }
-            return accountsWithCredentials;
-        }        
+            // A list of 1 element (single permission with its credentials) return to credentialQuery
+            List<Permission> permissionsWithRoles = credentialQuery.list();
+            //Hibernate.initialize effectively makes data available for java logic
+            Hibernate.initialize(permissionsWithRoles);            
+                
+            Set<Permission> permissions = new HashSet<>(permissionsWithRoles);
+            return permissions; 
+        }   
         finally 
         {
             session.close();

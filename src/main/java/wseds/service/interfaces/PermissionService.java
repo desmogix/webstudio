@@ -5,6 +5,7 @@
  */
 package wseds.service.interfaces;
 
+import java.util.Set;
 import wseds.model.Permission;
 
 /**
@@ -15,4 +16,5 @@ public interface PermissionService
 {
     void insert(Permission permission);
     Permission select(String name);
+    Set<Permission> listByRoles(String ... roles);
 }

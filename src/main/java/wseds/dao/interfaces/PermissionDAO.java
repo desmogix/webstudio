@@ -16,6 +16,6 @@ public interface PermissionDAO
 {
     void insert(Permission permission);
     Permission select(String name);
-    Set<Permission> listByRole();
+    Set<Permission> listByRoles(String ... roleName);
     
 }

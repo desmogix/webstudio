@@ -23,7 +23,6 @@ import wseds.dao.interfaces.PermissionDAO;
 import wseds.dao.interfaces.RoleDAO;
 import wseds.model.Account;
 import wseds.model.Credentials;
-import wseds.model.Permission;
 import wseds.model.Role;
 
 import wseds.service.interfaces.CredentialsService;
@@ -43,11 +42,8 @@ public class AccountServiceImp implements AccountService, CredentialsService
     @Autowired
     private PermissionDAO permissionDAO;
    
-    
     public AccountServiceImp(){}
-    
-    
-    
+     
     @Override
     @Transactional
     public void insert(Account account, Credentials credentials) 
@@ -55,10 +51,10 @@ public class AccountServiceImp implements AccountService, CredentialsService
         account.setCredentials(credentials);
         credentials.setAccount(account);
         
-        
-        
-        setUserPermissionTo(setUserRoleTo(account));
-        
+        Set<Role> roles = new HashSet<>();
+        roles.add(roleDAO.select("user"));
+        account.setRoles(roles);
+               
         accountDAO.insert(account);
         credentialsDAO.insert(credentials);
     }
@@ -72,7 +68,6 @@ public class AccountServiceImp implements AccountService, CredentialsService
         (credentialsDAO.selectWithUsername(credentials.getUsername())
                 .getAccount().getId_account());
     }
-    
     
     @Override
     @Transactional
@@ -91,66 +86,6 @@ public class AccountServiceImp implements AccountService, CredentialsService
         (credentialsDAO.selectWithUsername(username)
         .getAccount().getId_account());
     }
-    
-    /*
-    @Transactional
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
-    {
-        Credentials credentials = credentialsDAO.selectWithUsername(username);
-        
-        Set<String> userRole = new HashSet<>();
-        userRole.add("USER");
-                
-        
-        List<GrantedAuthority> auths = buildUserAuthority(userRole);
-        return buildUserForAuthentification(credentials, auths);
-    }
-    */
-    
-    
-    private Role setUserRoleTo(Account account)
-    {
-        Set<Role> roles = new HashSet<>();
-        roles.add(this.roleDAO.select("user"));
-        account.setRoles(roles);
-        return this.roleDAO.select("user");
-    }
-    
-    
-    private void setUserPermissionTo(Role role)
-    {
-        /*
-            Should be added a method that lists from permission
-        */
-        Set<Permission> permissions = new HashSet<>();
-        permissions.add(this.permissionDAO.select("comment"));
-        permissions.add(this.permissionDAO.select("book"));
-        permissions.add(this.permissionDAO.select("profile"));
-        role.setPermissions(permissions);
-    }
-    
-    private User buildUserForAuthentification(Credentials credentials, List<GrantedAuthority> authorities)
-    {
-        return new User(credentials.getUsername(), credentials.getPassword(), authorities);
-    }
-    
-    
-    private List<GrantedAuthority> buildUserAuthority(Set<String> userRoles)
-    {
-        Set<GrantedAuthority> setAuths = new HashSet<>();
-        
-        for(String userRole : userRoles)
-        {
-            setAuths.add(new SimpleGrantedAuthority(userRole));
-        }
-        
-        List<GrantedAuthority> result = new ArrayList<>(setAuths);
-        return result;
-    }
-    
-   
-    
     
     /*
     @Override

@@ -109,7 +109,7 @@
             class="org.springframework.web.servlet.view.InternalResourceViewResolver"
             p:prefix="/jsp/view/"
             p:suffix=".jsp" 
-             />     
+            />     
     
 
     <!-- Spring MesssageSource. -->         
@@ -126,16 +126,22 @@
     <!-- Model. -->
     <bean id="account" class="wseds.model.Account" />
     <bean id="credentials" class="wseds.model.Credentials" />
-
+    <bean id="role" class="wseds.model.Role" />
+    <bean id="permission" class="wseds.model.Permission" />
+    
     <!-- Wrapper obbject WTO -->
     <bean id="registrationForm" class="wseds.wdo.RegistrationForm" />
     
     <!-- Spring Services. -->
-    <bean id="accountServiceImp" class="wseds.service.AccountServiceImp" />    
+    <bean id="accountServiceImp" class="wseds.service.AccountServiceImp" />  
+    <bean id="roleServiceImp" class="wseds.service.RoleServiceImp" /> 
+    <bean id="permissionServiceImp" class="wseds.service.PermissionServiceImp" />  
 
     <!-- Spring Repositories. -->
     <bean id="accountDAOImp" class="wseds.dao.AccountDAOImp" />    
     <bean id="credentialsDAOImp" class="wseds.dao.CredentialsDAOImp" /> 
+    <bean id="roleDAOImp" class="wseds.dao.RoleDAOImp" />
+    <bean id="permissionDAOImp" class="wseds.dao.PermissionDAOImp" />
     
     <!-- Validator -->
     <bean id="accountValidator" class="wseds.validator.AccountValidator" />
