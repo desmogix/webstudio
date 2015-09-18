@@ -5,7 +5,6 @@
  */
 package wseds.model;
 
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,17 +18,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-
 import javax.persistence.Table;
-
-
-
 /**
  *
  * @author luigi@santivetti
  */
-
-
 @Entity
 @Table(name="role")
 public class Role implements Serializable
@@ -43,10 +36,24 @@ public class Role implements Serializable
     private String name;
     
     
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles")
-    private Set<Account> accounts = new HashSet<>(0);
+    @ManyToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable
+    (
+        name = "account_has_role", 
+        joinColumns = 
+            {
+                @JoinColumn
+                    (name="id_role", nullable = false)
+            }, 
+        inverseJoinColumns = 
+            {
+                @JoinColumn
+                    (name = "id_account", nullable = false)
+            }
+    )
+    private Set<Account> accounts = new HashSet<>();
     
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable
     (
         name = "role_has_permission", 
@@ -61,7 +68,7 @@ public class Role implements Serializable
                 (name = "id_permission", nullable = false)
         }
     )
-    private Set<Permission> permissions = new HashSet<>(0);
+    private Set<Permission> permissions = new HashSet<>();
 
     public Role(){}
     
@@ -89,12 +96,17 @@ public class Role implements Serializable
     {
         return accounts;
     }
-
+    
     public void setAccounts(Set<Account> accounts)
     {
         this.accounts = accounts;
     }
 
+    public void addAccount(Account account)
+    {
+        this.accounts.add(account);
+    }
+    
     public Set<Permission> getPermissions()
     {
         return permissions;
@@ -105,6 +117,8 @@ public class Role implements Serializable
         this.permissions = permissions;
     }
     
-    
-    
+    public void addPermission(Permission permission)
+    {
+        this.permissions.add(permission);
+    }
 }

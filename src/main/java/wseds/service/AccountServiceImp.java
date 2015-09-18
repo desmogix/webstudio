@@ -5,25 +5,21 @@
  */
 package wseds.service;
 
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import wseds.service.interfaces.AccountService;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+
 import org.springframework.stereotype.Service;
 import wseds.dao.interfaces.AccountDAO;
 import wseds.dao.interfaces.CredentialsDAO;
 import wseds.dao.interfaces.PermissionDAO;
+
 import wseds.dao.interfaces.RoleDAO;
 import wseds.model.Account;
 import wseds.model.Credentials;
+import wseds.model.Permission;
 import wseds.model.Role;
+
 
 import wseds.service.interfaces.CredentialsService;
 /**
@@ -38,30 +34,38 @@ public class AccountServiceImp implements AccountService, CredentialsService
     @Autowired
     private CredentialsDAO credentialsDAO;
     @Autowired
+    private PermissionDAO permissionDAO;
+    @Autowired
     private RoleDAO roleDAO;
     @Autowired
-    private PermissionDAO permissionDAO;
-   
+    private Role role;
+    //@Autowired
+    //private Permission permission;
+    
+    
+    
+    
     public AccountServiceImp(){}
      
     @Override
     @Transactional
     public void insert(Account account, Credentials credentials) 
     {
-        account.setCredentials(credentials);
-        credentials.setAccount(account);
+        //Too many role objects !!!
+        role.addAccount(account);
+        role.setPermissions(permissionDAO.list());
         
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleDAO.select("user"));
-        account.setRoles(roles);
-               
+        account.setCredentials(credentials);
+        account.addRole(roleDAO.select("user"));
+        
+        credentials.setAccount(account);
+          
         accountDAO.insert(account);
         credentialsDAO.insert(credentials);
     }
 
     
     @Override
-    @Transactional
     public Account selectWithCredentialsObject(Credentials credentials)
     {
         return accountDAO.select
@@ -70,7 +74,6 @@ public class AccountServiceImp implements AccountService, CredentialsService
     }
     
     @Override
-    @Transactional
     public Account selectWithPassword(String password)
     {
         return accountDAO.select
@@ -79,7 +82,6 @@ public class AccountServiceImp implements AccountService, CredentialsService
     }
     
     @Override
-    @Transactional
     public Account selectWithUsername(String username)
     {
         return accountDAO.select

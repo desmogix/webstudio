@@ -8,6 +8,7 @@ package wseds.service;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import wseds.dao.interfaces.PermissionDAO;
 import wseds.model.Permission;
 import wseds.service.interfaces.PermissionService;
@@ -25,6 +26,7 @@ public class PermissionServiceImp implements PermissionService
     public PermissionServiceImp(){}
 
     @Override
+    @Transactional
     public void insert(Permission permission)
     {
         permissionDAO.insert(permission);
@@ -37,9 +39,9 @@ public class PermissionServiceImp implements PermissionService
     }
 
     @Override
-    public Set<Permission> listByRoles(String... roles)
+    public Set<Permission> listPermissionsPerRole(Integer... id_roles)
     {
-         return permissionDAO.listByRoles(roles);
+         return permissionDAO.listPermissionsPerRole(id_roles);
     }
     
     

@@ -30,6 +30,7 @@ public class AccountDAOImp implements AccountDAO
     @Autowired
     private SessionFactory sessionFactory;
     
+    
     static final Logger logger = Logger.getLogger(AccountDAOImp.class.getName());
     
     public AccountDAOImp() 
@@ -37,7 +38,6 @@ public class AccountDAOImp implements AccountDAO
     }    
     
     @Override
-    @Transactional
     public void insert(Account account)  
     {
         Session session = sessionFactory.openSession();
@@ -61,7 +61,6 @@ public class AccountDAOImp implements AccountDAO
     }
     
     @Override
-    @Transactional
     public void delete(Integer id_account) 
     {
         Session session = sessionFactory.openSession();
@@ -82,7 +81,7 @@ public class AccountDAOImp implements AccountDAO
     }
 
     @Override
-    @Transactional
+ 
     public void update(Account account) 
     {
         Session session = sessionFactory.openSession();
@@ -104,7 +103,7 @@ public class AccountDAOImp implements AccountDAO
     }   
     
     @Override
-    //@Transactional
+
     public boolean check(Integer id_account) 
     {
         try 
@@ -119,7 +118,7 @@ public class AccountDAOImp implements AccountDAO
     }    
     
     @Override
-    //@Transactional
+    
     public Account selectWithCredentialsId(Integer id_account) 
     {
         Session session = sessionFactory.openSession();
@@ -144,7 +143,7 @@ public class AccountDAOImp implements AccountDAO
     }
 
     @Override
-    //@Transactional
+  
     public Account select(Integer id_account)
     {
         logger.info(AccountDAOImp.class.getName() + ".get() method called.");
@@ -160,7 +159,7 @@ public class AccountDAOImp implements AccountDAO
     }
 
     @Override
-    //@Transactional
+
     public List<Account> list() 
     {
         Session session = sessionFactory.openSession();  

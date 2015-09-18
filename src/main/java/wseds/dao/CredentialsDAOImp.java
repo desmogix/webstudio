@@ -39,7 +39,7 @@ public class CredentialsDAOImp implements CredentialsDAO
     }    
     
     @Override
-    @Transactional
+    
     public void insert(Credentials credentials)  
     {
         Session session = sessionFactory.openSession();
@@ -62,7 +62,7 @@ public class CredentialsDAOImp implements CredentialsDAO
     }
     
     @Override
-    @Transactional
+    
     public void delete(Integer credentialsId) 
     {
         Session session = sessionFactory.openSession();
@@ -85,7 +85,7 @@ public class CredentialsDAOImp implements CredentialsDAO
     }
 
     @Override
-    @Transactional
+   
     public void update(Credentials credentials) 
     {
         Session session = sessionFactory.openSession();

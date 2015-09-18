@@ -5,6 +5,8 @@
  */
 package wseds.dao.interfaces;
 
+import java.util.Set;
+import wseds.model.Permission;
 import wseds.model.Role;
 
 /**
@@ -17,4 +19,5 @@ public interface RoleDAO
     
     Role select(String name);
     
+    Set<Role> listPermissionsPerRole(String ... roleName);
 }

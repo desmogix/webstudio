@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import wseds.dao.interfaces.PermissionDAO;
 import wseds.model.Permission;
+import wseds.model.Role;
 
 
 /**
@@ -72,13 +73,13 @@ public class PermissionDAOImp implements PermissionDAO
         try 
         {                
             Query query = session.createQuery
-        ("select perm.name from permission perm where perm.name=:name")
+        ("from Permission where name=:name")
                     .setParameter("name", name);                      
             
             // NOTE: it depends upon the query, you know it will return one obj
-            Permission permission = (Permission) query.list().get(0); 
+            Permission permission = (Permission) query.uniqueResult();
             //Hibernate.initialize effectively load into the RAM its data
-            Hibernate.initialize(permission.getName());            
+            Hibernate.initialize(permission.getRoles());            
             return permission;            
             
         }        
@@ -88,28 +89,73 @@ public class PermissionDAOImp implements PermissionDAO
         }  
     }
     
-    public Set<Permission> listByRoles(String ... rolesName) 
+    @Override
+    public Set<Permission> listPermissionsPerRole(Integer... id_roles)
     {
-        Session session = sessionFactory.openSession();  
-        
+        Session session = sessionFactory.openSession();
         try 
-        {       
-            Query credentialQuery = session.createQuery
-            ("select distinct a from Permission a join a.role t where t.name in (:name)")
-                .setParameterList("name", rolesName);                      
-
-            // A list of 1 element (single permission with its credentials) return to credentialQuery
-            List<Permission> permissionsWithRoles = credentialQuery.list();
-            //Hibernate.initialize effectively makes data available for java logic
-            Hibernate.initialize(permissionsWithRoles);            
-                
-            Set<Permission> permissions = new HashSet<>(permissionsWithRoles);
-            return permissions; 
-        }   
+        {         
+            Query selectedPermissionsQuery = session.createQuery("from Permission p where p.roles.id_role=:id_roles").setParameter("id_roles", id_roles);  
+           
+            
+           
+            List<Permission> selectedPermissions = selectedPermissionsQuery.list(); 
+             /*
+            List<Permission> permissionsWithRoles = new ArrayList<>();
+            
+            for(Permission p : selectedPermissions)
+            {
+                Query rolesQuery = session.createQuery("from Permission as p left join fetch p.roles where p.id_permission = " +
+                                                      ":id_permission").setParameter("id_permission", p.getId_permission());
+            
+                Permission permissionWithRoles = (Permission) rolesQuery.list().get(0); 
+                Hibernate.initialize(permissionWithRoles.getRoles());            
+                permissionsWithRoles.add(permissionWithRoles);
+            }
+                 
+            */        
+            Set<Permission> roles = new HashSet<>(selectedPermissions);          
+            return roles;
+        }        
         finally 
         {
-            session.close();
-        }         
-    }   
+            session.close();            
+        }  
+    }
+
+    @Override
+    public Set<Permission> list()
+    {
+        Session session = sessionFactory.openSession();
+        try 
+        {         
+            Query permissionsQuery = session.createQuery("from Permission");  
+
+            List<Permission> permissions = permissionsQuery.list(); 
+            
+            List<Permission> permissionsWithRoles = new ArrayList<>();
+            
+            for(Permission a_permission : permissions)
+            {
+                Query rolesQuery = session.createQuery("from Permission as p left join fetch p.roles where p.id_permission = " +
+                                                      ":id_permission").setParameter("id_permission", a_permission.getId_permission());
+            
+                Permission permissionWithRoles = (Permission) rolesQuery.list().get(0); 
+                Hibernate.initialize(permissionWithRoles.getRoles());
+                
+                permissionsWithRoles.add(permissionWithRoles);
+            }
+                 
+                  
+            Set<Permission> result = new HashSet<>(permissionsWithRoles);          
+            return result;
+        }        
+        finally 
+        {
+            session.close();            
+        }  
+    }
+    
+    
     
 }

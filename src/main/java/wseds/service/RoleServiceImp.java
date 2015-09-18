@@ -7,6 +7,7 @@ package wseds.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import wseds.dao.interfaces.RoleDAO;
 import wseds.model.Role;
 import wseds.service.interfaces.RoleService;
@@ -24,6 +25,7 @@ public class RoleServiceImp implements RoleService
     public RoleServiceImp(){}
     
     @Override
+    @Transactional
     public void insert(Role role)
     {
         roleDAO.insert(role);

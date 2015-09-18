@@ -13,8 +13,8 @@ import java.util.Collection;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
 import javax.persistence.CascadeType;
 
 
@@ -30,7 +30,7 @@ import javax.persistence.ManyToMany;
 
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import wseds.security.SpringPermissionNameFormatter;
 
@@ -67,7 +67,7 @@ public class Account implements Serializable, UserDetails
     @JsonManagedReference
     private Credentials credentials;
 
-    @ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable
     (
         name = "account_has_role", 
@@ -82,7 +82,7 @@ public class Account implements Serializable, UserDetails
                     (name = "id_role", nullable = false)
             }
     )
-    private Set<Role> roles = new HashSet<>(0);
+    private Set<Role> roles = new HashSet<>();
     
     
     public Account()
@@ -148,6 +148,11 @@ public class Account implements Serializable, UserDetails
     public void setRoles(Set<Role> roles)
     {
         this.roles = roles;
+    }
+    
+    public void addRole(Role role)
+    {
+        this.roles.add(role);
     }
 
     public void setCredentials(Credentials credentials)

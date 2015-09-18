@@ -16,5 +16,5 @@ public interface PermissionService
 {
     void insert(Permission permission);
     Permission select(String name);
-    Set<Permission> listByRoles(String ... roles);
+    Set<Permission> listPermissionsPerRole(Integer ... id_roles);
 }

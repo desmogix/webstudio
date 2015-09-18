@@ -10,12 +10,15 @@ import java.io.Serializable;
 
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import javax.persistence.Table;
@@ -38,8 +41,22 @@ public class Permission implements Serializable
     @Column(name="name", nullable=false, columnDefinition = "VARCHAR", length=45)
     private String name;
     
-    @ManyToMany(fetch= FetchType.LAZY, mappedBy="permissions")
-    private Set<Role> roles = new HashSet<>(0);
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable
+    (
+        name = "role_has_permission", 
+        joinColumns = 
+        {
+            @JoinColumn
+                (name="id_permission", nullable=false)
+        },
+        inverseJoinColumns = 
+        {
+            @JoinColumn
+                (name = "id_role", nullable = false)
+        }
+    )
+    private Set<Role> roles = new HashSet<>();
     
     
     
@@ -71,6 +88,11 @@ public class Permission implements Serializable
         return roles;
     }
 
+    public void addRole(Role role)
+    {
+        this.roles.add(role);
+    }
+    
     public void setRoles(Set<Role> roles)
     {
         this.roles = roles;
