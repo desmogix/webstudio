@@ -73,7 +73,9 @@ public class PermissionDAOImp implements PermissionDAO
         try 
         {                
             Query query = session.createQuery
-        ("from Permission where name=:name")
+        ("from Permission as p "
+                + "left join fetch p.roles as pr "
+                + "where r.name = :name")
                     .setParameter("name", name);                      
             
             // NOTE: it depends upon the query, you know it will return one obj
@@ -90,32 +92,33 @@ public class PermissionDAOImp implements PermissionDAO
     }
     
     @Override
-    public Set<Permission> listPermissionsPerRole(Integer... id_roles)
+    public Set<Permission> listRolesPerPermission(String... permissionName)
     {
         Session session = sessionFactory.openSession();
         try 
-        {         
-            Query selectedPermissionsQuery = session.createQuery("from Permission p where p.roles.id_role=:id_roles").setParameter("id_roles", id_roles);  
-           
+        {       
             
-           
-            List<Permission> selectedPermissions = selectedPermissionsQuery.list(); 
-             /*
+            Query permissonQuery = session.createQuery("from Permission p where p.name=:name").setParameterList("name", permissionName);
+            List<Permission> permissions = permissonQuery.list();
+            
             List<Permission> permissionsWithRoles = new ArrayList<>();
             
-            for(Permission p : selectedPermissions)
+            for(Permission permission : permissions)
             {
-                Query rolesQuery = session.createQuery("from Permission as p left join fetch p.roles where p.id_permission = " +
-                                                      ":id_permission").setParameter("id_permission", p.getId_permission());
-            
-                Permission permissionWithRoles = (Permission) rolesQuery.list().get(0); 
-                Hibernate.initialize(permissionWithRoles.getRoles());            
+                Query selectedPermissionsQuery = session.createQuery
+        ("from Permission p "
+                + "left join fetch p.roles "
+                + "where p.id_permission = :id_permission")
+                    .setParameter("id_permission", permission.getId_permission());
+                
+                Permission permissionWithRoles = (Permission) selectedPermissionsQuery.list().get(0);
+                Hibernate.initialize(permissionWithRoles.getRoles());
                 permissionsWithRoles.add(permissionWithRoles);
             }
-                 
-            */        
-            Set<Permission> roles = new HashSet<>(selectedPermissions);          
-            return roles;
+            
+            Set<Permission> selectedPermissionsWithRoles = new HashSet<>(permissionsWithRoles);
+            return selectedPermissionsWithRoles;
+           
         }        
         finally 
         {
@@ -137,8 +140,9 @@ public class PermissionDAOImp implements PermissionDAO
             
             for(Permission a_permission : permissions)
             {
-                Query rolesQuery = session.createQuery("from Permission as p left join fetch p.roles where p.id_permission = " +
-                                                      ":id_permission").setParameter("id_permission", a_permission.getId_permission());
+                Query rolesQuery = session.createQuery
+        ("from Permission as p left join fetch p.roles where p.id_permission = :id_permission")
+                        .setParameter("id_permission", a_permission.getId_permission());
             
                 Permission permissionWithRoles = (Permission) rolesQuery.list().get(0); 
                 Hibernate.initialize(permissionWithRoles.getRoles());

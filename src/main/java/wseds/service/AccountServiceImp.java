@@ -51,15 +51,10 @@ public class AccountServiceImp implements AccountService, CredentialsService
     @Transactional
     public void insert(Account account, Credentials credentials) 
     {
-        //Too many role objects !!!
-        role.addAccount(account);
-        role.setPermissions(permissionDAO.list());
-        
         account.setCredentials(credentials);
-        account.addRole(roleDAO.select("user"));
-        
         credentials.setAccount(account);
-          
+        account.setRoles(roleDAO.listPermissionsPerRole("user"));
+        
         accountDAO.insert(account);
         credentialsDAO.insert(credentials);
     }

@@ -41,7 +41,7 @@ public class Permission implements Serializable
     @Column(name="name", nullable=false, columnDefinition = "VARCHAR", length=45)
     private String name;
     
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable
     (
         name = "role_has_permission", 

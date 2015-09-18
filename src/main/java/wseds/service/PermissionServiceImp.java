@@ -39,9 +39,9 @@ public class PermissionServiceImp implements PermissionService
     }
 
     @Override
-    public Set<Permission> listPermissionsPerRole(Integer... id_roles)
+    public Set<Permission> listRolesPerPermission(String... permissionName)
     {
-         return permissionDAO.listPermissionsPerRole(id_roles);
+         return permissionDAO.listRolesPerPermission(permissionName);
     }
     
     

@@ -74,8 +74,11 @@ public class RoleDAOImp implements RoleDAO
         {         
             
             Query query = session.createQuery
-        ("from Role where name=:name")
-                    .setParameter("name", name);                      
+        ("from Role as r "
+                + "left join fetch r.permissions as rp "
+                + "left join fetch r.accounts as ra "
+                + "where r.name = :name")
+                        .setParameter("name", name);                      
 
             // NOTE: it depends upon the query, you know it will return one obj
             //System.out.println("LIST: \n\n\n\n --------- >   " + query.list().size());
@@ -101,22 +104,27 @@ public class RoleDAOImp implements RoleDAO
         {         
             
             Query selectedRolesQuery = session.createQuery("from Role r where r.name=:name").setParameterList("name", roleName);  
-            List<Role> selectedRoles = selectedRolesQuery.list(); // This will get Persons but not their Books.
+            List<Role> roles = selectedRolesQuery.list(); // This will get Persons but not their Books.
             
             List<Role> rolesWithPermissions = new ArrayList<>();
             
-            for(Role r : selectedRoles)
+            for(Role role : roles)
             {
-                Query permissionsQuery = session.createQuery("from Role as r left join fetch r.permissions where r.id_role = " +
-                                                      ":id_role").setParameter("id_role", r.getId_role());
+                Query permissionsQuery = session.createQuery
+        ("from Role as r "
+                + "left join fetch r.permissions as rp "
+                + "left join fetch r.accounts as ra "
+                + "where r.id_role = :id_role")
+                        .setParameter("id_role", role.getId_role());
             
                 Role roleWithPermissions = (Role) permissionsQuery.list().get(0); 
-                Hibernate.initialize(roleWithPermissions.getPermissions());            
+                Hibernate.initialize(role.getPermissions());
+                Hibernate.initialize(role.getAccounts());           
                 rolesWithPermissions.add(roleWithPermissions);
             }
                  
-            Set<Role> roles = new HashSet<>(rolesWithPermissions);          
-            return roles;            
+            Set<Role> selectedRolesWithPermissions = new HashSet<>(rolesWithPermissions);          
+            return selectedRolesWithPermissions;            
             
         }        
         finally 
