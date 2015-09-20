@@ -158,8 +158,9 @@
     <import resource="wseds-flow.xml" /> 
     
     <!-- Security config class -->
-    <bean id="securityConfig" class="wseds.security.SecurityConfig" />
-    <bean id="gap" class="wseds.security.GeneralAuthenticationProvider">
+    <bean id="UrlsLayerConfig" class="wseds.security.urls.UrlLayerConfig" />
+    <bean id="MethodsLayerConfig" class="wseds.security.methods.MethodLayerConfig" />
+    <bean id="authenticationProvider" class="wseds.security.methods.GeneralAuthenticationProvider">
         <constructor-arg ref="accountServiceImp" /> 
     </bean>
         

@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
 import wseds.model.Credentials;
 import org.apache.log4j.Logger;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.transaction.annotation.Transactional;
+
 
 /**
  *
@@ -108,7 +108,7 @@ public class CredentialsDAOImp implements CredentialsDAO
     }
     
     @Override
-    //@Transactional
+   
     public boolean check(Integer credentialsId) 
     {
         try 
@@ -123,16 +123,16 @@ public class CredentialsDAOImp implements CredentialsDAO
     }    
     
     @Override
-    //@Transactional
+    
     public Credentials selectWithAccount(Integer id_credentials) 
     {
         Session session = sessionFactory.openSession();
-        Transaction transaction = session.getTransaction();
+        //Transaction transaction = session.getTransaction();
         
         try 
         {                
             Query query = session.createQuery
-        ("from Credentials as cred left join cred.id_account where usr.id_credentials = :id_credentials")
+        ("from Credentials as cred left join fetch cred.account where cred.id_credentials = :id_credentials")
                     .setParameter("id_credentials", id_credentials);                      
             // - gg - Return a list of one object Credentials 
             // NOTE: it depends upon the query, you know it will return one obj
@@ -148,7 +148,7 @@ public class CredentialsDAOImp implements CredentialsDAO
     }
     
     @Override
-    //@Transactional
+    
     public Credentials select(Integer id_credentials)
     {
         logger.info(CredentialsDAOImp.class.getName() + ".get() method called.");
@@ -168,7 +168,7 @@ public class CredentialsDAOImp implements CredentialsDAO
    
 
     @Override
-    //@Transactional
+    
     public Credentials selectWithUsername(String username) throws UsernameNotFoundException
     {
         Session session = sessionFactory.openSession();
@@ -176,7 +176,7 @@ public class CredentialsDAOImp implements CredentialsDAO
         try 
         {    
             List<Credentials> one_item_list = session.createQuery
-        ("from Credentials as cred where cred.username=:username")
+        ("from Credentials as cred left join fetch cred.account where cred.username = :username")
                     .setParameter("username", username).list(); 
             
             if(one_item_list.size()!=1)
@@ -185,7 +185,9 @@ public class CredentialsDAOImp implements CredentialsDAO
             }
             else
             {
-                return one_item_list.get(0);
+                Credentials credentials = one_item_list.get(0);
+                Hibernate.initialize(credentials.getAccount());
+                return credentials;
             }
         }        
         finally 
@@ -195,7 +197,7 @@ public class CredentialsDAOImp implements CredentialsDAO
     }
 
     @Override
-    //@Transactional
+    
     public Credentials selectWithPassword(String password)
     {
         Session session = sessionFactory.openSession();
@@ -203,7 +205,7 @@ public class CredentialsDAOImp implements CredentialsDAO
         try 
         {    
             List<Credentials> one_item_list = session.createQuery
-        ("from Credentials cred where cred.password=:password")
+        ("from Credentials as cred left join fetch cred.account where cred.password = :password")
                     .setParameter("password", password).list();
             
             if(one_item_list.size()!=1)
@@ -212,7 +214,9 @@ public class CredentialsDAOImp implements CredentialsDAO
             }
             else
             {
-                return one_item_list.get(0);
+                Credentials credentials = one_item_list.get(0);
+                Hibernate.initialize(credentials.getAccount());
+                return credentials;
             }
         }        
         finally 
@@ -222,7 +226,7 @@ public class CredentialsDAOImp implements CredentialsDAO
     }
 
     @Override
-    //@Transactional
+    
     public Credentials selectWithSalt(String salt)
     {
         Session session = sessionFactory.openSession(); 
@@ -230,7 +234,7 @@ public class CredentialsDAOImp implements CredentialsDAO
         try 
         {    
             List<Credentials> one_item_list = session.createQuery
-        ("from Credentials cred where cred.salt=:salt")
+        ("from Credentials as cred left join fetch cred.account where cred.salt = :salt")
                     .setParameter("salt", salt).list();
             
             if(one_item_list.size()!=1)
@@ -239,7 +243,9 @@ public class CredentialsDAOImp implements CredentialsDAO
             }
             else
             {
-                return one_item_list.get(0);
+                Credentials credentials = one_item_list.get(0);
+                Hibernate.initialize(credentials.getAccount());
+                return credentials;
             }
         }        
         finally 
@@ -267,7 +273,7 @@ public class CredentialsDAOImp implements CredentialsDAO
            for (Credentials credentials : credentialss) 
            {   
                 Query accountQuery = session.createQuery
-        ("from Credentials as cred left join cred.account where cred.id_credentials = :id_credentials")
+        ("from Credentials as cred left join fetch cred.account where cred.id_credentials = :id_credentials")
                         .setParameter("id_credentials", credentials.getId_credentials());                      
                 Credentials credentialsWithAccount = (Credentials) credentialsQuery.list().get(0); 
                 Hibernate.initialize(credentialsWithAccount.getAccount());            

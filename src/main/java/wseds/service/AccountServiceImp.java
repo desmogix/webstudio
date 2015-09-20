@@ -8,6 +8,7 @@ package wseds.service;
 import wseds.service.interfaces.AccountService;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import org.springframework.stereotype.Service;
 import wseds.dao.interfaces.AccountDAO;
@@ -49,6 +50,7 @@ public class AccountServiceImp implements AccountService, CredentialsService
      
     @Override
     @Transactional
+    //@PreAuthorize("hasRole('ROLE_PERMISSION_booking')")
     public void insert(Account account, Credentials credentials) 
     {
         account.setCredentials(credentials);

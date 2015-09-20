@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wseds.security;
+package wseds.security.methods;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -11,13 +11,13 @@ import org.springframework.security.core.GrantedAuthority;
  *
  * @author luigiS
  */
-public class SpringPermissionNameFormatter implements GrantedAuthority
+public class AccountAuthority implements GrantedAuthority
 {
 
     private final String authority;
     private final String PERMISSION_PREFIX = "ROLE_PERMISSION_";
     
-    public SpringPermissionNameFormatter(String authority) 
+    public AccountAuthority(String authority) 
     {
         this.authority = PERMISSION_PREFIX + authority;
     }

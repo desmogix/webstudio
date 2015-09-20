@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wseds.security;
+package wseds.security.methods;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -38,6 +37,9 @@ public class GeneralAuthenticationProvider implements AuthenticationProvider
     public Authentication authenticate(Authentication authentication) throws AuthenticationException
     {
         Account account = accountService.selectWithUsername(authentication.getPrincipal().toString());
+        
+        //NON LO STAMPA
+        System.out.println("\n\n\n ++++++++++++++++++++++++++++++++++++++++++++++++++ \n\n\n +++ USER: " + authentication.getCredentials().toString() + "\n\n\n");
         
         if(account == null)
         {
