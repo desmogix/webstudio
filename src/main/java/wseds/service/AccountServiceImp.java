@@ -81,9 +81,17 @@ public class AccountServiceImp implements AccountService, CredentialsService
     @Override
     public Account selectWithUsername(String username)
     {
-        return accountDAO.select
-        (credentialsDAO.selectWithUsername(username)
-        .getAccount().getId_account());
+        try
+        {
+            return accountDAO.select
+            (credentialsDAO.selectWithUsername(username)
+            .getAccount().getId_account());
+        }
+        catch(Exception e)
+        {
+           throw e;     
+        }
+        
     }
     
     /*

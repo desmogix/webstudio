@@ -1,4 +1,4 @@
 <!-- LuigiS -->
 
-<c:url value="/jsp/view/service.jsp" var="serviceURL" />  
-<a href="${serviceURL}">Services</a>   
+<c:url value="/service" var="serviceURL" />  
+<font color="black"> <a style="text-decoration:none; color:inherit" href="${serviceURL}">Services</a> </font>  

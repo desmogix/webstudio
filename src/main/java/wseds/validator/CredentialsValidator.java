@@ -18,36 +18,10 @@ import wseds.model.Account;
 
 import wseds.model.Credentials;
 
-@Component
-public class CredentialsValidator implements Validator
+
+public interface CredentialsValidator extends Validator
 {
-    public CredentialsValidator()
-    {
-    }
     
-    @Override
-    public boolean supports (Class cls)
-    {
-        return Credentials.class.isAssignableFrom(cls);
-    }
-    
-    @Override
-    public void validate(Object target, Errors errors)
-    {
-        
-        Credentials credentials = (Credentials) target;
-        
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "credentials.username", "username.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "credentials.password", "password.required");
-        
-        if (credentials.getUsername().length() > 30) 
-        {
-            errors.rejectValue("username", "userame.invalidLength");
-        }
-        
-        if (credentials.getUsername().length() > 128) 
-        {
-            errors.rejectValue("password", "password.invalidLength");
-        }
-    }
+    public void validate(Object target, Errors errors, String propertyPath);
+
 }

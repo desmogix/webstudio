@@ -1,0 +1,4 @@
+<!-- LuigiS -->
+
+<c:url value="/register" var="registerURL" />  
+<font color="green"> <a style="text-decoration:none; color:inherit" href="${registerURL}">Register</a>   </font>

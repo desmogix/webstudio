@@ -13,11 +13,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <%@include file="/jspf/home.jspf"%>
+        <b><%@include file="/jspf/home.jspf"%></b>
         <%@include file="/jspf/alert.jspf"%> 
         <%@include file="/jspf/service.jspf"%> 
         <%@include file="/jspf/blog.jspf"%> 
-        <%@include file="/jspf/login.jspf"%> 
+        <%@include file="/jspf/login.jspf"%>
+        <%@include file="/jspf/register.jspf"%>
         <title>Home WSEDS</title>
     </head>
 
@@ -25,8 +26,7 @@
         
         <h1>Web Studio Everyday Service</h1>
         <h2>Home</h2>
-        
-        <p>Select from the menu above your destination</p>
+        <h3>Select from the menu above your destination</h3>
         
     </body>
 </html>

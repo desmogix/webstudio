@@ -1,6 +1,7 @@
 package wseds.controller;
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import wseds.model.Account;
 import wseds.model.Credentials;
+import wseds.security.methods.GeneralAuthenticationProvider;
 
 import wseds.service.interfaces.AccountService;
 
@@ -20,6 +22,7 @@ import wseds.validator.AccountValidator;
 import wseds.validator.CredentialsValidator;
 
 import wseds.wdo.RegistrationForm;
+
 
 
 
@@ -41,7 +44,8 @@ public class AccountController
     @Autowired
     private AccountService accountService;
    
-    
+    @Autowired
+    private GeneralAuthenticationProvider gap;
     
     @Autowired
     private MessageSource messageSource;
@@ -53,7 +57,7 @@ public class AccountController
     private Credentials credentials;
     @Autowired
     private RegistrationForm registrationForm;
-    
+  
     
     public AccountController() 
     {}
@@ -94,10 +98,32 @@ public class AccountController
         }
     }  
     
-    @RequestMapping(value="/getLogin", method=RequestMethod.GET)
-    public String getLogin() 
+    @RequestMapping(value="/getSignin", method=RequestMethod.GET)
+    public String getSignIn(Model model) 
     {   
-        return "jsp/view/register";
+        model.addAttribute("credentials", credentials);
+        return "signin";
     }
+    
+    @RequestMapping(value="/postSignin", method=RequestMethod.POST)
+    public String postSignIn(@ModelAttribute("credentials") Credentials credentials, 
+                            BindingResult bindingResult, 
+                            Model model) 
+    {   
+        this.credentials = credentials;
+        credentialsValidator.validate(credentials, bindingResult);
+        
+        if (bindingResult.hasErrors()) 
+        {
+            return "signin";
+        }
+        else 
+        {   
+            return "redirect:/jsp/view/user_home.jsp";
+        }
+    }
+    
+    
+   
     
 }

@@ -23,7 +23,11 @@ public class UrlLayerConfig extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
-        //http.authorizeRequests().antMatchers("/jsp/view/login_1.jsp").access("hasRole('ROLE_USER')").and().formLogin().and().httpBasic();
+        /*
+        http.authorizeRequests().antMatchers("/account/getSignin")
+                                .access("hasRole('ROLE_USER')").and()
+                                .formLogin().loginPage("/jsp/view/signin.jsp").defaultSuccessUrl("/jsp/view/user_home.jsp").and().httpBasic();
+        */
     }
     
    

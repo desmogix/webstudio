@@ -11,40 +11,40 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        <%@include file="/jspf/home.jspf"%>
-        <%@include file="/jspf/alert.jspf"%> 
-        <%@include file="/jspf/service.jspf"%> 
-        <%@include file="/jspf/blog.jspf"%> 
-        <%@include file="/jspf/login.jspf"%>
-    </head>
-    <body>
-        <h1>Web Studio Everyday Service</h1>
-        <h2>Login</h2>
-        
-        
-        
-        <c:url value="/account/getRegister" var="getRegisterURL" />
-        <c:url value="/jsp/view/login_1.jsp" var="getAuthenticationURL" />
-        
-            <table border="0">
-                <form:form action="${getRegisterURL}" method="get">
-                    <tr><td>Click on Register to create a new account</td></tr>
-                    <tr><td>&nbsp;</td></tr>
-                    <tr><td align="middle"><input type="submit" value="Register"> </td></tr>  
+                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+                <title>Sign in</title>
+                <%@include file="/jspf/home.jspf"%>
+                <%@include file="/jspf/alert.jspf"%> 
+                <%@include file="/jspf/service.jspf"%> 
+                <%@include file="/jspf/blog.jspf"%> 
+                <b><%@include file="/jspf/login.jspf"%></b>
+                <%@include file="/jspf/register.jspf"%>
+        </head>
+
+
+        <body>
+                <h1>Web Studio Everyday Service</h1>
+                <h2>Login</h2>
+
+                <c:url value="/login/postLogin" var="postSignInURL" />
+                <form:form id="postLogin" action="${postSignInURL}" method="post" modelAttribute="credentials" >
+                    <table>
+                            <tr>
+                                <td align="left"><form:label id="j_username" path="username">Username</form:label></td>  
+                                <td><form:input id="j_username" path="username" /></td>
+                                <td><font color="red"><form:errors id="error" path="username" /></font></td>
+                            </tr>
+                            <tr>
+                                <td align="left"><form:label id="j_password" path="password">Password</form:label></td>  
+                                <td><form:password id="j_password" path="password" /></td>
+                                <td><font color="red"><form:errors id="error" path="password" /></font></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td align="middle"><input type="submit" value="Sign in"></td>
+                            </tr>      
+                    </table>
                 </form:form>
-                <form:form action="${getAuthenticationURL}" method="get">
-                    <tr><td>&nbsp;</td></tr>
-                    <tr><td>&nbsp;</td></tr>
-                    <tr><td>&nbsp;</td></tr>
-                    <tr><td>Click on Login to access to your profile</td></tr>
-                    <tr><td>&nbsp;</td></tr>
-                    <tr><td align="middle"><input type="submit" value="Login"></td></tr> 
-                </form:form>  
-            </table>            
         
-            
-            
-    </body>
+        </body>
 </html>

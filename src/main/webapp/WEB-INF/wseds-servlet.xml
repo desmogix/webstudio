@@ -122,7 +122,13 @@
     
      <!-- Spring Controllers. -->
     <bean id="accountController" class="wseds.controller.AccountController" />
-
+    <bean id="indexController" class="wseds.controller.IndexController" />
+    <bean id="homeController" class="wseds.controller.home.HomeController" />
+    <bean id="registrationController" class="wseds.controller.register.RegisterController" />
+    <bean id="loginController" class="wseds.controller.login.LoginController" />
+    
+    
+    
     <!-- Model. -->
     <bean id="account" class="wseds.model.Account" />
     <bean id="credentials" class="wseds.model.Credentials" />
@@ -132,6 +138,7 @@
     <!-- Wrapper obbject WTO -->
     <bean id="registrationForm" class="wseds.wdo.RegistrationForm" />
     
+     
     <!-- Spring Services. -->
     <bean id="accountServiceImp" class="wseds.service.AccountServiceImp" />  
     <bean id="roleServiceImp" class="wseds.service.RoleServiceImp" /> 
@@ -145,7 +152,7 @@
     
     <!-- Validator -->
     <bean id="accountValidator" class="wseds.validator.AccountValidator" />
-    <bean id="credentialsValidator" class="wseds.validator.CredentialsValidator" />
+    <bean id="credentialsValidator" class="wseds.validator.CredentialsValidatorImp" />
 
     <tx:annotation-driven />
     

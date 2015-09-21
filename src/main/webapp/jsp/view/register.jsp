@@ -23,15 +23,17 @@
         <%@include file="/jspf/service.jspf"%> 
         <%@include file="/jspf/blog.jspf"%> 
         <%@include file="/jspf/login.jspf"%> 
+        <b><%@include file="/jspf/register.jspf"%></b>
                     
         <title>WSEDS: please enter your details to register.</title>    
     </head>
     <body>        
-        <h3>WSEDS: please enter your details to register.</h3>
-         
+        <h1>Web Studio Everyday Service</h1>
+        <h2>Register</h2>
+        <h3>Please insert your details</h3> 
         <!-- Register an account. -->    
 
-        <c:url value="/account/postRegister" var="postRegisterURL" />
+        <c:url value="/register/postRegister" var="postRegisterURL" />
         <form:form id="postRegister" action="${postRegisterURL}" method="post" modelAttribute="registrationForm">                                           
             <table border="0">
                 <tr>

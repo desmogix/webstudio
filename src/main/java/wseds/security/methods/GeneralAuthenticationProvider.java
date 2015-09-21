@@ -25,6 +25,7 @@ import wseds.service.interfaces.AccountService;
 @Component(value="authenticationProvider")
 public class GeneralAuthenticationProvider implements AuthenticationProvider
 {
+    
     private AccountService accountService;
  
     @Autowired
@@ -36,24 +37,33 @@ public class GeneralAuthenticationProvider implements AuthenticationProvider
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException
     {
-        Account account = accountService.selectWithUsername(authentication.getPrincipal().toString());
-        
-        //NON LO STAMPA
-        System.out.println("\n\n\n ++++++++++++++++++++++++++++++++++++++++++++++++++ \n\n\n +++ USER: " + authentication.getCredentials().toString() + "\n\n\n");
-        
-        if(account == null)
+        Account account = null;
+        try
         {
-            throw new UsernameNotFoundException(String.format("Invalid credentials", authentication.getPrincipal()));
+            account = accountService.selectWithUsername(authentication.getPrincipal().toString());
         }
+        catch(Exception e)
+        {
+            
+        }
+
+        //NON LO STAMPA
+        System.out.println("\n\n\n ++++++++++++++++++++++++++++++++++++++++++++++++++ \n\n\n "
+                + "+++ USER: " + authentication.getCredentials().toString() + "\n\n\n"); 
+        
+         if(account == null)
+            {
+                throw new UsernameNotFoundException(String.format("Invalid credentials", authentication.getPrincipal()));
+            }
         
         //String suppliedPasswordHash = DigestUtils.sha1Hex(authentication.getCredentials().toString());
         
-        if(!account.getCredentials().getPassword().equals(authentication.getCredentials().toString())){
-            throw new BadCredentialsException("Invalid credentials");
-        }
+            if(!account.getCredentials().getPassword().equals(authentication.getCredentials().toString()))
+            {
+                throw new BadCredentialsException("Invalid credentials");
+            }
 
         Authentication token = new UsernamePasswordAuthenticationToken(account.getUsername(), account.getPassword(), account.getAuthorities());
- 
         return token;
     }
 
