@@ -72,7 +72,6 @@ public class RoleDAOImp implements RoleDAO
         Session session = sessionFactory.openSession();
         try 
         {         
-            
             Query query = session.createQuery
         ("from Role as r "
                 + "left join fetch r.permissions as rp "
@@ -83,7 +82,7 @@ public class RoleDAOImp implements RoleDAO
             // NOTE: it depends upon the query, you know it will return one obj
             //System.out.println("LIST: \n\n\n\n --------- >   " + query.list().size());
             Role role = (Role) query.uniqueResult(); 
-            //Hibernate.initialize effectively load into the RAM its data
+            
             Hibernate.initialize(role.getPermissions());
             Hibernate.initialize(role.getAccounts());
             

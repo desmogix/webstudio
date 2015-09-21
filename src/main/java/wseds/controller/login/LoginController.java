@@ -6,6 +6,7 @@
 package wseds.controller.login;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,8 +27,11 @@ public class LoginController
     @Autowired
     private Credentials credentials;
     @Autowired
-    CredentialsValidator credentialsValidator;
-
+    private CredentialsValidator credentialsValidator;
+    @Autowired
+    private AuthenticationProvider authenticationProvider;
+    
+    
     @RequestMapping(value="/getLogin", method=RequestMethod.GET)
     public String getLogin(Model model) 
     {   

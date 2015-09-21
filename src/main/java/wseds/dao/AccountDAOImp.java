@@ -119,22 +119,26 @@ public class AccountDAOImp implements AccountDAO
     
     @Override
     
-    public Account selectWithCredentialsId(Integer id_account) 
+    public Account select(Integer id_account) 
     {
         Session session = sessionFactory.openSession();
         //Transaction transaction = session.getTransaction();
         try 
         {                
             Query query = session.createQuery
-        ("from Account as acc left join acc.credentials where acc.id_account = :id_account")
+        ("from Account as a "
+                + "left join fetch a.credentials as ac "
+                + "left join fetch a.roles as ar "
+                + "where a.id_account = :id_account")
                     .setParameter("id_account", id_account);                      
             // - gg - Return a list of one object Account. 
             // NOTE: it depends upon the query, you know it will return one obj
             Account account = (Account) query.list().get(0); 
             //Hibernate.initialize effectively load into the RAM its data
-            Hibernate.initialize(account.getCredentials());            
+            Hibernate.initialize(account.getCredentials());
+            Hibernate.initialize(account.getRoles());
             return account;            
-            //return (Account) session.get(Account.class, id_account);
+            
         }        
         finally 
         {
@@ -142,22 +146,25 @@ public class AccountDAOImp implements AccountDAO
         }         
     }
 
+    /*
     @Override
-  
     public Account select(Integer id_account)
     {
         logger.info(AccountDAOImp.class.getName() + ".get() method called.");
         
         Session session = sessionFactory.openSession();
-        //Transaction transaction = session.getTransaction();
-        try {    
+        
+        try 
+        {    
             return (Account) session.get(Account.class, id_account);                                  
         }        
-        finally {
+        finally 
+        {
             session.close();
         }         
     }
-
+    */
+    
     @Override
 
     public List<Account> list() 

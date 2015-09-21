@@ -170,7 +170,6 @@ public class Account implements Serializable, UserDetails
             {
                 AccountAuthority accountAuthority = new AccountAuthority(permission.getName());
                 authorities.add(accountAuthority);
-                //System.out.println("\n\n\n ******** AUTHORITY ******** \n\n\n " + authorities.toString() + "\n\n\n");
             }
         }
         return authorities;

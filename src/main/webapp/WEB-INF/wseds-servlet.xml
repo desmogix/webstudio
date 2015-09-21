@@ -121,14 +121,11 @@
     </bean>
     
      <!-- Spring Controllers. -->
-    <bean id="accountController" class="wseds.controller.AccountController" />
-    <bean id="indexController" class="wseds.controller.IndexController" />
+
     <bean id="homeController" class="wseds.controller.home.HomeController" />
     <bean id="registrationController" class="wseds.controller.register.RegisterController" />
     <bean id="loginController" class="wseds.controller.login.LoginController" />
-    
-    
-    
+
     <!-- Model. -->
     <bean id="account" class="wseds.model.Account" />
     <bean id="credentials" class="wseds.model.Credentials" />
@@ -165,8 +162,8 @@
     <import resource="wseds-flow.xml" /> 
     
     <!-- Security config class -->
-    <bean id="UrlsLayerConfig" class="wseds.security.urls.UrlLayerConfig" />
-    <bean id="MethodsLayerConfig" class="wseds.security.methods.MethodLayerConfig" />
+    <bean id="urlsLayerConfig" class="wseds.security.urls.UrlLayerConfig" />
+    <bean id="methodsLayerConfig" class="wseds.security.methods.MethodLayerConfig" />
     <bean id="authenticationProvider" class="wseds.security.methods.GeneralAuthenticationProvider">
         <constructor-arg ref="accountServiceImp" /> 
     </bean>

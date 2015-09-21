@@ -47,9 +47,9 @@ public class GeneralAuthenticationProvider implements AuthenticationProvider
             
         }
 
-        //NON LO STAMPA
+        
         System.out.println("\n\n\n ++++++++++++++++++++++++++++++++++++++++++++++++++ \n\n\n "
-                + "+++ USER: " + authentication.getCredentials().toString() + "\n\n\n"); 
+                + "+++ PASSWORD: " + authentication.getCredentials().toString() + "\n\n\n"); 
         
          if(account == null)
             {

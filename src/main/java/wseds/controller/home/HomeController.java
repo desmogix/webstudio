@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import wseds.controller.home.HomeController;
+
 import wseds.controller.login.LoginController;
 import wseds.controller.register.RegisterController;
 
@@ -20,7 +20,7 @@ import wseds.controller.register.RegisterController;
  * @author luigi@santivetti
  */
 @Controller
-@RequestMapping("/home")
+@RequestMapping("/")
 public class HomeController
 {
     @Autowired

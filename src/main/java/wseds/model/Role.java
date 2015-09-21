@@ -36,7 +36,7 @@ public class Role implements Serializable
     private String name;
     
     
-    @ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable
     (
         name = "account_has_role", 
@@ -53,7 +53,7 @@ public class Role implements Serializable
     )
     private Set<Account> accounts = new HashSet<>();
     
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable
     (
         name = "role_has_permission", 

@@ -168,27 +168,20 @@ public class CredentialsDAOImp implements CredentialsDAO
    
 
     @Override
-    
     public Credentials selectWithUsername(String username) throws UsernameNotFoundException
     {
         Session session = sessionFactory.openSession();
         //Transaction transaction = session.getTransaction();
         try 
         {    
-            List<Credentials> one_item_list = session.createQuery
-        ("from Credentials as cred left join fetch cred.account where cred.username = :username")
-                    .setParameter("username", username).list(); 
-            
-            if(one_item_list.size()!=1)
-            {
-                return null;
-            }
-            else
-            {
-                Credentials credentials = one_item_list.get(0);
+            Credentials credentials = (Credentials) session.createQuery
+        ("from Credentials as cred "
+                + "left join fetch cred.account where cred.username = :username")
+                    .setParameter("username", username).uniqueResult(); 
+
                 Hibernate.initialize(credentials.getAccount());
                 return credentials;
-            }
+            
         }        
         finally 
         {
@@ -205,7 +198,8 @@ public class CredentialsDAOImp implements CredentialsDAO
         try 
         {    
             List<Credentials> one_item_list = session.createQuery
-        ("from Credentials as cred left join fetch cred.account where cred.password = :password")
+        ("from Credentials as cred "
+                + "left join fetch cred.account where cred.password = :password")
                     .setParameter("password", password).list();
             
             if(one_item_list.size()!=1)

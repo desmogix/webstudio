@@ -26,21 +26,20 @@
                 <h1>Web Studio Everyday Service</h1>
                 <h2>Login</h2>
 
-                <c:url value="/login/postLogin" var="postSignInURL" />
+                <c:url value="/login" var="postSignInURL" />
                 <form:form id="postLogin" action="${postSignInURL}" method="post" modelAttribute="credentials" >
                     <table>
+                        <c:if test="${(param.error)!=null }"> <tr><td></td><td align="middle"><b><font color="red">Bad credentials</font></b></td></tr></c:if>
                             <tr>
                                 <td align="left"><form:label id="j_username" path="username">Username</form:label></td>  
-                                <td><form:input id="j_username" path="username" /></td>
-                                <td><font color="red"><form:errors id="error" path="username" /></font></td>
+                                <td><form:input id="username"  path="username" /></td>
                             </tr>
                             <tr>
                                 <td align="left"><form:label id="j_password" path="password">Password</form:label></td>  
-                                <td><form:password id="j_password" path="password" /></td>
-                                <td><font color="red"><form:errors id="error" path="password" /></font></td>
+                                <td><form:password id="password"  path="password" /></td>
                             </tr>
                             <tr>
-                                <td></td>
+                                <td><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> </td>
                                 <td align="middle"><input type="submit" value="Sign in"></td>
                             </tr>      
                     </table>
