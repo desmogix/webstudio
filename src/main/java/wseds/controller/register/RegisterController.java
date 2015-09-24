@@ -57,7 +57,7 @@ public class RegisterController
     }
     
     
-    @RequestMapping(value = "/postRegister", method = RequestMethod.POST)       
+    @RequestMapping(value = "/postregister", method = RequestMethod.POST)       
     public String postRegister( @ModelAttribute("registrationForm") RegistrationForm registrationForm, 
                                 BindingResult bindingResult,
                                 Model model) 
@@ -74,6 +74,7 @@ public class RegisterController
         }
         else 
         {   
+            model.addAttribute("registrationForm", new RegistrationForm());
             accountService.insert(account, credentials);
             
             String yeah = "Yeah, you got it buddy.";

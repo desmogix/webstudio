@@ -22,7 +22,7 @@ public class MethodLayerConfig
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception
     {  
-        auth.authenticationProvider(gap);   
+        auth.authenticationProvider(gap);
     }
 
     

@@ -9,6 +9,7 @@ package wseds.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 
 
 import java.util.HashSet;
@@ -29,7 +30,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 //import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import wseds.security.methods.AccountAuthority;
@@ -59,15 +64,28 @@ public class Account implements Serializable, UserDetails
     @Column(name="name", nullable=false, columnDefinition="VARCHAR",length=30)
     private String name;
     
-    @Column(name="email", nullable=false, columnDefinition="VARCHAR",length=45)
-    private String email;
+    @Column(name="type", nullable=false, columnDefinition="VARCHAR",length=20)
+    private String type;
+    
+    @Column(name="expired", nullable=false, columnDefinition="BIT")
+    private Boolean expired;
+    
+    @Column(name="enabled", nullable=false, columnDefinition="BIT")
+    private Boolean enabled;
+    
+    @Column(name="blocked", nullable=false, columnDefinition="BIT")
+    private Boolean blocked;
+    
+    @Column(name="creation", nullable=true, columnDefinition="DATETIME")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creation;
     
     
-    @OneToOne(mappedBy = "account", targetEntity = Credentials.class)
+    @OneToOne(mappedBy = "account", targetEntity = Credentials.class, fetch = FetchType.EAGER)
     @JsonManagedReference
     private Credentials credentials;
 
-    @ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable
     (
         name = "account_has_role", 
@@ -84,7 +102,7 @@ public class Account implements Serializable, UserDetails
     )
     private Set<Role> roles = new HashSet<>();
     
-    
+
     public Account()
     {
         
@@ -95,21 +113,10 @@ public class Account implements Serializable, UserDetails
         return id_account;
     }
     
-    
     public void setId_account(Integer id_account) 
     {
         this.id_account = id_account;
     }
-
-    /*
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-    */
     
     public String getSurname() {
         return surname;
@@ -126,15 +133,7 @@ public class Account implements Serializable, UserDetails
     public void setName(String name) {
         this.name = name;
     }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
+    
     public Credentials getCredentials()
     {
         return credentials;
@@ -210,8 +209,56 @@ public class Account implements Serializable, UserDetails
     {
         return true;
     }
-   
-    
+
+    public String getType()
+    {
+        return type;
+    }
+
+    public void setType(String type)
+    {
+        this.type = type;
+    }
+
+    public Boolean getExpired()
+    {
+        return expired;
+    }
+
+    public void setExpired(Boolean expired)
+    {
+        this.expired = expired;
+    }
+
+    public Boolean getEnabled()
+    {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled)
+    {
+        this.enabled = enabled;
+    }
+
+    public Boolean getBlocked()
+    {
+        return blocked;
+    }
+
+    public void setBlocked(Boolean blocked)
+    {
+        this.blocked = blocked;
+    }
+
+    public Date getCreation()
+    {
+        return creation;
+    }
+
+    public void setCreation(Date creation)
+    {
+        this.creation = creation;
+    }
     
 }
 

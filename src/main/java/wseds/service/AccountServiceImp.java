@@ -5,12 +5,18 @@
  */
 package wseds.service;
 
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.Locale;
 import wseds.service.interfaces.AccountService;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.stereotype.Service;
+import sun.util.calendar.BaseCalendar;
 import wseds.dao.interfaces.AccountDAO;
 import wseds.dao.interfaces.CredentialsDAO;
 import wseds.dao.interfaces.PermissionDAO;
@@ -39,20 +45,26 @@ public class AccountServiceImp implements AccountService, CredentialsService
     @Autowired
     private RoleDAO roleDAO;
     @Autowired
-    private Role role;
-    //@Autowired
-    //private Permission permission;
-    
-    
-    
-    
+    private PasswordEncoder passwordEncoder;
+
     public AccountServiceImp(){}
      
     @Override
     @Transactional
-    //@PreAuthorize("hasRole('ROLE_PERMISSION_booking')")
     public void insert(Account account, Credentials credentials) 
     {
+        credentials.setPassword(passwordEncoder.encode(credentials.getPassword()));
+        
+        account.setBlocked(Boolean.FALSE);
+        account.setEnabled(Boolean.TRUE);
+        account.setExpired(Boolean.FALSE);
+        account.setType("user");
+        Date date = new Date();
+        DateFormatter df = new DateFormatter("dd/mm/yyyy");
+        String dates = df.print(date, Locale.ENGLISH);
+       
+        account.setCreation(date);
+        
         account.setCredentials(credentials);
         credentials.setAccount(account);
         account.setRoles(roleDAO.listPermissionsPerRole("user"));
@@ -61,7 +73,6 @@ public class AccountServiceImp implements AccountService, CredentialsService
         credentialsDAO.insert(credentials);
     }
 
-    
     @Override
     public Account selectWithCredentialsObject(Credentials credentials)
     {

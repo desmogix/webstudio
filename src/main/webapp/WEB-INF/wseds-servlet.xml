@@ -135,6 +135,7 @@
     <bean id="credentials" class="wseds.model.Credentials" />
     <bean id="role" class="wseds.model.Role" />
     <bean id="permission" class="wseds.model.Permission" />
+    <bean id="verificatio" class="wseds.model.Verification" />
     
     <!-- Wrapper obbject WTO -->
     <bean id="registrationForm" class="wseds.wdo.RegistrationForm" />
@@ -165,12 +166,13 @@
     <!-- Spring webflow -->
     <import resource="wseds-flow.xml" /> 
     
-    <!-- Security config class -->
+    <!-- Spring security -->
     <bean id="urlsLayerConfig" class="wseds.security.urls.UrlLayerConfig" />
     <bean id="methodsLayerConfig" class="wseds.security.methods.MethodLayerConfig" />
     <bean id="authenticationProvider" class="wseds.security.methods.GeneralAuthenticationProvider">
         <constructor-arg ref="accountServiceImp" /> 
     </bean>
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
         
     <!-- Spring (the servlet) configures Hibernate  -->
     <!-- Enable hibernate annotations in POJOs file-->
@@ -201,7 +203,5 @@
             </list>
         </property>  
     </bean>
-    
-   
-   
+
 </beans>

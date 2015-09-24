@@ -27,8 +27,8 @@
         <h3>Please insert your details</h3> 
         <!-- Register an account. -->    
 
-        <c:url value="/register/postRegister" var="postRegisterURL" />
-        <form:form id="postRegister" action="${postRegisterURL}" method="post" modelAttribute="registrationForm">                                           
+        <c:url value="/public/register/postregister" var="postRegisterURL" />
+        <form:form action="${postRegisterURL}" method="post" modelAttribute="registrationForm">                                           
             <table border="0">
                 <tr>
                     <td align="left"><form:label path="account.name">Name</form:label></td>  
@@ -41,14 +41,10 @@
                     <td><font color="red"><form:errors path="account.surname" /></font></td>
                 </tr>
                 
-                <tr>
-                    <td align="left"><form:label path="account.email">Email</form:label></td>   
-                    <td><form:input path="account.email" /></td>
-                    <td><font color="red"><form:errors path="account.email" /></font></td>
-                </tr>
+                
                
                 <tr>
-                    <td align="left"><form:label path="credentials.username">Username</form:label></td>  
+                    <td align="left"><form:label path="credentials.username">Email</form:label></td>  
                     <td><form:input path="credentials.username" /></td>
                     <td><font color="red"><form:errors path="credentials.username" /></font></td>
                 </tr>
@@ -59,22 +55,18 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td>${yeah}</td>  
+                    <td><font color="green"> <a style="text-decoration:none; color:inherit; font-size:30px">${yeah}</a>   </font></td>  
                     <td></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td><input type="submit" value="Register">&nbsp;<input type="Reset" value="Reset"></td>  
+                    <td><input type="submit" value="Register" /></td>  
                     <td></td>
                 </tr>
             </table>
         </form:form>
          
         
-        <p>
-            I though registration process being part of a spring-web-flow.
-            By the way, Account and User credentials are mapped against two different tables.
-            Account is  referred through FK UserCred_id.
-        </p> 
+         
     </body>
 </html>

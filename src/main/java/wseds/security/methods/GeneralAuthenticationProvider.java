@@ -11,12 +11,15 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
+
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import wseds.model.Account;
 import wseds.service.interfaces.AccountService;
+
+
 
 /**
  *
@@ -27,8 +30,10 @@ import wseds.service.interfaces.AccountService;
 public class GeneralAuthenticationProvider implements AuthenticationProvider
 {
     
-    private AccountService accountService;
- 
+    private final AccountService accountService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    
     @Autowired
     public GeneralAuthenticationProvider(AccountService accountService)
     {
@@ -38,37 +43,24 @@ public class GeneralAuthenticationProvider implements AuthenticationProvider
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException
     {
-        Account account = null;
-        try
+        Account account = accountService.selectWithUsername(authentication.getPrincipal().toString());
+ 
+        if(account == null)
         {
-            account = accountService.selectWithUsername(authentication.getPrincipal().toString());
+            throw new UsernameNotFoundException(String.format("Invalid credentials", authentication.getPrincipal()));
         }
-        catch(Exception e)
+        
+        String rawPassword = authentication.getCredentials().toString();
+        String cryPassowrd = account.getCredentials().getPassword();
+
+        System.out.println("\n ++++++++++++++++++++++++++++++++++++++++++++++++++ \n "
+                + "+++ RAW PASSWORD: " + rawPassword + "\n --- --- --- --- --- --- --- \n" 
+                + "+++ CRY PASSWORD: " + cryPassowrd + "\n");
+        if(!passwordEncoder.matches(rawPassword, cryPassowrd))
         {
-            
+            throw new BadCredentialsException("Invalid credentials");
         }
 
-        
-        System.out.println("\n\n ++++++++++++++++++++++++++++++++++++++++++++++++++ \n\n "
-                + "+++ PASSWORD: " + authentication.getCredentials().toString() + "\n"); 
-        
-         if(account == null)
-            {
-                throw new UsernameNotFoundException(String.format("Invalid credentials", authentication.getPrincipal()));
-            }
-        
-        //String suppliedPasswordHash = DigestUtils.sha1Hex(authentication.getCredentials().toString());
-        
-            if(!account.getCredentials().getPassword().equals(authentication.getCredentials().toString()))
-            {
-                throw new BadCredentialsException("Invalid credentials");
-            }
-
-            for(GrantedAuthority g : account.getAuthorities() )
-            {
-                System.out.println("\n authority:  " + g.getAuthority() + "\n");  
-            }
-            
         Authentication token = new UsernamePasswordAuthenticationToken(account.getUsername(), account.getPassword(), account.getAuthorities());
         return token;
     }

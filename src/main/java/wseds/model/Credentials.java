@@ -10,10 +10,12 @@ package wseds.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -24,9 +26,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -44,7 +45,7 @@ public class Credentials implements Serializable
     @Column(name="id_credentials")
     private Integer id_credentials;
 
-    @Column(name="username", nullable=false, columnDefinition="VARCHAR",length=30)      
+    @Column(name="email", nullable=false, columnDefinition="VARCHAR",length=30)      
     private String username;
 
     @Column(name="password", nullable=false, columnDefinition="CHAR", length=128)
@@ -53,8 +54,16 @@ public class Credentials implements Serializable
     @Column(name="salt", nullable=true, columnDefinition="CHAR", length=128)
     private String salt;
     
+    @Column(name="usertime", nullable=true, columnDefinition="DATETIME")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date usertime;
     
-    @OneToOne(cascade = CascadeType.ALL, targetEntity = Account.class)
+    @Column(name="passwordtime", nullable=true, columnDefinition="DATETIME")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date passwordtime;
+    
+    
+    @OneToOne(cascade = CascadeType.ALL, targetEntity = Account.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_credentials")
     @JsonBackReference
     private Account account;

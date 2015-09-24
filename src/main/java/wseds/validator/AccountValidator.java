@@ -41,7 +41,7 @@ public class AccountValidator implements Validator
         
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "account.name", "name.required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "account.surname", "surname.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "account.email", "email.required"); 
+        
        
         if (account.getName().length() > 30) {
             errors.rejectValue("name", "name.invalidLength");
@@ -49,8 +49,6 @@ public class AccountValidator implements Validator
         if (account.getSurname().length() > 30) {
             errors.rejectValue("surname", "surname.invalidLength");
         }
-        if (account.getEmail().length() > 45) {
-            errors.rejectValue("email", "email.invalidLength");
-        }   
+       
     }
 }

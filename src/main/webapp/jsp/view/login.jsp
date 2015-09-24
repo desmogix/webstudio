@@ -26,11 +26,11 @@
                     <table>
                         <c:if test="${(param.error)!=null }"> <tr><td></td><td align="middle"><b><font color="red">Bad credentials</font></b></td></tr></c:if>
                             <tr>
-                                <td align="left"><form:label id="j_username" path="username">Username</form:label></td>  
+                                <td align="left"><form:label id="username" path="username">Email</form:label></td>  
                                 <td><form:input id="username"  path="username" /></td>
                             </tr>
                             <tr>
-                                <td align="left"><form:label id="j_password" path="password">Password</form:label></td>  
+                                <td align="left"><form:label id="password" path="password">Password</form:label></td>  
                                 <td><form:password id="password"  path="password" /></td>
                             </tr>
                             <tr>
