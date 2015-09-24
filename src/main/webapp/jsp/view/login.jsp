@@ -12,22 +12,30 @@
 <html>
     <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-                <title>Sign in</title>
+                <title>Login WSEDS</title>
                 <%@include file="/jspf/home.jspf"%>
-                <%@include file="/jspf/alert.jspf"%> 
-                <%@include file="/jspf/service.jspf"%> 
+                <%@include file="/jspf/alerts.jspf"%> 
+                <%@include file="/jspf/services.jspf"%> 
                 <%@include file="/jspf/blog.jspf"%> 
-                <b><%@include file="/jspf/login.jspf"%></b>
+                
                 <%@include file="/jspf/register.jspf"%>
-        </head>
+                <c:if test="${pageContext.request.userPrincipal.name == 'desmogix'}">
+                    <%@include file="/jspf/logout.jspf"%>
+                    <%@include file="/jspf/userhome.jspf"%>
+                </c:if>
+            <c:if test="${pageContext.request.userPrincipal.name != 'desmogix'}">
+                    <%@include file="/jspf/login.jspf"%>
+                </c:if>
+
+</head>
 
 
         <body>
                 <h1>Web Studio Everyday Service</h1>
                 <h2>Login</h2>
 
-                <c:url value="/login" var="postSignInURL" />
-                <form:form id="postLogin" action="${postSignInURL}" method="post" modelAttribute="credentials" >
+                <c:url value="/public/login" var="postLoginURL" />
+                <form:form action="${postLoginURL}" method="post" modelAttribute="credentials" >
                     <table>
                         <c:if test="${(param.error)!=null }"> <tr><td></td><td align="middle"><b><font color="red">Bad credentials</font></b></td></tr></c:if>
                             <tr>

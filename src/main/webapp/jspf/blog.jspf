@@ -1,4 +1,4 @@
 <!-- LuigiS -->
 
-<c:url value="/blog" var="blogURL" />  
-<font color="black"> <a style="text-decoration: none; color:inherit" href="${blogURL}">Blog</a>  </font>
+<c:url value="/public/blog" var="blogURL" />  
+<font color="black"> <a style="text-decoration: none; color:inherit; font-size:20px" href="${blogURL}">Blog</a>  </font>

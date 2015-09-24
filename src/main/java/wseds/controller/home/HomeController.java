@@ -6,13 +6,14 @@
 package wseds.controller.home;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import wseds.controller.authenticated.UserHomeController;
 
-import wseds.controller.login.LoginController;
-import wseds.controller.register.RegisterController;
 
 
 /**
@@ -20,42 +21,28 @@ import wseds.controller.register.RegisterController;
  * @author luigi@santivetti
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping("/home")
 public class HomeController
 {
     @Autowired
-    private RegisterController registrationController;
-    @Autowired
-    private LoginController loginController;
-    
-    
-    @RequestMapping(value="alert", method = RequestMethod.GET)
-    public String displayAlert()
+    private UserHomeController userHomeController;
+    /*
+    index.jsp is pointed by the web.xml at deploy ultimated time.
+    index.jsp redirect to /public
+    spring looks up a handler method for /public
+    homeController (loaded into the app context via servlet bean injection) 
+    handles /public through displayHome()
+    */
+    @RequestMapping(method = RequestMethod.GET)
+    public String displayHome(Model model)
     {
-        return "alert";
+        //if(!SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("desmogix"))
+            return "home";
+        //else
+           // return userHomeController.displayUserHome(model);
     }
     
-    @RequestMapping(value="service", method = RequestMethod.GET)
-    public String displayService()
-    {
-        return "service";
-    }
     
-    @RequestMapping(value="blog", method = RequestMethod.GET)
-    public String displayBlog()
-    {
-        return "blog";
-    }
     
-    @RequestMapping(value="login", method = RequestMethod.GET)
-    public String getLogin(Model model)
-    {
-        return loginController.getLogin(model);
-    }
     
-    @RequestMapping(value="register", method = RequestMethod.GET)
-    public String getRegister(Model model)
-    {
-        return registrationController.getRegister(model);
-    }
 }

@@ -1,0 +1,3 @@
+<%-- any content can be specified here e.g.: --%>
+<c:url value="/logout" var="logoutURL" />  
+<font color="brown"> <a style="text-decoration:none; color:inherit; font-size:20px" href="${logoutURL}">Logout</a>   </font>

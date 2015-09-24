@@ -25,13 +25,13 @@ import wseds.wdo.RegistrationForm;
  * @author luigi@santivetti
  */
 @Controller
-@RequestMapping("/register")
+@RequestMapping("/public/register")
 public class RegisterController
 {
     @Autowired
-    AccountValidator accountValidator;
+    private AccountValidator accountValidator;
     @Autowired
-    CredentialsValidator credentialsValidator;
+    private CredentialsValidator credentialsValidator;
     
     @Autowired
     private AccountService accountService;
@@ -46,9 +46,8 @@ public class RegisterController
     @Autowired
     private RegistrationForm registrationForm;
     
-    
-    @RequestMapping(value="/getRegister", method=RequestMethod.GET)
-    public String getRegister(Model model) 
+    @RequestMapping(method=RequestMethod.GET)
+    public String displayRegister(Model model) 
     {   
         this.registrationForm.setAccount(account);
         this.registrationForm.setCredentials(credentials);

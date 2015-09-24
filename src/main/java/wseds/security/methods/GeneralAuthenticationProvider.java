@@ -11,6 +11,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
@@ -48,8 +49,8 @@ public class GeneralAuthenticationProvider implements AuthenticationProvider
         }
 
         
-        System.out.println("\n\n\n ++++++++++++++++++++++++++++++++++++++++++++++++++ \n\n\n "
-                + "+++ PASSWORD: " + authentication.getCredentials().toString() + "\n\n\n"); 
+        System.out.println("\n\n ++++++++++++++++++++++++++++++++++++++++++++++++++ \n\n "
+                + "+++ PASSWORD: " + authentication.getCredentials().toString() + "\n"); 
         
          if(account == null)
             {
@@ -63,6 +64,11 @@ public class GeneralAuthenticationProvider implements AuthenticationProvider
                 throw new BadCredentialsException("Invalid credentials");
             }
 
+            for(GrantedAuthority g : account.getAuthorities() )
+            {
+                System.out.println("\n authority:  " + g.getAuthority() + "\n");  
+            }
+            
         Authentication token = new UsernamePasswordAuthenticationToken(account.getUsername(), account.getPassword(), account.getAuthorities());
         return token;
     }

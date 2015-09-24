@@ -125,6 +125,10 @@
     <bean id="homeController" class="wseds.controller.home.HomeController" />
     <bean id="registrationController" class="wseds.controller.register.RegisterController" />
     <bean id="loginController" class="wseds.controller.login.LoginController" />
+    <bean id="userHomeController" class="wseds.controller.authenticated.UserHomeController" />
+    <bean id="servicesController" class="wseds.controller.services.ServicesController" />
+    <bean id="alertsController" class="wseds.controller.alerts.AlertsController" />
+    <bean id="blogController" class="wseds.controller.blog.BlogController" />
 
     <!-- Model. -->
     <bean id="account" class="wseds.model.Account" />

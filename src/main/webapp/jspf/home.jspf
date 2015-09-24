@@ -1,4 +1,4 @@
 <!-- LuigiS -->
 
 <c:url value="/" var="homeURL" />  
-<font color="blue"> <a style="text-decoration: none; color:inherit" href="${homeURL}">Home</a> </font>     
+<font color="blue"> <a style="text-decoration: none; color:inherit; font-size:20px" href="${homeURL}">Home</a> </font>     
