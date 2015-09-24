@@ -29,7 +29,9 @@ public class UserHomeController
     @RequestMapping(value="/userhome", method = RequestMethod.GET)
     public String displayUserHome(Model model)
     {
+        
         model.addAttribute("username", this.getUsername());
+        model.addAttribute("linkToHome", "/home");
         return "userhome";
     }
     
